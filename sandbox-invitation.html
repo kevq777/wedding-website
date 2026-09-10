@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invitation Experience Sandbox — Kevin & Shannel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  
+  <style>
+    :root {
+      --bg-noir: #0C0D0E;
+      --bg-surface: #141619;
+      --bg-card: #1A1D22;
+      --gold-primary: #D4AF37;
+      --gold-light: #F3E5AB;
+      --gold-dark: #997B24;
+      --gold-gradient: linear-gradient(135deg, #FBF0D9 0%, #D4AF37 50%, #8A6D1C 100%);
+      --text-white: #FFFFFF;
+      --text-muted: #9E9B95;
+      --font-serif: 'Cinzel', serif;
+      --font-sans: 'Montserrat', sans-serif;
+      --font-editorial: 'Playfair Display', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-noir);
+      color: var(--text-white);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Control Bar */
+    .sandbox-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(14, 16, 19, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 14px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .sandbox-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sandbox-brand h1 {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .sandbox-brand span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold-primary);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    /* Concept Selector Tabs */
+    .concept-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .concept-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .concept-tab:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .concept-tab.active {
+      background: var(--gold-gradient);
+      color: #0A0A0A;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
+    }
+
+    .sandbox-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-replay {
+      background: transparent;
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-replay:hover {
+      background: var(--gold-primary);
+      color: #000;
+    }
+
+    /* Concept Info Bar */
+    .concept-info {
+      background: #111317;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 0.82rem;
+    }
+
+    .concept-title-desc {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .concept-tag {
+      color: var(--gold-primary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    .concept-desc {
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Main Stage */
+    .sandbox-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+      min-height: 640px;
+    }
+
+    .stage-particle-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Concept Container */
+    .concept-view {
+      display: none;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 520px;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .concept-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ==========================================================================
+       CONCEPT 1: HAUTE COUTURE DIPTYCH FOLIO WITH SILK RIBBON BOW
+       ========================================================================== */
+    .folio-wrapper {
+      position: relative;
+      width: 100%;
+      perspective: 1400px;
+    }
+
+    .folio-box {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      border-radius: 8px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(212, 175, 55, 0.3);
+      overflow: hidden;
+      background: #0B0D10;
+    }
+
+    /* Interior Invitation Card (Underneath doors) */
+    .folio-card-interior {
+      position: absolute;
+      inset: 0;
+      padding: 44px 32px;
+      background: radial-gradient(circle at 50% 30%, #1D1E22 0%, #0E0F12 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      border: 1px solid var(--gold-dark);
+      z-index: 1;
+    }
+
+    .interior-border {
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      pointer-events: none;
+    }
+
+    .interior-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--gold-primary);
+    }
+    .interior-corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+    .interior-corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+    .interior-corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+    .interior-corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+
+    .interior-eyebrow {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: var(--gold-primary);
+      margin-bottom: 8px;
+    }
+
+    .interior-names {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: #FFF;
+      letter-spacing: 0.08em;
+      margin: 12px 0;
+    }
+
+    .interior-names span {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      color: var(--gold-light);
+      margin: 0 6px;
+    }
+
+    .interior-quote {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #D6D2C4;
+      line-height: 1.6;
+      max-width: 380px;
+      margin: 16px 0;
+    }
+
+    .interior-details {
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 14px 0;
+      width: 100%;
+      margin: 16px 0;
+    }
+
+    .interior-date {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+      margin-bottom: 4px;
+    }
+
+    .interior-venue {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .btn-enter-site {
+      background: var(--gold-gradient);
+      color: #0A0A0A;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-enter-site:hover {
+      transform: scale(1.04);
+      box-shadow: 0 6px 26px rgba(212, 175, 55, 0.6);
+    }
+
+    /* Diptych Double Doors (Left & Right Leaves) */
+    .folio-door {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background: linear-gradient(135deg, #181A1E 0%, #0E1013 100%);
+      z-index: 10;
+      transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+    }
+
+    .folio-door::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .folio-door.left {
+      left: 0;
+      transform-origin: left center;
+      border-right: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .folio-door.right {
+      right: 0;
+      transform-origin: right center;
+      border-left: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .folio-doors-opened .folio-door.left {
+      transform: rotateY(-110deg);
+    }
+
+    .folio-doors-opened .folio-door.right {
+      transform: rotateY(110deg);
+    }
+
+    /* Folio Cover Monogram across doors */
+    .door-monogram-half {
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: rgba(212, 175, 55, 0.4);
+      letter-spacing: 0.1em;
+    }
+
+    .folio-door.left .door-monogram-half {
+      right: 4px;
+      text-align: right;
+    }
+
+    .folio-door.right .door-monogram-half {
+      left: 4px;
+      text-align: left;
+    }
+
+    /* Silk Ribbon & Bow Overlay */
+    .folio-ribbon-system {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .folio-ribbon-horiz {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 38px;
+      transform: translateY(-50%);
+      background: linear-gradient(180deg, #F3E5AB 0%, #D4AF37 35%, #8F7220 70%, #D4AF37 100%);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 8px rgba(212, 175, 55, 0.4);
+    }
+
+    .folio-ribbon-horiz::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 6px);
+    }
+
+    /* Bow Knot in the Center */
+    .folio-bow-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 140px;
+      height: 140px;
+      pointer-events: auto;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bow-knot {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FFF6D6 0%, #D4AF37 45%, #7C5E16 100%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 12px rgba(212, 175, 55, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #3F3006;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    }
+
+    .folio-bow-container:hover .bow-knot {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+    }
+
+    /* Bow Loops */
+    .bow-loop {
+      position: absolute;
+      width: 54px;
+      height: 38px;
+      border-radius: 50% 50% 40% 40%;
+      background: linear-gradient(135deg, #F9F1D8 0%, #D4AF37 55%, #85691C 100%);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+      z-index: 3;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    }
+
+    .bow-loop.left {
+      left: 18px;
+      transform: rotate(-30deg);
+      transform-origin: right center;
+    }
+
+    .bow-loop.right {
+      right: 18px;
+      transform: rotate(30deg);
+      transform-origin: left center;
+    }
+
+    /* Bow Tails */
+    .bow-tail {
+      position: absolute;
+      top: 60px;
+      width: 28px;
+      height: 60px;
+      background: linear-gradient(180deg, #D4AF37 0%, #85691C 100%);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+      z-index: 2;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .bow-tail.left {
+      left: 42px;
+      transform: rotate(18deg);
+      transform-origin: top center;
+    }
+
+    .bow-tail.right {
+      right: 42px;
+      transform: rotate(-18deg);
+      transform-origin: top center;
+    }
+
+    /* Untying animation state */
+    .ribbon-untying .bow-loop.left {
+      transform: translateX(-60px) rotate(-90deg) scale(0.4);
+      opacity: 0;
+    }
+
+    .ribbon-untying .bow-loop.right {
+      transform: translateX(60px) rotate(90deg) scale(0.4);
+      opacity: 0;
+    }
+
+    .ribbon-untying .bow-tail.left {
+      transform: translateY(60px) rotate(45deg) scale(0.4);
+      opacity: 0;
+    }
+
+    .ribbon-untying .bow-tail.right {
+      transform: translateY(60px) rotate(-45deg) scale(0.4);
+      opacity: 0;
+    }
+
+    .ribbon-untying .bow-knot {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    .ribbon-untying .folio-ribbon-horiz {
+      opacity: 0;
+      transform: translateY(-50%) scaleX(0.2);
+      transition: all 0.7s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+    }
+
+    .bow-hint-prompt {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(14, 16, 19, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 8px 18px;
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 25;
+      animation: pulseHint 2s infinite alternate ease-in-out;
+      white-space: nowrap;
+    }
+
+    @keyframes pulseHint {
+      0% { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+    }
+
+    /* ==========================================================================
+       CONCEPT 2: ACCRA DESTINATION BOARDING FOLIO & GOLD EMBOSSED STAMP
+       ========================================================================== */
+    .passport-wallet {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+
+    .wallet-cover {
+      background: #101215;
+      border-radius: 12px;
+      padding: 30px 24px 34px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wallet-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .wallet-header {
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .wallet-crest {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--gold-primary);
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .wallet-header h3 {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      letter-spacing: 0.22em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .wallet-header p {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Boarding Pass Ticket */
+    .boarding-pass-card {
+      background: #FFFFFF;
+      color: #1A1A1A;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    }
+
+    .boarding-pass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.7);
+    }
+
+    .pass-header {
+      background: #0E1013;
+      color: #FFF;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--gold-primary);
+    }
+
+    .pass-airline {
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+    }
+
+    .pass-class {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(212, 175, 55, 0.2);
+      color: var(--gold-light);
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .pass-flight-path {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 24px 16px;
+    }
+
+    .flight-node {
+      text-align: left;
+    }
+
+    .flight-node.dest {
+      text-align: right;
+    }
+
+    .flight-code {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #111;
+      line-height: 1;
+    }
+
+    .flight-city {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .flight-plane-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      margin: 0 20px;
+    }
+
+    .plane-line {
+      width: 100%;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, #D4AF37, #D4AF37 6px, transparent 6px, transparent 12px);
+      position: relative;
+    }
+
+    .flight-duration {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    /* Pass Details Grid */
+    .pass-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 12px 24px 20px;
+      border-bottom: 2px dashed #E0DCCF;
+      position: relative;
+    }
+
+    .pass-grid::before, .pass-grid::after {
+      content: '';
+      position: absolute;
+      bottom: -11px;
+      width: 22px;
+      height: 22px;
+      background: #101215;
+      border-radius: 50%;
+    }
+    .pass-grid::before { left: -11px; }
+    .pass-grid::after { right: -11px; }
+
+    .pass-field-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #888;
+      margin-bottom: 2px;
+    }
+
+    .pass-field-val {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* Pass Footer & Barcode */
+    .pass-footer {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FAF8F5;
+      position: relative;
+    }
+
+    .barcode-lines {
+      height: 38px;
+      width: 180px;
+      background: repeating-linear-gradient(90deg, 
+        #111, #111 2px, 
+        transparent 2px, transparent 4px, 
+        #111 4px, #111 7px,
+        transparent 7px, transparent 9px,
+        #111 9px, #111 10px,
+        transparent 10px, transparent 13px,
+        #111 13px, #111 16px
+      );
+    }
+
+    /* Ghanaian Gold Arrival Stamp */
+    .accra-arrival-stamp {
+      position: absolute;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-12deg);
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      border: 3px double #C49226;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #9E7416;
+      padding: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .accra-arrival-stamp.stamped {
+      opacity: 0.95;
+      transform: translateY(-50%) rotate(-12deg) scale(1);
+    }
+
+    .stamp-title {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .stamp-date {
+      font-family: var(--font-serif);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #835E0F;
+      margin: 2px 0;
+    }
+
+    .stamp-entry {
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       CONCEPT 3: CARTIER-STYLE GILDED MONOGRAM TURN-CLASP JEWEL BOX
+       ========================================================================== */
+    .jewel-box-wrapper {
+      position: relative;
+      width: 100%;
+      perspective: 1200px;
+    }
+
+    .jewel-box {
+      width: 100%;
+      min-height: 480px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 50% 30%, #1A1C20 0%, #0D0E10 100%);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.8);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    /* Velvet Cushion Invitation Surface */
+    .jewel-interior {
+      position: absolute;
+      inset: 16px;
+      border-radius: 8px;
+      background: radial-gradient(circle at 50% 40%, #17181D 0%, #0B0C0E 100%);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 34px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.92);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+      z-index: 1;
+    }
+
+    .box-unlocked .jewel-interior {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Outer Lid with Turn Clasp */
+    .jewel-box-lid {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1C1E23 0%, #0F1014 100%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.8s ease;
+      transform-origin: top center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .jewel-box-lid::before {
+      content: '';
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 6px;
+    }
+
+    .box-unlocked .jewel-box-lid {
+      transform: rotateX(-100deg);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .lid-header {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      letter-spacing: 0.18em;
+      color: var(--gold-light);
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    /* Turn Clasp Mechanism */
+    .turn-clasp-mechanism {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .clasp-base-plate {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #252830 0%, #121316 100%);
+      border: 2px solid var(--gold-primary);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), inset 0 2px 6px rgba(255, 255, 255, 0.2);
+    }
+
+    .clasp-rotating-dial {
+      position: relative;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FDF3DB 0%, #D4AF37 50%, #785A14 100%);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #5A430B;
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 2;
+    }
+
+    .clasp-rotating-dial.unlocked {
+      transform: rotate(90deg);
+      box-shadow: 0 0 35px rgba(212, 175, 55, 0.9);
+    }
+
+    .clasp-dial-monogram {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #382B08;
+      letter-spacing: 0.06em;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    }
+
+    .clasp-bars {
+      position: absolute;
+      top: 50%;
+      left: -16px;
+      right: -16px;
+      height: 12px;
+      transform: translateY(-50%);
+      background: var(--gold-gradient);
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      z-index: 1;
+      transition: width 0.4s ease, opacity 0.4s ease;
+    }
+
+    .clasp-hint {
+      margin-top: 32px;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+
+    /* ==========================================================================
+       CONCEPT 4: THE CINEMATIC APERTURE / LENS BLOOM REVEAL
+       ========================================================================== */
+    .lens-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      border-radius: 12px;
+      background: #000;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Underneath Revealed Photo & Invitation */
+    .lens-revealed-backdrop {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(180deg, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.85) 100%), url('assets/images/IMG_0927.webp');
+      background-size: cover;
+      background-position: center 25%;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .lens-invite-overlay {
+      background: rgba(14, 16, 20, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 24px 28px;
+      border-radius: 10px;
+      max-width: 420px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Shutter Aperture Iris Mechanism */
+    .iris-cover {
+      position: absolute;
+      inset: 0;
+      background: #08090A;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease, transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .lens-opened .iris-cover {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.15);
+    }
+
+    .iris-housing {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 3px solid var(--gold-primary);
+      box-shadow: 0 0 50px rgba(212, 175, 55, 0.25), inset 0 0 40px rgba(0, 0, 0, 0.9);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .iris-housing:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 60px rgba(212, 175, 55, 0.5);
+    }
+
+    .aperture-svg {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .iris-housing:hover .aperture-svg {
+      transform: rotate(25deg);
+    }
+
+    .lens-opened .aperture-svg {
+      transform: rotate(90deg) scale(2);
+      opacity: 0;
+    }
+
+    .iris-center-dot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 16px var(--gold-primary);
+      animation: pulseDot 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      100% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .iris-prompt {
+      font-size: 0.76rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-top: 8px;
+    }
+
+    .iris-subprompt {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Comparison Notes Drawer */
+    .sandbox-notes {
+      background: #0E1013;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px;
+    }
+
+    .notes-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .note-card {
+      background: #14171C;
+      border-radius: 8px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .note-card.highlight {
+      border-color: rgba(212, 175, 55, 0.4);
+      background: rgba(212, 175, 55, 0.04);
+    }
+
+    .note-card h4 {
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .note-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sandbox-header {
+        padding: 12px 16px;
+      }
+      .concept-tabs {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+      }
+      .concept-tab {
+        font-size: 0.72rem;
+        padding: 6px 12px;
+        white-space: nowrap;
+      }
+      .concept-info {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 16px;
+      }
+      .sandbox-stage {
+        padding: 24px 12px;
+      }
+      .flight-code {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sandbox Control Bar -->
+  <header class="sandbox-header">
+    <div class="sandbox-brand">
+      <h1>Kevin & Shannel</h1>
+      <span>Invitation Sandbox</span>
+    </div>
+
+    <!-- Switcher Tabs -->
+    <nav class="concept-tabs" aria-label="Invitation Concepts">
+      <button class="concept-tab active" data-concept="folio">
+        <span>1. Silk Ribbon Folio</span>
+      </button>
+      <button class="concept-tab" data-concept="boarding">
+        <span>2. Accra Travel Pass</span>
+      </button>
+      <button class="concept-tab" data-concept="jewel">
+        <span>3. Cartier Turn-Clasp</span>
+      </button>
+      <button class="concept-tab" data-concept="lens">
+        <span>4. Cinematic Lens</span>
+      </button>
+    </nav>
+
+    <div class="sandbox-actions">
+      <button class="btn-replay" id="replayBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        Replay Animation
+      </button>
+      <a href="index.html" class="btn-replay" style="border-color: rgba(255,255,255,0.2); color: #FFF;">
+        View Main Site &rarr;
+      </a>
+    </div>
+  </header>
+
+  <!-- Explanatory Info Strip -->
+  <div class="concept-info">
+    <div class="concept-title-desc">
+      <span class="concept-tag" id="infoTag">Couture Ritual</span>
+      <p class="concept-desc" id="infoDesc">
+        Inspired by high-fashion invitation folios (Cartier / Chanel). Untying a weighted liquid-gold silk satin ribbon swings open double obsidian doors in 3D perspective to reveal the formal invitation card.
+      </p>
+    </div>
+  </div>
+
+  <!-- Interactive Stage -->
+  <main class="sandbox-stage">
+    <!-- Ambient Golden Stardust Canvas -->
+    <canvas id="sandboxCanvas" class="stage-particle-canvas"></canvas>
+
+    <!-- ====================================================================
+         CONCEPT 1: HAUTE COUTURE DIPTYCH FOLIO (SILK RIBBON BOW)
+         ==================================================================== -->
+    <section class="concept-view active" id="view-folio">
+      <div class="folio-wrapper">
+        <div class="folio-box" id="folioBox">
+          
+          <!-- Interior Formal Invitation Card -->
+          <div class="folio-card-interior">
+            <div class="interior-border">
+              <div class="interior-corner tl"></div>
+              <div class="interior-corner tr"></div>
+              <div class="interior-corner bl"></div>
+              <div class="interior-corner br"></div>
+            </div>
+
+            <div>
+              <div class="interior-eyebrow">The Holy Matrimony &amp; Celebration of</div>
+              <h2 class="interior-names">Kevin <span>&amp;</span> Shannel</h2>
+            </div>
+
+            <p class="interior-quote">
+              “I have found the one whom my soul loves. Hand in hand, grounded in faith, we step forward into our forever.”
+            </p>
+
+            <div class="interior-details">
+              <div class="interior-date">Saturday, 9th January 2027</div>
+              <div class="interior-venue">Labadi Beach Hotel • Accra, Ghana</div>
+            </div>
+
+            <button class="btn-enter-site" onclick="alert('In production, this smoothly scrolls into the live wedding site!')">
+              Enter Celebration
+            </button>
+          </div>
+
+          <!-- Diptych Left & Right Doors -->
+          <div class="folio-door left">
+            <div class="door-monogram-half">K</div>
+          </div>
+          <div class="folio-door right">
+            <div class="door-monogram-half">&amp; S</div>
+          </div>
+
+          <!-- Silk Ribbon & Center Bow -->
+          <div class="folio-ribbon-system" id="ribbonSystem">
+            <div class="folio-ribbon-horiz"></div>
+
+            <div class="folio-bow-container" id="bowContainer" title="Click to untie ribbon">
+              <div class="bow-loop left"></div>
+              <div class="bow-loop right"></div>
+              <div class="bow-tail left"></div>
+              <div class="bow-tail right"></div>
+              <div class="bow-knot">K&amp;S</div>
+            </div>
+
+            <div class="bow-hint-prompt">Tap Bow to Untie Ribbon</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CONCEPT 2: ACCRA DESTINATION FIRST-CLASS BOARDING FOLIO
+         ==================================================================== -->
+    <section class="concept-view" id="view-boarding">
+      <div class="passport-wallet">
+        <div class="wallet-cover">
+          <div class="wallet-header">
+            <div class="wallet-crest">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold-primary)" stroke-width="1.6">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <h3>Republic of Ghana</h3>
+            <p>Official Wedding Invitation Pass • 2027</p>
+          </div>
+
+          <!-- Interactive Boarding Pass Card -->
+          <div class="boarding-pass-card" id="boardingPass" title="Click to stamp entry pass">
+            <div class="pass-header">
+              <span class="pass-airline">FOREVER AIRWAYS • KS 0901</span>
+              <span class="pass-class">Black-Tie Class</span>
+            </div>
+
+            <div class="pass-flight-path">
+              <div class="flight-node">
+                <div class="flight-code">LHR</div>
+                <div class="flight-city">London, UK</div>
+              </div>
+
+              <div class="flight-plane-divider">
+                <div class="plane-line"></div>
+                <span class="flight-duration">Destination Forever</span>
+              </div>
+
+              <div class="flight-node dest">
+                <div class="flight-code">ACC</div>
+                <div class="flight-city">Accra, Ghana</div>
+              </div>
+            </div>
+
+            <div class="pass-grid">
+              <div>
+                <div class="pass-field-label">Passenger</div>
+                <div class="pass-field-val">Honored Guest</div>
+              </div>
+              <div>
+                <div class="pass-field-label">Date</div>
+                <div class="pass-field-val">09 JAN 2027</div>
+              </div>
+              <div>
+                <div class="pass-field-label">Seat</div>
+                <div class="pass-field-val">01A &amp; 01B</div>
+              </div>
+              <div>
+                <div class="pass-field-label">Venue</div>
+                <div class="pass-field-val">Labadi Beach Hotel</div>
+              </div>
+              <div>
+                <div class="pass-field-label">Time</div>
+                <div class="pass-field-val">1:00 PM GMT</div>
+              </div>
+              <div>
+                <div class="pass-field-label">Dress Code</div>
+                <div class="pass-field-val">Black-Tie Formal</div>
+              </div>
+            </div>
+
+            <div class="pass-footer">
+              <div class="barcode-lines"></div>
+
+              <!-- Animated Gold Arrival Stamp -->
+              <div class="accra-arrival-stamp" id="accraStamp">
+                <span class="stamp-title">Accra Border</span>
+                <span class="stamp-date">09.01.2027</span>
+                <span class="stamp-entry">Admitted</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 16px;">
+            <span style="font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light);">
+              Tap Boarding Pass to Stamp &amp; Confirm
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CONCEPT 3: CARTIER-STYLE GILDED MONOGRAM TURN-CLASP JEWEL BOX
+         ==================================================================== -->
+    <section class="concept-view" id="view-jewel">
+      <div class="jewel-box-wrapper">
+        <div class="jewel-box" id="jewelBox">
+          
+          <!-- Interior Velvet Cushion Content -->
+          <div class="jewel-interior">
+            <div style="width: 100%;">
+              <div class="interior-eyebrow">A Formal Request for the Presence of</div>
+              <h2 class="interior-names" style="font-size: 1.6rem; margin: 8px 0;">Kevin <span>&amp;</span> Shannel</h2>
+              <div style="font-size: 0.74rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light);">
+                In Celebration of Holy Matrimony
+              </div>
+            </div>
+
+            <div style="width: 100%; border-top: 1px solid rgba(212, 175, 55, 0.3); border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding: 14px 0; margin: 18px 0;">
+              <p style="font-size: 1.1rem; font-family: var(--font-serif); color: #FFF; letter-spacing: 0.12em;">
+                Saturday, 9th January 2027
+              </p>
+              <p style="font-size: 0.76rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px;">
+                Labadi Beach Hotel • Accra, Ghana
+              </p>
+            </div>
+
+            <button class="btn-enter-site" onclick="alert('In production, this smoothly scrolls into the live wedding site!')">
+              Enter The Celebration
+            </button>
+          </div>
+
+          <!-- Exterior Lid with Turn Clasp -->
+          <div class="jewel-box-lid" id="boxLid">
+            <h3 class="lid-header">The White Wedding</h3>
+
+            <!-- Mechanical Rotating Turn Clasp -->
+            <div class="turn-clasp-mechanism" id="claspBtn" title="Click to rotate clasp and unlock">
+              <div class="clasp-base-plate"></div>
+              <div class="clasp-bars"></div>
+              <div class="clasp-rotating-dial" id="claspDial">
+                <span class="clasp-dial-monogram">K&amp;S</span>
+              </div>
+            </div>
+
+            <div class="clasp-hint">Turn Monogram Clasp to Unlock</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         CONCEPT 4: THE CINEMATIC APERTURE / LENS BLOOM REVEAL
+         ==================================================================== -->
+    <section class="concept-view" id="view-lens">
+      <div class="lens-wrapper" id="lensBox">
+        
+        <!-- Background Editorial Photo & Invitation Card -->
+        <div class="lens-revealed-backdrop">
+          <div class="lens-invite-overlay">
+            <div class="interior-eyebrow">You are cordially invited to celebrate</div>
+            <h2 class="interior-names" style="font-size: 1.6rem; margin: 6px 0;">Kevin <span>&amp;</span> Shannel</h2>
+            <p style="font-size: 0.85rem; color: #E0DCDB; margin: 10px 0; line-height: 1.5;">
+              Saturday, 9th January 2027 • Labadi Beach Hotel, Accra
+            </p>
+            <button class="btn-enter-site" style="margin-top: 8px;" onclick="alert('In production, this smoothly scrolls into the live wedding site!')">
+              Explore Wedding Site
+            </button>
+          </div>
+        </div>
+
+        <!-- Shutter / Iris Camera Shutter Cover -->
+        <div class="iris-cover" id="irisCover">
+          <div class="iris-housing" id="irisBtn" title="Click to open camera lens">
+            <svg class="aperture-svg" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(212, 175, 55, 0.4)" stroke-width="1.5" />
+              <!-- 8 Shutter Blades -->
+              <path d="M 50 4 A 46 46 0 0 1 82 18 L 50 50 Z" fill="#14171B" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+              <path d="M 82 18 A 46 46 0 0 1 96 50 L 50 50 Z" fill="#181B20" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+              <path d="M 96 50 A 46 46 0 0 1 82 82 L 50 50 Z" fill="#121417" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+              <path d="M 82 82 A 46 46 0 0 1 50 96 L 50 50 Z" fill="#16191E" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+              <path d="M 50 96 A 46 46 0 0 1 18 82 L 50 50 Z" fill="#131518" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+              <path d="M 18 82 A 46 46 0 0 1 4 50 L 50 50 Z" fill="#171A1F" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+              <path d="M 4 50 A 46 46 0 0 1 18 18 L 50 50 Z" fill="#111316" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+              <path d="M 18 18 A 46 46 0 0 1 50 4 L 50 50 Z" fill="#15181D" stroke="#D4AF37" stroke-width="0.8" opacity="0.9" />
+            </svg>
+            <div class="iris-center-dot"></div>
+          </div>
+
+          <div class="iris-prompt">Touch to Focus</div>
+          <div class="iris-subprompt">Experience The Reveal</div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Comparison Guide for Couple -->
+  <footer class="sandbox-notes">
+    <div class="notes-grid">
+      <div class="note-card highlight">
+        <h4>1. Couture Diptych Silk Folio</h4>
+        <p><strong>Metaphor:</strong> High-jewelry gift box or bespoke couture stationery.<br />
+        <strong>Tactile Action:</strong> Untying the satin bow physically opens twin doors in 3D perspective.<br />
+        <strong>Why It's Distinct:</strong> Zero envelopes, zero wax seals—completely unique from your friends' site.</p>
+      </div>
+
+      <div class="note-card">
+        <h4>2. Accra Destination Boarding Pass</h4>
+        <p><strong>Metaphor:</strong> First-class diplomatic passport wallet.<br />
+        <strong>Tactile Action:</strong> Pulling out the boarding ticket stamps an authentic Ghanaian gold border seal.<br />
+        <strong>Why It's Distinct:</strong> Celebrates the international journey to Accra, Ghana.</p>
+      </div>
+
+      <div class="note-card">
+        <h4>3. Cartier Gilded Turn-Clasp</h4>
+        <p><strong>Metaphor:</strong> Private vault / luxury watchmaker box.<br />
+        <strong>Tactile Action:</strong> A satisfying 90-degree mechanical twist of the K&amp;S dial lifts the velvet-lined lid.<br />
+        <strong>Why It's Distinct:</strong> High-end tactile precision and exclusive black-tie feeling.</p>
+      </div>
+
+      <div class="note-card">
+        <h4>4. Cinematic Lens Shutter</h4>
+        <p><strong>Metaphor:</strong> Editorial fashion photography &amp; cinema.<br />
+        <strong>Tactile Action:</strong> Clicking the golden aperture ring blooms light across the rooftop sunset portrait.<br />
+        <strong>Why It's Distinct:</strong> Focuses directly on Kevin &amp; Shannel's photography.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Concept Switching
+      const tabs = document.querySelectorAll(".concept-tab");
+      const views = document.querySelectorAll(".concept-view");
+      const infoTag = document.getElementById("infoTag");
+      const infoDesc = document.getElementById("infoDesc");
+      const replayBtn = document.getElementById("replayBtn");
+
+      const infoData = {
+        folio: {
+          tag: "Couture Ritual",
+          desc: "Inspired by high-fashion invitation folios (Cartier / Chanel). Untying a weighted liquid-gold silk satin ribbon swings open double obsidian doors in 3D perspective to reveal the formal invitation card."
+        },
+        boarding: {
+          tag: "Destination Travel",
+          desc: "A bespoke travel wallet tailored for an Accra destination wedding. Tapping the First-Class Boarding Pass stamps an authentic Ghanaian border control gold seal and confirms flight KS 0901 to Accra."
+        },
+        jewel: {
+          tag: "Mechanical Luxury",
+          desc: "Inspired by luxury jewel boxes (Cartier / Patek Philippe). Turning the 3D gilded monogram turn-clasp 90 degrees unlocks the box lid, smoothly revealing the ceremony details on a velvet cushion."
+        },
+        lens: {
+          tag: "Editorial Cinema",
+          desc: "Editorial camera aperture reveal. Clicking the golden shutter ring triggers a lens focus bloom, dissolving moody noir darkness into Kevin & Shannel's high-definition London rooftop portrait."
+        }
+      };
+
+      let currentConcept = "folio";
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          currentConcept = tab.getAttribute("data-concept");
+          views.forEach((view) => {
+            view.classList.toggle("active", view.id === `view-${currentConcept}`);
+          });
+
+          if (infoData[currentConcept]) {
+            infoTag.textContent = infoData[currentConcept].tag;
+            infoDesc.textContent = infoData[currentConcept].desc;
+          }
+        });
+      });
+
+      // Concept 1: Ribbon Untying Logic
+      const bowContainer = document.getElementById("bowContainer");
+      const ribbonSystem = document.getElementById("ribbonSystem");
+      const folioBox = document.getElementById("folioBox");
+
+      function triggerFolioOpen() {
+        ribbonSystem.classList.add("ribbon-untying");
+        setTimeout(() => {
+          folioBox.classList.add("folio-doors-opened");
+        }, 500);
+      }
+
+      function resetFolio() {
+        folioBox.classList.remove("folio-doors-opened");
+        setTimeout(() => {
+          ribbonSystem.classList.remove("ribbon-untying");
+        }, 400);
+      }
+
+      if (bowContainer) {
+        bowContainer.addEventListener("click", triggerFolioOpen);
+      }
+
+      // Concept 2: Boarding Pass Stamp Logic
+      const boardingPass = document.getElementById("boardingPass");
+      const accraStamp = document.getElementById("accraStamp");
+
+      function triggerBoardingStamp() {
+        accraStamp.classList.add("stamped");
+      }
+
+      function resetBoarding() {
+        accraStamp.classList.remove("stamped");
+      }
+
+      if (boardingPass) {
+        boardingPass.addEventListener("click", triggerBoardingStamp);
+      }
+
+      // Concept 3: Turn Clasp Logic
+      const claspBtn = document.getElementById("claspBtn");
+      const claspDial = document.getElementById("claspDial");
+      const jewelBox = document.getElementById("jewelBox");
+
+      function triggerClaspOpen() {
+        claspDial.classList.add("unlocked");
+        setTimeout(() => {
+          jewelBox.classList.add("box-unlocked");
+        }, 500);
+      }
+
+      function resetClasp() {
+        jewelBox.classList.remove("box-unlocked");
+        setTimeout(() => {
+          claspDial.classList.remove("unlocked");
+        }, 400);
+      }
+
+      if (claspBtn) {
+        claspBtn.addEventListener("click", triggerClaspOpen);
+      }
+
+      // Concept 4: Lens Aperture Logic
+      const irisBtn = document.getElementById("irisBtn");
+      const lensBox = document.getElementById("lensBox");
+
+      function triggerLensOpen() {
+        lensBox.classList.add("lens-opened");
+      }
+
+      function resetLens() {
+        lensBox.classList.remove("lens-opened");
+      }
+
+      if (irisBtn) {
+        irisBtn.addEventListener("click", triggerLensOpen);
+      }
+
+      // Master Replay Button
+      if (replayBtn) {
+        replayBtn.addEventListener("click", () => {
+          if (currentConcept === "folio") {
+            resetFolio();
+            setTimeout(triggerFolioOpen, 600);
+          } else if (currentConcept === "boarding") {
+            resetBoarding();
+            setTimeout(triggerBoardingStamp, 500);
+          } else if (currentConcept === "jewel") {
+            resetClasp();
+            setTimeout(triggerClaspOpen, 600);
+          } else if (currentConcept === "lens") {
+            resetLens();
+            setTimeout(triggerLensOpen, 600);
+          }
+        });
+      }
+
+      // Ambient Background Particles
+      const canvas = document.getElementById("sandboxCanvas");
+      if (canvas) {
+        const ctx = canvas.getContext("2d");
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+
+        window.addEventListener("resize", () => {
+          w = canvas.width = window.innerWidth;
+          h = canvas.height = window.innerHeight;
+        });
+
+        const pts = Array.from({ length: 24 }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 0.6 + Math.random() * 1.2,
+          vy: 0.2 + Math.random() * 0.4,
+          a: 0.1 + Math.random() * 0.4
+        }));
+
+        function loop() {
+          ctx.clearRect(0, 0, w, h);
+          for (let p of pts) {
+            p.y -= p.vy;
+            if (p.y < 0) p.y = h;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(212, 175, 55, ${p.a})`;
+            ctx.fill();
+          }
+          requestAnimationFrame(loop);
+        }
+        loop();
+      }
+    });
+  </script>
+</body>
+</html>

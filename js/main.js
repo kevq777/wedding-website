@@ -1,0 +1,795 @@
+/**
+ * Kevin & Shannel — Wedding Celebration
+ * Saturday, 9th January 2027 | Labadi Beach Hotel, Accra, Ghana
+ * Master JavaScript Logic
+ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  /* ==========================================================================
+     CONFIGURATION SETTINGS (Easily updated by the couple)
+     ========================================================================== */
+  const CONFIG = {
+    // Guest Access Password
+    password: "FOREVER2027",
+    
+    // Wedding Date & Time (January 9, 2027, 1:00 PM GMT Accra)
+    weddingDate: new Date("January 9, 2027 13:00:00 GMT").getTime(),
+    
+    // WithJoy.com URLs
+    joyRegistryUrl: "https://withjoy.com/kevin-and-shannel/registry",
+    joySiteUrl: "https://withjoy.com/kevin-and-shannel",
+    
+    // Event Details for Calendar Invites
+    event: {
+      title: "Kevin & Shannel's Wedding Celebration",
+      description: "Join us in celebrating the White Wedding of Kevin & Shannel at the Labadi Beach Hotel in Accra, Ghana.",
+      location: "Labadi Beach Hotel, No 1 La Bypass, Accra, Ghana",
+      startDate: "20270109T130000Z",
+      endDate: "20270109T230000Z"
+    }
+  };
+
+  /* ==========================================================================
+     1. INTEGRATED CARTIER MONOGRAM VAULT GATE & INVITATION OPENING
+     ========================================================================== */
+  const gate = document.getElementById("passwordGate");
+  const gateForm = document.getElementById("gateForm");
+  const gatePassword = document.getElementById("gatePassword");
+  const gateError = document.getElementById("gateError");
+  const cartierVault = document.getElementById("cartierVault");
+  const vaultLid = document.getElementById("vaultLid");
+  const vaultInterior = document.getElementById("vaultInterior");
+  const vaultClaspDial = document.getElementById("vaultClaspDial");
+  const vaultClaspBars = document.getElementById("vaultClaspBars");
+  const vaultEnterBtn = document.getElementById("vaultEnterBtn");
+  const vaultClaspBtn = document.getElementById("vaultClaspBtn");
+
+  // Check if session is already authenticated
+  if (sessionStorage.getItem("wedding_unlocked") === "true") {
+    gate.classList.add("unlocked");
+  }
+
+  function triggerVaultUnlock() {
+    // 1. Rotate Cartier Clasp 90deg with gold glow & retract latch bars
+    if (vaultClaspDial) vaultClaspDial.classList.add("unlocked");
+    if (vaultClaspBars) vaultClaspBars.classList.add("retracted");
+    if (gateError) gateError.style.display = "none";
+
+    // 2. Open Vault Lid in 3D & reveal the formal invitation presentation
+    setTimeout(() => {
+      if (vaultLid) {
+        vaultLid.classList.add("opened");
+        setTimeout(() => {
+          if (vaultLid.classList.contains("opened")) {
+            vaultLid.style.display = "none";
+          }
+        }, 800);
+      }
+      if (vaultInterior) vaultInterior.classList.add("revealed");
+    }, 450);
+
+    // 3. Mark session unlocked in sessionStorage
+    sessionStorage.setItem("wedding_unlocked", "true");
+  }
+
+  function dismissVaultToSite() {
+    gate.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease";
+    gate.classList.add("unlocked");
+  }
+
+  if (gateForm) {
+    gateForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const entered = gatePassword.value.trim();
+      if (entered.toUpperCase() === CONFIG.password.toUpperCase()) {
+        triggerVaultUnlock();
+      } else {
+        if (cartierVault) {
+          cartierVault.classList.add("lock-error-shake");
+          setTimeout(() => cartierVault.classList.remove("lock-error-shake"), 500);
+        }
+        if (gateError) gateError.style.display = "block";
+        gatePassword.value = "";
+        gatePassword.focus();
+      }
+    });
+  }
+
+  if (vaultClaspBtn) {
+    vaultClaspBtn.addEventListener("click", () => {
+      const entered = gatePassword.value.trim();
+      if (entered.toUpperCase() === CONFIG.password.toUpperCase()) {
+        triggerVaultUnlock();
+      } else {
+        gatePassword.focus();
+      }
+    });
+  }
+
+  if (vaultEnterBtn) {
+    vaultEnterBtn.addEventListener("click", dismissVaultToSite);
+  }
+
+  // Global helpers to replay or view the Cartier invitation anytime
+  window.openCartierInvitation = function () {
+    gate.classList.remove("unlocked");
+    if (cartierVault) cartierVault.classList.remove("lock-error-shake");
+    if (vaultLid) {
+      vaultLid.style.display = "";
+      vaultLid.classList.remove("opened");
+    }
+    if (vaultInterior) vaultInterior.classList.remove("revealed");
+    if (vaultClaspDial) vaultClaspDial.classList.remove("unlocked");
+    if (vaultClaspBars) vaultClaspBars.classList.remove("retracted");
+    if (gatePassword) gatePassword.value = "";
+  };
+
+  window.viewOpenedInvitation = function () {
+    gate.classList.remove("unlocked");
+    if (vaultLid) {
+      vaultLid.classList.add("opened");
+      vaultLid.style.display = "none";
+    }
+    if (vaultInterior) vaultInterior.classList.add("revealed");
+    if (vaultClaspDial) vaultClaspDial.classList.add("unlocked");
+    if (vaultClaspBars) vaultClaspBars.classList.add("retracted");
+  };
+
+  /* ==========================================================================
+     2. NAVIGATION & MOBILE DRAWER
+     ========================================================================== */
+  const nav = document.querySelector("nav");
+  const hamburger = document.getElementById("navHamburger");
+  const mobileDrawer = document.getElementById("mobileDrawer");
+  const mobileBackdrop = document.getElementById("mobileBackdrop");
+  const navLinks = document.querySelectorAll(".nav-links a, .mobile-nav-links a");
+
+  // Dynamic Scroll Glassmorphism
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      nav.classList.add("scrolled");
+    } else {
+      nav.classList.remove("scrolled");
+    }
+  });
+
+  // Mobile Drawer Toggle
+  function toggleMobileMenu(open) {
+    const isOpen = open !== undefined ? open : !mobileDrawer.classList.contains("open");
+    if (isOpen) {
+      mobileDrawer.classList.add("open");
+      mobileBackdrop.classList.add("open");
+      hamburger.classList.add("active");
+      document.body.style.overflow = "hidden";
+    } else {
+      mobileDrawer.classList.remove("open");
+      mobileBackdrop.classList.remove("open");
+      hamburger.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  }
+
+  if (hamburger) {
+    hamburger.addEventListener("click", () => toggleMobileMenu());
+  }
+  if (mobileBackdrop) {
+    mobileBackdrop.addEventListener("click", () => toggleMobileMenu(false));
+  }
+
+  // Close mobile drawer upon link click
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      toggleMobileMenu(false);
+    });
+  });
+
+  // Active section indicator on scroll
+  const sections = document.querySelectorAll("section[id]");
+  const observerNav = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("id");
+          document.querySelectorAll(".nav-links a").forEach((a) => {
+            a.classList.toggle("active", a.getAttribute("href") === `#${id}`);
+          });
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+  sections.forEach((sec) => observerNav.observe(sec));
+
+  /* ==========================================================================
+     3. LIVE COUNTDOWN TIMER
+     ========================================================================== */
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minsEl = document.getElementById("minutes");
+  const secsEl = document.getElementById("seconds");
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = CONFIG.weddingDate - now;
+
+    if (distance > 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (daysEl) daysEl.innerText = String(days).padStart(2, "0");
+      if (hoursEl) hoursEl.innerText = String(hours).padStart(2, "0");
+      if (minsEl) minsEl.innerText = String(minutes).padStart(2, "0");
+      if (secsEl) secsEl.innerText = String(seconds).padStart(2, "0");
+    } else {
+      const timerContainer = document.querySelector(".timer-container");
+      if (timerContainer) {
+        timerContainer.innerHTML = `<div class="badge-gold" style="font-size:1.1rem; padding: 12px 24px;">Today We Celebrate!</div>`;
+      }
+    }
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  /* ==========================================================================
+     4. SAVE TO CALENDAR (Google Calendar & .ICS Download)
+     ========================================================================== */
+  const calendarDropdown = document.getElementById("calendarDropdown");
+  const calendarToggleBtn = document.getElementById("calendarToggleBtn");
+  const googleCalLink = document.getElementById("googleCalLink");
+  const appleCalLink = document.getElementById("appleCalLink");
+
+  if (calendarToggleBtn && calendarDropdown) {
+    calendarToggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      calendarDropdown.classList.toggle("open");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!calendarDropdown.contains(e.target)) {
+        calendarDropdown.classList.remove("open");
+      }
+    });
+  }
+
+  // Google Calendar URL
+  if (googleCalLink) {
+    const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+      CONFIG.event.title
+    )}&dates=${CONFIG.event.startDate}/${CONFIG.event.endDate}&details=${encodeURIComponent(
+      CONFIG.event.description
+    )}&location=${encodeURIComponent(CONFIG.event.location)}`;
+    googleCalLink.setAttribute("href", gCalUrl);
+  }
+
+  // Apple / Outlook .ICS Generator & Download
+  if (appleCalLink) {
+    appleCalLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      const icsContent = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Kevin and Shannel Wedding//EN",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        `SUMMARY:${CONFIG.event.title}`,
+        `DESCRIPTION:${CONFIG.event.description}`,
+        `LOCATION:${CONFIG.event.location}`,
+        `DTSTART:${CONFIG.event.startDate}`,
+        `DTEND:${CONFIG.event.endDate}`,
+        "STATUS:CONFIRMED",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+
+      const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const tempLink = document.createElement("a");
+      tempLink.href = url;
+      tempLink.setAttribute("download", "Kevin-and-Shannel-Wedding.ics");
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  /* ==========================================================================
+     5. SCROLL REVEAL ANIMATIONS
+     ========================================================================== */
+  const revealElements = document.querySelectorAll(".reveal-on-scroll");
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  revealElements.forEach((el) => revealObserver.observe(el));
+
+  /* ==========================================================================
+     6. EDITORIAL PHOTO GALLERY & LIGHTBOX
+     ========================================================================== */
+  const galleryItems = document.querySelectorAll(".gallery-item");
+  const filterBtns = document.querySelectorAll(".gallery-filter-btn");
+  const lightbox = document.getElementById("galleryLightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const lightboxClose = document.getElementById("lightboxClose");
+  const lightboxPrev = document.getElementById("lightboxPrev");
+  const lightboxNext = document.getElementById("lightboxNext");
+
+  let currentGalleryIndex = 0;
+  let activeGalleryList = [];
+
+  function updateActiveList() {
+    activeGalleryList = Array.from(galleryItems).filter(
+      (item) => item.style.display !== "none"
+    );
+  }
+  updateActiveList();
+
+  // Category Filtering
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const category = btn.getAttribute("data-filter");
+      galleryItems.forEach((item) => {
+        const itemCat = item.getAttribute("data-category");
+        if (category === "all" || itemCat.includes(category)) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+      updateActiveList();
+    });
+  });
+
+  // Open Lightbox
+  function openLightbox(index) {
+    if (activeGalleryList.length === 0) return;
+    currentGalleryIndex = (index + activeGalleryList.length) % activeGalleryList.length;
+    const targetItem = activeGalleryList[currentGalleryIndex];
+    const imgSrc = targetItem.querySelector("img").getAttribute("src");
+    lightboxImg.src = imgSrc;
+    lightbox.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  galleryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const idx = activeGalleryList.indexOf(item);
+      if (idx !== -1) openLightbox(idx);
+    });
+  });
+
+  if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openLightbox(currentGalleryIndex - 1);
+    });
+  }
+  if (lightboxNext) {
+    lightboxNext.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openLightbox(currentGalleryIndex + 1);
+    });
+  }
+
+  // Close on backdrop click
+  if (lightbox) {
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+
+  // Keyboard navigation for Lightbox
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox || !lightbox.classList.contains("active")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") openLightbox(currentGalleryIndex - 1);
+    if (e.key === "ArrowRight") openLightbox(currentGalleryIndex + 1);
+  });
+
+  /* ==========================================================================
+     7. WITHJOY REGISTRY MODAL & DIRECT LINKS
+     ========================================================================== */
+  const joyModal = document.getElementById("joyModal");
+  const openJoyBtns = document.querySelectorAll(".open-joy-modal-btn");
+  const joyModalClose = document.getElementById("joyModalClose");
+  const joyModalDismiss = document.getElementById("joyModalDismiss");
+  const joyDirectLink = document.getElementById("joyDirectLink");
+  const joyPrimaryBtn = document.getElementById("joyPrimaryBtn");
+
+  if (joyDirectLink) {
+    joyDirectLink.setAttribute("href", CONFIG.joySiteUrl);
+  }
+  if (joyPrimaryBtn) {
+    joyPrimaryBtn.setAttribute("href", CONFIG.joyRegistryUrl);
+  }
+
+  function openJoyModal() {
+    if (!joyModal) return;
+    joyModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeJoyModal() {
+    if (!joyModal) return;
+    joyModal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  openJoyBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openJoyModal();
+    });
+  });
+
+  if (joyModalClose) joyModalClose.addEventListener("click", closeJoyModal);
+  if (joyModalDismiss) joyModalDismiss.addEventListener("click", closeJoyModal);
+  if (joyModal) {
+    joyModal.addEventListener("click", (e) => {
+      if (e.target === joyModal) closeJoyModal();
+    });
+  }
+
+  /* ==========================================================================
+     8. BANK DETAILS & MOBILE MONEY (MOMO) MODAL
+     ========================================================================== */
+  const bankModal = document.getElementById("bankModal");
+  const openBankBtns = document.querySelectorAll(".open-bank-modal-btn");
+  const bankModalClose = document.getElementById("bankModalClose");
+
+  function openBankModal() {
+    if (!bankModal) return;
+    bankModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeBankModal() {
+    if (!bankModal) return;
+    bankModal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  openBankBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openBankModal();
+    });
+  });
+
+  if (bankModalClose) bankModalClose.addEventListener("click", closeBankModal);
+  if (bankModal) {
+    bankModal.addEventListener("click", (e) => {
+      if (e.target === bankModal) closeBankModal();
+    });
+  }
+
+  /* ==========================================================================
+     9. RSVP FORM SUBMISSION & LOCAL ARCHIVAL
+     ========================================================================== */
+  const rsvpForm = document.getElementById("rsvpForm");
+  const rsvpSuccess = document.getElementById("rsvpSuccess");
+  const resetRsvpBtn = document.getElementById("resetRsvpBtn");
+
+  if (rsvpForm) {
+    rsvpForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const rsvpData = {
+        timestamp: new Date().toISOString(),
+        fullName: document.getElementById("fullName")?.value.trim() || "",
+        email: document.getElementById("email")?.value.trim() || "",
+        phone: document.getElementById("phone")?.value.trim() || "",
+        attendance: document.getElementById("ceremonies")?.value || "",
+        guestCount: document.getElementById("guestCount")?.value || "1",
+        dietary: document.getElementById("dietary")?.value.trim() || "None",
+        message: document.getElementById("message")?.value.trim() || ""
+      };
+
+      // Save to localStorage for resilient persistence
+      try {
+        const stored = JSON.parse(localStorage.getItem("wedding_rsvps") || "[]");
+        stored.push(rsvpData);
+        localStorage.setItem("wedding_rsvps", JSON.stringify(stored));
+        console.log("RSVP registered successfully:", rsvpData);
+      } catch (err) {
+        console.error("Local storage error:", err);
+      }
+
+      // Smooth transition to Success state
+      rsvpForm.style.display = "none";
+      rsvpSuccess.style.display = "block";
+      rsvpSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
+  if (resetRsvpBtn) {
+    resetRsvpBtn.addEventListener("click", () => {
+      rsvpForm.reset();
+      rsvpSuccess.style.display = "none";
+      rsvpForm.style.display = "block";
+    });
+  }
+
+  // Developer / Couple Helper to export all RSVPs to CSV from console:
+  window.exportRSVPs = function () {
+    const data = JSON.parse(localStorage.getItem("wedding_rsvps") || "[]");
+    if (data.length === 0) {
+      alert("No RSVP responses stored yet.");
+      return;
+    }
+    const headers = ["Timestamp", "Full Name", "Email", "Phone", "Attendance", "Guests", "Dietary", "Message"];
+    const rows = data.map((d) => [
+      `"${d.timestamp}"`,
+      `"${d.fullName}"`,
+      `"${d.email}"`,
+      `"${d.phone}"`,
+      `"${d.attendance}"`,
+      `"${d.guestCount}"`,
+      `"${d.dietary}"`,
+      `"${(d.message || "").replace(/"/g, '""')}"`
+    ]);
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Kevin_Shannel_RSVPs_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  /* ==========================================================================
+     10. EXPANDABLE FAQ ACCORDION
+     ========================================================================== */
+  const faqQuestions = document.querySelectorAll(".faq-question");
+
+  faqQuestions.forEach((button) => {
+    button.addEventListener("click", () => {
+      const item = button.parentElement;
+      const isActive = item.classList.contains("active");
+
+      document.querySelectorAll(".faq-item").forEach((other) => {
+        other.classList.remove("active");
+      });
+
+      if (!isActive) {
+        item.classList.add("active");
+      }
+    });
+  });
+
+  /* ==========================================================================
+     11. HERO LIVING DYNAMICS (Stardust Particles, Auto-Crossfade & Parallax)
+     ========================================================================== */
+
+  // A. Hero Stardust Micro-Particles Engine
+  function initHeroStardust() {
+    const canvas = document.getElementById("heroStardust");
+    const heroSection = document.getElementById("hero");
+    if (!canvas || !heroSection) return;
+
+    const ctx = canvas.getContext("2d");
+    let animationFrameId = null;
+    let isVisible = true;
+    let width = 0;
+    let height = 0;
+
+    const particles = [];
+    const PARTICLE_COUNT = 28;
+
+    function resize() {
+      width = canvas.width = heroSection.offsetWidth;
+      height = canvas.height = heroSection.offsetHeight;
+    }
+
+    window.addEventListener("resize", resize, { passive: true });
+    resize();
+
+    class StardustParticle {
+      constructor(isInitial = false) {
+        this.reset(isInitial);
+      }
+
+      reset(isInitial = false) {
+        this.x = Math.random() * width;
+        this.y = isInitial ? Math.random() * height : height + Math.random() * 20;
+        this.radius = 0.6 + Math.random() * 1.3;
+        this.speedY = 0.18 + Math.random() * 0.4;
+        this.speedX = (Math.random() - 0.5) * 0.22;
+        this.alpha = 0.12 + Math.random() * 0.42;
+        this.pulseSpeed = 0.012 + Math.random() * 0.02;
+        this.pulseVal = Math.random() * Math.PI * 2;
+      }
+
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        this.pulseVal += this.pulseSpeed;
+
+        if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+          this.reset(false);
+        }
+      }
+
+      draw() {
+        const currentAlpha = Math.max(0.06, this.alpha + Math.sin(this.pulseVal) * 0.18);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212, 175, 55, ${currentAlpha})`;
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = "rgba(212, 175, 55, 0.4)";
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(new StardustParticle(true));
+    }
+
+    function loop() {
+      if (!isVisible) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      animationFrameId = requestAnimationFrame(loop);
+    }
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            isVisible = true;
+            if (!animationFrameId) {
+              animationFrameId = requestAnimationFrame(loop);
+            }
+          } else {
+            isVisible = false;
+            if (animationFrameId) {
+              cancelAnimationFrame(animationFrameId);
+              animationFrameId = null;
+            }
+          }
+        });
+      }, { threshold: 0.05 });
+
+      observer.observe(heroSection);
+    } else {
+      animationFrameId = requestAnimationFrame(loop);
+    }
+  }
+
+  // B. Living Crossfade Slider
+  function initHeroSlider() {
+    const slides = document.querySelectorAll(".hero-slide");
+    const dots = document.querySelectorAll(".hero-slide-dot");
+    const container = document.querySelector(".hero-image-container");
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+    let slideTimer = null;
+    const INTERVAL_MS = 6000;
+
+    function goToSlide(index) {
+      slides[currentIndex].classList.remove("active");
+      if (dots[currentIndex]) dots[currentIndex].classList.remove("active");
+
+      currentIndex = (index + slides.length) % slides.length;
+
+      slides[currentIndex].classList.add("active");
+      if (dots[currentIndex]) dots[currentIndex].classList.add("active");
+    }
+
+    function startTimer() {
+      stopTimer();
+      slideTimer = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, INTERVAL_MS);
+    }
+
+    function stopTimer() {
+      if (slideTimer) {
+        clearInterval(slideTimer);
+        slideTimer = null;
+      }
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener("click", () => {
+        goToSlide(idx);
+        startTimer();
+      });
+    });
+
+    if (container) {
+      container.addEventListener("mouseenter", stopTimer);
+      container.addEventListener("mouseleave", startTimer);
+      container.addEventListener("touchstart", stopTimer, { passive: true });
+      container.addEventListener("touchend", startTimer, { passive: true });
+    }
+
+    startTimer();
+  }
+
+  // C. Subtle 3D Depth Parallax on Desktop
+  function initHeroParallax() {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const heroSection = document.getElementById("hero");
+    const heroFrame = document.querySelector(".hero-frame");
+    const heroSeal = document.querySelector(".hero-monogram-seal");
+    if (!heroSection || !heroFrame) return;
+
+    let targetRX = 0;
+    let targetRY = 0;
+    let currentRX = 0;
+    let currentRY = 0;
+    let isParallaxActive = false;
+
+    heroSection.addEventListener("mousemove", (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      targetRX = -y * 7;
+      targetRY = x * 7;
+
+      if (!isParallaxActive) {
+        isParallaxActive = true;
+        requestAnimationFrame(animateParallax);
+      }
+    });
+
+    heroSection.addEventListener("mouseleave", () => {
+      targetRX = 0;
+      targetRY = 0;
+    });
+
+    function animateParallax() {
+      currentRX += (targetRX - currentRX) * 0.08;
+      currentRY += (targetRY - currentRY) * 0.08;
+
+      heroFrame.style.transform = `perspective(1000px) rotateX(${currentRX.toFixed(2)}deg) rotateY(${currentRY.toFixed(2)}deg)`;
+      if (heroSeal) {
+        heroSeal.style.transform = `translate3d(${(-currentRY * 1.5).toFixed(1)}px, ${(currentRX * 1.5).toFixed(1)}px, 20px)`;
+      }
+
+      if (Math.abs(targetRX - currentRX) > 0.01 || Math.abs(targetRY - currentRY) > 0.01) {
+        requestAnimationFrame(animateParallax);
+      } else {
+        isParallaxActive = false;
+        heroFrame.style.transform = targetRX === 0 ? "none" : heroFrame.style.transform;
+      }
+    }
+  }
+
+  // Initialize living hero features
+  initHeroStardust();
+  initHeroSlider();
+  initHeroParallax();
+});
+

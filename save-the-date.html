@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Save the Date Cards | Kevin & Shannel — Saturday, 9th January 2027</title>
+  <meta name="description" content="Download and share high-resolution Save the Date cards for Kevin & Shannel's wedding celebration in Accra, Ghana." />
+
+  <!-- Favicon / Brand Touch Icon (Luxury Gold Monogram Seal) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2247%22 fill=%22%230A0A0A%22 stroke=%22%23C5A059%22 stroke-width=%223%22/><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22none%22 stroke=%22%23C5A059%22 stroke-width=%221%22 stroke-dasharray=%223%202%22/><text x=%2250%25%22 y=%2259%25%22 font-family=%22Cinzel,serif%22 font-size=%2228%22 font-weight=%22600%22 fill=%22%23C5A059%22 text-anchor=%22middle%22 letter-spacing=%222%22>K%26S</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .studio-header {
+      text-align: center;
+      padding: 130px 24px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 36px;
+      max-width: 1240px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+    .card-preview-box {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 4px;
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.35s var(--ease-spring), box-shadow 0.35s ease, border-color 0.3s ease;
+      position: relative;
+    }
+    .card-preview-box:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-float);
+      border-color: var(--gold-primary);
+    }
+    .card-img-wrap {
+      border-radius: 4px;
+      overflow: hidden;
+      background: #0d0d0d;
+      border: 1px solid var(--gold-border-subtle);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .card-img-wrap:hover img {
+      transform: scale(1.025);
+    }
+    .card-img-wrap::after {
+      content: 'Click to Zoom';
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      background: rgba(10, 10, 10, 0.75);
+      backdrop-filter: blur(6px);
+      color: var(--gold-primary);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--gold-border-subtle);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .card-img-wrap:hover::after {
+      opacity: 1;
+    }
+    .card-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .card-info h3 {
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+      color: var(--text-charcoal);
+    }
+    .card-info p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .card-meta-pill {
+      display: inline-block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold-primary);
+      background: rgba(197, 160, 89, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      border: 1px solid var(--gold-border-subtle);
+    }
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+    }
+    .btn-share {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px;
+      background: #25D366; /* WhatsApp Green */
+      color: #FFFFFF !important;
+      border: none;
+      border-radius: 2px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn-share:hover {
+      background: #1EBE5D;
+    }
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: transform 0.2s;
+    }
+    .back-home-link:hover {
+      transform: translateX(-4px);
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 5, 5, 0.94);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox-modal.active {
+      display: flex;
+    }
+    .lightbox-content {
+      max-width: 520px;
+      max-height: 90vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--gold-border);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -42px;
+      right: -10px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 4px 10px;
+      line-height: 1;
+    }
+    .lightbox-close:hover {
+      color: var(--gold-primary);
+    }
+    .lightbox-caption {
+      margin-top: 14px;
+      text-align: center;
+      color: #eaeaea;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Simple Navigation -->
+  <nav style="justify-content: space-between; padding: 18px 48px;">
+    <a href="index.html" class="nav-logo">
+      <span>K</span> & <span>S</span>
+    </a>
+    <a href="index.html" class="btn-outline" style="padding: 8px 18px; font-size: 0.72rem;">
+      &larr; Back to Wedding Website
+    </a>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="studio-header">
+    <a href="index.html" class="back-home-link">&larr; Return to Wedding Site</a>
+    <span class="section-eyebrow">Digital Stationery Suite</span>
+    <h1 style="font-size: clamp(2.4rem, 4.5vw, 3.6rem); margin-bottom: 14px;">
+      Shareable Save the Date Cards
+    </h1>
+    <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; max-width: 680px; margin: 0 auto;">
+      High-resolution 1080&times;1920 announcement cards featuring seamless gradient fades, warm metallic typography, and zero passcodes. Designed for WhatsApp Status, Instagram Stories, iMessage, and mobile messaging.
+    </p>
+    <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+  </header>
+
+  <!-- Cards Grid -->
+  <main class="cards-grid">
+
+    <!-- Card 1 (Redone): Photo 0851 (The Royal Black-Tie) -->
+    <article class="card-preview-box">
+      <div>
+        <div class="card-img-wrap" onclick="openLightbox('assets/save-the-date/SaveTheDate-1-RoyalGold-Story.png', 'Card 01 • The Royal Black-Tie (Photo 0851)')">
+          <img 
+            src="assets/save-the-date/SaveTheDate-1-RoyalGold-Story.png" 
+            alt="Card 01 - The Royal Black-Tie Save the Date Card (0851)" 
+            loading="eager"
+          />
+        </div>
+        <div class="card-info">
+          <span class="card-meta-pill">Card 01 • Photo 0851 • Story (9:16)</span>
+          <h3>The Royal Black-Tie</h3>
+          <p>Editorial black-tie portrait seamlessly melting into dark noir obsidian with royal gold serifs and divider.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a 
+          href="assets/save-the-date/SaveTheDate-1-RoyalGold-Story.png" 
+          download="Kevin-Shannel-SaveTheDate-Card-1-RoyalBlackTie.png" 
+          class="btn-gold" 
+          style="width: 100%;"
+        >
+          Download Card (PNG)
+        </a>
+        <button 
+          type="button" 
+          class="btn-share" 
+          onclick="shareCard('assets/save-the-date/SaveTheDate-1-RoyalGold-Story.png', 'Kevin & Shannel — Save the Date (9th January 2027)')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.14l-.66 2.408 2.467-.647a5.717 5.717 0 0 0 2.936.807h.001c3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.768-5.769-5.768zm3.376 8.163c-.144.404-.836.77-1.168.819-.304.045-.694.072-2.12-.519-1.815-.753-2.985-2.597-3.076-2.718-.089-.12-1.229-1.636-1.229-3.12 0-1.485.779-2.215 1.055-2.516.276-.301.602-.376.803-.376.201 0 .401.002.576.012.188.01.439-.071.687.525.251.602.853 2.081.928 2.232.075.15.126.326.025.526-.1.201-.151.326-.301.501-.15.176-.316.393-.451.527-.151.15-.308.314-.133.615.176.301.78 1.288 1.671 2.081 1.146 1.021 2.112 1.336 2.413 1.486.301.15.477.125.653-.075.175-.201.753-.877.954-1.178.201-.301.401-.251.677-.15.276.1.1.753.877 1.83 2.157.075.15.126.251.126.351.001.427-.143.854-.287 1.258z"/>
+          </svg>
+          Share on WhatsApp / Mobile
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 2 (Redone): Photo 0723 (Twilight Candlelight Romance) -->
+    <article class="card-preview-box">
+      <div>
+        <div class="card-img-wrap" onclick="openLightbox('assets/save-the-date/SaveTheDate-2-TwilightRomance-Story.png', 'Card 02 • Twilight Candlelight (Photo 0723)')">
+          <img 
+            src="assets/save-the-date/SaveTheDate-2-TwilightRomance-Story.png" 
+            alt="Card 02 - Twilight Candlelight Save the Date Card (0723)" 
+            loading="eager"
+          />
+        </div>
+        <div class="card-info">
+          <span class="card-meta-pill">Card 02 • Photo 0723 • Story (9:16)</span>
+          <h3>Twilight Candlelight Romance</h3>
+          <p>Rooftop terrace candlelight with sparkling city lights, fading softly into midnight navy with Song of Solomon scripture.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a 
+          href="assets/save-the-date/SaveTheDate-2-TwilightRomance-Story.png" 
+          download="Kevin-Shannel-SaveTheDate-Card-2-TwilightRomance.png" 
+          class="btn-gold" 
+          style="width: 100%;"
+        >
+          Download Card (PNG)
+        </a>
+        <button 
+          type="button" 
+          class="btn-share" 
+          onclick="shareCard('assets/save-the-date/SaveTheDate-2-TwilightRomance-Story.png', 'Kevin & Shannel — Save the Date (9th January 2027)')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.14l-.66 2.408 2.467-.647a5.717 5.717 0 0 0 2.936.807h.001c3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.768-5.769-5.768zm3.376 8.163c-.144.404-.836.77-1.168.819-.304.045-.694.072-2.12-.519-1.815-.753-2.985-2.597-3.076-2.718-.089-.12-1.229-1.636-1.229-3.12 0-1.485.779-2.215 1.055-2.516.276-.301.602-.376.803-.376.201 0 .401.002.576.012.188.01.439-.071.687.525.251.602.853 2.081.928 2.232.075.15.126.326.025.526-.1.201-.151.326-.301.501-.15.176-.316.393-.451.527-.151.15-.308.314-.133.615.176.301.78 1.288 1.671 2.081 1.146 1.021 2.112 1.336 2.413 1.486.301.15.477.125.653-.075.175-.201.753-.877.954-1.178.201-.301.401-.251.677-.15.276.1.1.753.877 1.83 2.157.075.15.126.251.126.351.001.427-.143.854-.287 1.258z"/>
+          </svg>
+          Share on WhatsApp / Mobile
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 3: Photo 0844 (The Ring Gaze) -->
+    <article class="card-preview-box">
+      <div>
+        <div class="card-img-wrap" onclick="openLightbox('assets/save-the-date/SaveTheDate-0844-RingGaze-Story.png', 'Card 03 • The Ring Gaze (Photo 0844)')">
+          <img 
+            src="assets/save-the-date/SaveTheDate-0844-RingGaze-Story.png" 
+            alt="Card 03 - The Ring Gaze Seamless Blend Save the Date Card (0844)" 
+            loading="lazy"
+          />
+        </div>
+        <div class="card-info">
+          <span class="card-meta-pill">Card 03 • Photo 0844 • Story (9:16)</span>
+          <h3>The Ring Gaze</h3>
+          <p>Kevin and Shannel admiring the engagement ring together, softly fading into rich obsidian with warm gold serifs.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a 
+          href="assets/save-the-date/SaveTheDate-0844-RingGaze-Story.png" 
+          download="Kevin-Shannel-SaveTheDate-Card-3-RingGaze-0844.png" 
+          class="btn-gold" 
+          style="width: 100%;"
+        >
+          Download Card (PNG)
+        </a>
+        <button 
+          type="button" 
+          class="btn-share" 
+          onclick="shareCard('assets/save-the-date/SaveTheDate-0844-RingGaze-Story.png', 'Kevin & Shannel — Save the Date (9th January 2027)')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.14l-.66 2.408 2.467-.647a5.717 5.717 0 0 0 2.936.807h.001c3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.768-5.769-5.768zm3.376 8.163c-.144.404-.836.77-1.168.819-.304.045-.694.072-2.12-.519-1.815-.753-2.985-2.597-3.076-2.718-.089-.12-1.229-1.636-1.229-3.12 0-1.485.779-2.215 1.055-2.516.276-.301.602-.376.803-.376.201 0 .401.002.576.012.188.01.439-.071.687.525.251.602.853 2.081.928 2.232.075.15.126.326.025.526-.1.201-.151.326-.301.501-.15.176-.316.393-.451.527-.151.15-.308.314-.133.615.176.301.78 1.288 1.671 2.081 1.146 1.021 2.112 1.336 2.413 1.486.301.15.477.125.653-.075.175-.201.753-.877.954-1.178.201-.301.401-.251.677-.15.276.1.1.753.877 1.83 2.157.075.15.126.251.126.351.001.427-.143.854-.287 1.258z"/>
+          </svg>
+          Share on WhatsApp / Mobile
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 4: Photo 0704 (Twilight Skyline Romance) -->
+    <article class="card-preview-box">
+      <div>
+        <div class="card-img-wrap" onclick="openLightbox('assets/save-the-date/SaveTheDate-0704-TwilightEmbrace-Story.png', 'Card 04 • Twilight Skyline Romance (Photo 0704)')">
+          <img 
+            src="assets/save-the-date/SaveTheDate-0704-TwilightEmbrace-Story.png" 
+            alt="Card 04 - Twilight Skyline Romance Save the Date Card (0704)" 
+            loading="lazy"
+          />
+        </div>
+        <div class="card-info">
+          <span class="card-meta-pill">Card 04 • Photo 0704 • Story (9:16)</span>
+          <h3>Twilight Skyline Romance</h3>
+          <p>Rooftop terrace gaze under deep twilight skies, melting seamlessly into midnight navy with romantic scripture pull-quote.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a 
+          href="assets/save-the-date/SaveTheDate-0704-TwilightEmbrace-Story.png" 
+          download="Kevin-Shannel-SaveTheDate-Card-4-TwilightSkyline-0704.png" 
+          class="btn-gold" 
+          style="width: 100%;"
+        >
+          Download Card (PNG)
+        </a>
+        <button 
+          type="button" 
+          class="btn-share" 
+          onclick="shareCard('assets/save-the-date/SaveTheDate-0704-TwilightEmbrace-Story.png', 'Kevin & Shannel — Save the Date (9th January 2027)')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.14l-.66 2.408 2.467-.647a5.717 5.717 0 0 0 2.936.807h.001c3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.768-5.769-5.768zm3.376 8.163c-.144.404-.836.77-1.168.819-.304.045-.694.072-2.12-.519-1.815-.753-2.985-2.597-3.076-2.718-.089-.12-1.229-1.636-1.229-3.12 0-1.485.779-2.215 1.055-2.516.276-.301.602-.376.803-.376.201 0 .401.002.576.012.188.01.439-.071.687.525.251.602.853 2.081.928 2.232.075.15.126.326.025.526-.1.201-.151.326-.301.501-.15.176-.316.393-.451.527-.151.15-.308.314-.133.615.176.301.78 1.288 1.671 2.081 1.146 1.021 2.112 1.336 2.413 1.486.301.15.477.125.653-.075.175-.201.753-.877.954-1.178.201-.301.401-.251.677-.15.276.1.1.753.877 1.83 2.157.075.15.126.251.126.351.001.427-.143.854-.287 1.258z"/>
+          </svg>
+          Share on WhatsApp / Mobile
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 5: Photo 0855 (Tropical Palm Joy) -->
+    <article class="card-preview-box">
+      <div>
+        <div class="card-img-wrap" onclick="openLightbox('assets/save-the-date/SaveTheDate-0855-TropicalJoy-Story.png', 'Card 05 • Tropical Garden Joy (Photo 0855)')">
+          <img 
+            src="assets/save-the-date/SaveTheDate-0855-TropicalJoy-Story.png" 
+            alt="Card 05 - Tropical Joy Seamless Blend Save the Date Card (0855)" 
+            loading="lazy"
+          />
+        </div>
+        <div class="card-info">
+          <span class="card-meta-pill">Card 05 • Photo 0855 • Story (9:16)</span>
+          <h3>Tropical Garden Joy</h3>
+          <p>Lush tropical palm wallpaper and warm smiles fading into deep palm obsidian, honoring the Ghanaian celebration theme.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a 
+          href="assets/save-the-date/SaveTheDate-0855-TropicalJoy-Story.png" 
+          download="Kevin-Shannel-SaveTheDate-Card-5-TropicalJoy-0855.png" 
+          class="btn-gold" 
+          style="width: 100%;"
+        >
+          Download Card (PNG)
+        </a>
+        <button 
+          type="button" 
+          class="btn-share" 
+          onclick="shareCard('assets/save-the-date/SaveTheDate-0855-TropicalJoy-Story.png', 'Kevin & Shannel — Save the Date (9th January 2027)')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.14l-.66 2.408 2.467-.647a5.717 5.717 0 0 0 2.936.807h.001c3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.768-5.769-5.768zm3.376 8.163c-.144.404-.836.77-1.168.819-.304.045-.694.072-2.12-.519-1.815-.753-2.985-2.597-3.076-2.718-.089-.12-1.229-1.636-1.229-3.12 0-1.485.779-2.215 1.055-2.516.276-.301.602-.376.803-.376.201 0 .401.002.576.012.188.01.439-.071.687.525.251.602.853 2.081.928 2.232.075.15.126.326.025.526-.1.201-.151.326-.301.501-.15.176-.316.393-.451.527-.151.15-.308.314-.133.615.176.301.78 1.288 1.671 2.081 1.146 1.021 2.112 1.336 2.413 1.486.301.15.477.125.653-.075.175-.201.753-.877.954-1.178.201-.301.401-.251.677-.15.276.1.1.753.877 1.83 2.157.075.15.126.251.126.351.001.427-.143.854-.287 1.258z"/>
+          </svg>
+          Share on WhatsApp / Mobile
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 6: Photo 0864 (Appleyard Roses & Diamond) -->
+    <article class="card-preview-box">
+      <div>
+        <div class="card-img-wrap" onclick="openLightbox('assets/save-the-date/SaveTheDate-0864-RoseDiamond-Story.png', 'Card 06 • Roses & Diamond Promise (Photo 0864)')">
+          <img 
+            src="assets/save-the-date/SaveTheDate-0864-RoseDiamond-Story.png" 
+            alt="Card 06 - Roses & Diamond Seamless Blend Save the Date Card (0864)" 
+            loading="lazy"
+          />
+        </div>
+        <div class="card-info">
+          <span class="card-meta-pill">Card 06 • Photo 0864 • Story (9:16)</span>
+          <h3>Roses & Diamond Promise</h3>
+          <p>Shannel holding the London red rose bouquet with Kevin holding her hand showing the diamond ring, feathering into black velvet.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a 
+          href="assets/save-the-date/SaveTheDate-0864-RoseDiamond-Story.png" 
+          download="Kevin-Shannel-SaveTheDate-Card-6-RosesDiamond-0864.png" 
+          class="btn-gold" 
+          style="width: 100%;"
+        >
+          Download Card (PNG)
+        </a>
+        <button 
+          type="button" 
+          class="btn-share" 
+          onclick="shareCard('assets/save-the-date/SaveTheDate-0864-RoseDiamond-Story.png', 'Kevin & Shannel — Save the Date (9th January 2027)')"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.025 3.14l-.66 2.408 2.467-.647a5.717 5.717 0 0 0 2.936.807h.001c3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.768-5.769-5.768zm3.376 8.163c-.144.404-.836.77-1.168.819-.304.045-.694.072-2.12-.519-1.815-.753-2.985-2.597-3.076-2.718-.089-.12-1.229-1.636-1.229-3.12 0-1.485.779-2.215 1.055-2.516.276-.301.602-.376.803-.376.201 0 .401.002.576.012.188.01.439-.071.687.525.251.602.853 2.081.928 2.232.075.15.126.326.025.526-.1.201-.151.326-.301.501-.15.176-.316.393-.451.527-.151.15-.308.314-.133.615.176.301.78 1.288 1.671 2.081 1.146 1.021 2.112 1.336 2.413 1.486.301.15.477.125.653-.075.175-.201.753-.877.954-1.178.201-.301.401-.251.677-.15.276.1.1.753.877 1.83 2.157.075.15.126.251.126.351.001.427-.143.854-.287 1.258z"/>
+          </svg>
+          Share on WhatsApp / Mobile
+        </button>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Interactive Fullscreen Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="Close Preview">&times;</button>
+      <img src="" alt="Save the Date Full Preview" class="lightbox-img" id="lightboxImg" />
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- Share Functionality & Lightbox Script -->
+  <script>
+    function openLightbox(imgSrc, captionText) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImg');
+      const caption = document.getElementById('lightboxCaption');
+      img.src = imgSrc;
+      caption.textContent = captionText;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(event) {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    async function shareCard(url, title) {
+      const text = "We're getting married! Save the date: Saturday, 9th January 2027 in Accra, Ghana. Kevin & Shannel";
+      if (navigator.share && navigator.canShare) {
+        try {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          const file = new File([blob], url.split('/').pop(), { type: blob.type });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              title: title,
+              text: text,
+              files: [file]
+            });
+            return;
+          }
+        } catch (e) {
+          console.log("File share fallback", e);
+        }
+      }
+      // Direct WhatsApp fallback link
+      const encodedMsg = encodeURIComponent(`${text}\n\nView cards: ${window.location.origin}/save-the-date.html`);
+      window.open(`https://api.whatsapp.com/send?text=${encodedMsg}`, '_blank');
+    }
+  </script>
+
+  <!-- Footer -->
+  <footer style="padding: 60px 24px;">
+    <div class="footer-names" style="font-size: 2rem;">Kevin & Shannel</div>
+    <div class="footer-date">Saturday, 9th January 2027 • Accra, Ghana</div>
+    <div class="footer-copy">© 2027 Kevin & Shannel Wedding Celebration.</div>
+  </footer>
+
+</body>
+</html>

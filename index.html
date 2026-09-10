@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kevin & Shannel | The White Wedding — Saturday, 9th January 2027</title>
+  <meta name="description" content="Celebrate the wedding of Kevin & Shannel on Saturday, 9th January 2027 at the Labadi Beach Hotel in Accra, Ghana." />
+
+  <!-- Favicon / Brand Touch Icon (Luxury Gold Monogram Seal) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2247%22 fill=%22%230A0A0A%22 stroke=%22%23C5A059%22 stroke-width=%223%22/><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22none%22 stroke=%22%23C5A059%22 stroke-width=%221%22 stroke-dasharray=%223%202%22/><text x=%2250%25%22 y=%2259%25%22 font-family=%22Cinzel,serif%22 font-size=%2228%22 font-weight=%22600%22 fill=%22%23C5A059%22 text-anchor=%22middle%22 letter-spacing=%222%22>K%26S</text></svg>">
+
+  <!-- Google Fonts: Luxury Editorial Serifs & Clean Modern Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Master JavaScript Logic -->
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- ================= INTEGRATED CARTIER MONOGRAM VAULT GATE ================= -->
+  <div id="passwordGate" role="dialog" aria-modal="true" aria-label="Celebration Access Gate">
+    <div class="cartier-vault-box" id="cartierVault">
+      
+      <!-- Interior Formal Invitation Presentation (revealed when unlocked) -->
+      <div class="vault-interior" id="vaultInterior">
+        <div class="vault-interior-border">
+          <div class="vault-corner tl"></div>
+          <div class="vault-corner tr"></div>
+          <div class="vault-corner bl"></div>
+          <div class="vault-corner br"></div>
+        </div>
+        
+        <div class="vault-interior-content">
+          <div class="vault-eyebrow">A Formal Request for the Presence of Honored Guests</div>
+          <h2 class="vault-couple-names">Kevin <span>&amp;</span> Shannel</h2>
+          <div class="vault-subtitle">The Holy Matrimony &amp; Celebration</div>
+          
+          <div class="vault-scripture">
+            “I have found the one whom my soul loves. Hand in hand, grounded in faith, we step forward into our forever.”
+          </div>
+          
+          <div class="vault-event-meta">
+            <div class="vault-event-date">Saturday, 9th January 2027</div>
+            <div class="vault-event-location">Labadi Beach Hotel • Accra, Ghana</div>
+          </div>
+          
+          <button type="button" class="btn-gold vault-enter-btn" id="vaultEnterBtn">
+            Enter Celebration
+          </button>
+        </div>
+      </div>
+
+      <!-- Exterior Vault Lid with Rotating Cartier Clasp & Password Form -->
+      <div class="vault-lid" id="vaultLid">
+        <div class="vault-lid-frame"></div>
+        
+        <div class="vault-lid-header">
+          <div class="vault-header-eyebrow">The White Wedding of</div>
+          <h2 class="vault-header-title">Kevin <span>&amp;</span> Shannel</h2>
+          <p class="vault-header-date">09 • 01 • 2027 &bull; ACCRA, GHANA</p>
+        </div>
+
+        <!-- The Cartier Monogram Mechanical Turn-Clasp -->
+        <div class="vault-clasp-mechanism" id="vaultClaspBtn" title="Turn Clasp to Unlock">
+          <div class="vault-clasp-base"></div>
+          <div class="vault-clasp-bars" id="vaultClaspBars"></div>
+          <div class="vault-clasp-dial" id="vaultClaspDial">
+            <span class="vault-clasp-monogram">K&amp;S</span>
+          </div>
+        </div>
+
+        <!-- Integrated Password Form -->
+        <form id="gateForm" class="vault-gate-form">
+          <p class="vault-form-instruction">Please enter the passcode on your invitation to unlock</p>
+          
+          <div class="vault-input-group">
+            <input 
+              type="password" 
+              id="gatePassword" 
+              class="vault-passcode-input" 
+              placeholder="ENTER PASSCODE" 
+              required 
+              autocomplete="off"
+              aria-label="Celebration Passcode"
+            />
+            <button type="submit" class="vault-submit-arrow" id="gateSubmitBtn" aria-label="Submit Passcode">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+          
+          <div id="gateError" class="vault-error-msg">Incorrect passcode. Please check your invitation card and try again.</div>
+          
+          <div class="vault-passcode-hint">
+            Passcode: <code>FOREVER2027</code>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NAVIGATION BAR ================= -->
+  <nav id="mainNav">
+    <a href="#hero" class="nav-logo">
+      <span>K</span> & <span>S</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#celebration">The Celebration</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#venues">Venues</a></li>
+      <li><a href="#dresscode">Dress Code</a></li>
+      <li><a href="#registry">Registry</a></li>
+      <li><a href="#travel">Travel</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="save-the-date.html" style="color: var(--gold-primary); font-weight: 600;">Cards</a></li>
+      <li><a href="#rsvp" class="btn-gold nav-cta-btn">RSVP</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle Navigation Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Navigation Slide-Out Drawer -->
+  <div class="mobile-nav-backdrop" id="mobileBackdrop"></div>
+  <aside class="mobile-nav-drawer" id="mobileDrawer" aria-label="Mobile Navigation">
+    <div>
+      <div class="nav-logo" style="margin-bottom: 36px; font-size: 1.4rem;">
+        <span>K</span> & <span>S</span>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#celebration">The Celebration</a></li>
+        <li><a href="#gallery">Editorial Gallery</a></li>
+        <li><a href="#venues">Venues & Location</a></li>
+        <li><a href="#dresscode">Dress Code</a></li>
+        <li><a href="#registry">Gifts & Registry</a></li>
+        <li><a href="#travel">Travel & Accra Guide</a></li>
+        <li><a href="#faq">Questions & Answers</a></li>
+        <li><a href="save-the-date.html" style="color: var(--gold-primary); font-weight: 600;">Save the Date Cards</a></li>
+        <li><a href="#rsvp" style="color: var(--gold-primary); font-weight: 600;">RSVP Form</a></li>
+      </ul>
+    </div>
+    <div class="mobile-nav-footer">
+      <p>9th January 2027 • Accra, Ghana</p>
+    </div>
+  </aside>
+
+  <!-- ================= 1. HERO SECTION ================= -->
+  <section class="hero" id="hero">
+    <!-- Ambient Celestial Stardust Canvas -->
+    <canvas id="heroStardust" class="hero-stardust-canvas" aria-hidden="true"></canvas>
+
+    <div class="hero-content reveal-on-scroll">
+      <div class="hero-eyebrow">The Wedding Celebration of</div>
+      <h1 class="hero-title">
+        Kevin <span>& Shannel</span>
+      </h1>
+      
+      <div class="hero-meta">
+        <div class="hero-date">
+          <span>Saturday, 9th January 2027</span>
+        </div>
+        <div class="hero-location">Labadi Beach Hotel • Accra, Ghana</div>
+      </div>
+
+      <!-- Live Countdown Clock -->
+      <div class="timer-container" aria-label="Countdown to Wedding Day">
+        <div class="timer-box">
+          <div class="timer-num" id="days">00</div>
+          <div class="timer-label">Days</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-num" id="hours">00</div>
+          <div class="timer-label">Hours</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-num" id="minutes">00</div>
+          <div class="timer-label">Mins</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-num" id="seconds">00</div>
+          <div class="timer-label">Secs</div>
+        </div>
+      </div>
+
+      <!-- Hero Call-to-Action Group -->
+      <div class="hero-actions">
+        <a href="#rsvp" class="btn-gold">RSVP to Celebrate</a>
+        
+        <!-- Save to Calendar Dropdown -->
+        <div class="calendar-dropdown" id="calendarDropdown">
+          <button type="button" class="btn-outline" id="calendarToggleBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Save the Date
+          </button>
+          <div class="calendar-menu">
+            <a id="googleCalLink" target="_blank" rel="noopener noreferrer">
+              <span>Google Calendar</span>
+            </a>
+            <a href="#" id="appleCalLink">
+              <span>Apple / Outlook (.ics)</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="save-the-date.html" class="btn-outline" title="View & Download Shareable Digital Cards">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+            <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          Shareable Cards
+        </a>
+      </div>
+    </div>
+
+    <!-- Living Hero Portrait Arch & Rotating Horological Seal -->
+    <div class="hero-image-container reveal-on-scroll delay-2">
+      <!-- Ambient Golden Backlight Halo -->
+      <div class="hero-halo-glow" aria-hidden="true"></div>
+
+      <!-- Outer Dashed Arch Border -->
+      <div class="hero-frame-decoration"></div>
+
+      <!-- Rotating Tourbillon Monogram Seal -->
+      <div class="hero-monogram-seal" aria-hidden="true">
+        <svg class="seal-svg" viewBox="0 0 120 120">
+          <defs>
+            <path id="sealCircle" d="M 60,60 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" />
+          </defs>
+          <circle cx="60" cy="60" r="55" class="seal-outer-ring" />
+          <circle cx="60" cy="60" r="47" class="seal-inner-ring" />
+          <g class="seal-rotating-text">
+            <text class="seal-text">
+              <textPath href="#sealCircle" startOffset="0%">
+                KEVIN &amp; SHANNEL • 09.01.2027 • ACCRA GHANA •
+              </textPath>
+            </text>
+          </g>
+        </svg>
+        <div class="seal-center-monogram">K<span>&</span>S</div>
+      </div>
+
+      <!-- Arched Photo Frame with Editorial Living Crossfade -->
+      <div class="hero-frame">
+        <div class="hero-slides">
+          <!-- Slide 1: Formal Black-Tie Portrait -->
+          <div class="hero-slide active">
+            <img 
+              src="assets/images/IMG_0851.webp" 
+              alt="Kevin and Shannel formal wedding celebration portrait" 
+              loading="eager"
+              width="1365"
+              height="2048"
+            />
+          </div>
+
+          <!-- Slide 2: Rooftop Laughter & Diamond Ring (IMG_0927) -->
+          <div class="hero-slide">
+            <img 
+              src="assets/images/IMG_0927.webp" 
+              alt="Kevin and Shannel laughing together on rooftop terrace with engagement ring" 
+              loading="lazy"
+              width="1365"
+              height="2048"
+            />
+          </div>
+
+          <!-- Slide 3: Armchair Ring Gaze -->
+          <div class="hero-slide">
+            <img 
+              src="assets/images/IMG_0844.webp" 
+              alt="Shannel seated in black gown with Kevin admiring diamond ring" 
+              loading="lazy"
+              width="1365"
+              height="2048"
+            />
+          </div>
+
+          <!-- Slide 4: Appleyard Roses & Diamond Ring -->
+          <div class="hero-slide">
+            <img 
+              src="assets/images/IMG_0864.webp" 
+              alt="Appleyard London red roses and sparkling engagement ring" 
+              loading="lazy"
+              width="1365"
+              height="2048"
+            />
+          </div>
+
+          <!-- Slide 5: Warm Smiles & Tropical Palms -->
+          <div class="hero-slide">
+            <img 
+              src="assets/images/IMG_0855.webp" 
+              alt="Kevin and Shannel laughing together against sunlit tropical palms" 
+              loading="lazy"
+              width="1365"
+              height="2048"
+            />
+          </div>
+        </div>
+
+        <!-- Slide Capsule Indicators -->
+        <div class="hero-slide-nav" aria-label="Portrait Slideshow Navigation">
+          <button class="hero-slide-dot active" aria-label="Slide 1: Formal Black-Tie"></button>
+          <button class="hero-slide-dot" aria-label="Slide 2: Rooftop Laughter"></button>
+          <button class="hero-slide-dot" aria-label="Slide 3: Armchair Ring Gaze"></button>
+          <button class="hero-slide-dot" aria-label="Slide 4: Appleyard Roses"></button>
+          <button class="hero-slide-dot" aria-label="Slide 5: Tropical Palms"></button>
+        </div>
+
+        <div class="hero-floating-tag">Saturday • 09.01.2027</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. OUR STORY SECTION ================= -->
+  <section id="story">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">The Journey</span>
+      <h2>Two Hearts, One Lifelong Promise</h2>
+      <p class="section-subtext">How an ordinary season quietly unfolded into our greatest calling and joy.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <div class="story-grid">
+      <div class="story-text reveal-on-scroll delay-1">
+        <p class="drop-cap">
+          What began as casual conversation and kindred laughter quickly blossomed into the quiet realization that we had found our safe haven in one another. With every shared prayer, late-night discussion, and spontaneous adventure, our roots deepened in love, patience, and mutual respect.
+        </p>
+        <div class="story-quote-card">
+          “I have found the one whom my soul loves. Hand in hand, grounded in faith, we step forward into our forever.”
+        </div>
+        <p>
+          On an unforgettable evening beneath the city lights, surrounded by candlelight and roses, Kevin asked the question that sealed our future, and Shannel answered with an emphatic, joyful yes.
+        </p>
+        <p>
+          As we look ahead toward January 9th, 2027 in Accra, we are overwhelmed with gratitude to gather our dearest loved ones from across the globe to celebrate the covenant of our marriage.
+        </p>
+      </div>
+
+      <div class="story-image-mosaic reveal-on-scroll delay-2">
+        <div class="story-main-img-card">
+          <img 
+            src="assets/images/IMG_0855.webp" 
+            alt="Kevin and Shannel smiling together against tropical palm wallpaper" 
+            loading="lazy"
+            width="900"
+            height="1100"
+          />
+          <div class="story-badge-overlay">
+            <h4>London to Accra</h4>
+            <span>Our Next Chapter Begins</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full-Width Panoramic Cinematic Banner -->
+    <div class="cinematic-banner reveal-on-scroll">
+      <img 
+        src="assets/images/IMG_0893.webp" 
+        alt="Kevin & Shannel embracing in black and white overlooking the city" 
+        loading="lazy"
+        width="2048"
+        height="1150"
+      />
+      <div class="cinematic-content">
+        <p>“From London skies to warm Atlantic tides, our journey continues forever.”</p>
+        <span>Saturday, 9th January 2027 • Labadi Beach Hotel</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. THE CELEBRATION (WHITE WEDDING) ================= -->
+  <section id="celebration">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Order of Events</span>
+      <h2>The White Wedding</h2>
+      <p class="section-subtext">A day of sacred matrimony, coastal elegance, and spirited celebration under the Ghanaian sun and stars.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <div class="celebration-wrap reveal-on-scroll">
+      <div class="celebration-card">
+        <!-- Ghanaian Adinkra Cultural Motif: Osram Ne Nsoromma (The Moon and the Star) -->
+        <div class="adinkra-crest-wrap" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 24px;">
+          <svg width="46" height="46" viewBox="0 0 48 48" fill="none" stroke="var(--gold-primary)" stroke-width="1.3" style="margin-bottom: 8px;">
+            <circle cx="24" cy="24" r="22" stroke="var(--gold-border-subtle)" stroke-dasharray="2 2"/>
+            <path d="M26 12a12 12 0 1 0 0 24 10 10 0 0 1 0-24z" fill="rgba(197, 160, 89, 0.12)" stroke="var(--gold-primary)"/>
+            <polygon points="31,18 32.5,21.5 36,22 33.5,24.5 34,28 31,26 28,28 28.5,24.5 26,22 29.5,21.5" fill="var(--gold-primary)" stroke="none"/>
+          </svg>
+          <span style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--gold-primary); font-weight: 600;">Osram Ne Nsoromma • Symbol of Love &amp; Fidelity</span>
+        </div>
+        <span class="celebration-badge">The Main Event</span>
+        <h3 class="celebration-title">The Holy Matrimony & Grand Reception</h3>
+        <p class="celebration-intro">
+          Join us as we exchange sacred vows surrounded by swaying palm trees and Atlantic ocean breezes on the private lawns of Labadi Beach Hotel, followed by sunset cocktails, an exquisite culinary dinner, and dancing late into the night.
+        </p>
+
+        <!-- White Wedding Day Schedule Timeline -->
+        <div class="wedding-timeline" aria-label="Wedding Day Timeline">
+          <div class="timeline-step">
+            <div class="timeline-time">1:00 PM</div>
+            <div class="timeline-title">Guest Arrival</div>
+            <div class="timeline-desc">Welcome refreshments & ceremony lawn seating.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-time">2:00 PM</div>
+            <div class="timeline-title">The Vows</div>
+            <div class="timeline-desc">Processional, sacred covenant exchange & rings.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-time">3:30 PM</div>
+            <div class="timeline-title">Golden Hour Cocktails</div>
+            <div class="timeline-desc">Canapés, champagne & oceanfront portraits.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-time">5:00 PM</div>
+            <div class="timeline-title">Grand Reception</div>
+            <div class="timeline-desc">Bridal entrance, gourmet dinner & speeches.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-time">8:00 PM</div>
+            <div class="timeline-title">Party & Dancing</div>
+            <div class="timeline-desc">First dance, cake cutting & dancing under the stars.</div>
+          </div>
+        </div>
+
+        <div class="celebration-details">
+          <div class="detail-item">
+            <h4>Date & Time</h4>
+            <p>Saturday, 9 Jan 2027 • 1:00 PM GMT</p>
+          </div>
+          <div class="detail-item">
+            <h4>Venue</h4>
+            <p>Labadi Beach Hotel, Accra</p>
+          </div>
+          <div class="detail-item">
+            <h4>Theme & Vibe</h4>
+            <p>Tropical Garden Glamour</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <a href="#rsvp" class="btn-gold">Confirm Your Attendance</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. CURATED PHOTO GALLERY & LIGHTBOX ================= -->
+  <section id="gallery">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Memories Captured</span>
+      <h2>Our Engagement Editorial</h2>
+      <p class="section-subtext">A glimpse into our proposal evening, heartfelt smiles, and London celebration portraits.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <!-- Gallery Category Filter Tabs -->
+    <div class="gallery-controls reveal-on-scroll">
+      <button class="gallery-filter-btn active" data-filter="all">All Photos</button>
+      <button class="gallery-filter-btn" data-filter="portraits">Portraits</button>
+      <button class="gallery-filter-btn" data-filter="twilight">Twilight Romance</button>
+      <button class="gallery-filter-btn" data-filter="details">Details & Bouquet</button>
+    </div>
+
+    <!-- Curated Gallery Grid with High-Res WebP Images -->
+    <div class="gallery-grid reveal-on-scroll">
+      
+      <!-- Photo 1: Armchair Editorial Portrait -->
+      <div class="gallery-item" data-category="portraits">
+        <img src="assets/images/IMG_0836.webp" alt="Kevin and Shannel in formal black attire" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>High Fashion & Grace</h4>
+            <span>Portraits</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 2: Street Evening Gown Cape -->
+      <div class="gallery-item" data-category="portraits twilight">
+        <img src="assets/images/IMG_0781.webp" alt="Shannel in flowing cape gown walking city street with Kevin" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>City Nights & Cape Gown</h4>
+            <span>Twilight Romance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 3: Bouquet & Engagement Ring -->
+      <div class="gallery-item" data-category="details">
+        <img src="assets/images/IMG_0864.webp" alt="Appleyard London red rose bouquet and sparkling diamond ring" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>Appleyard Roses & Diamond</h4>
+            <span>Details</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 4: Intimate Amber Light Cheek Caress -->
+      <div class="gallery-item" data-category="twilight portraits">
+        <img src="assets/images/IMG_0777.webp" alt="Kevin touching Shannels cheek tenderly under streetlight" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>A Gentle Touch</h4>
+            <span>Twilight Romance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 5: B&W Intimate Ring Hug -->
+      <div class="gallery-item" data-category="details twilight">
+        <img src="assets/images/IMG_0894.webp" alt="Close embrace in black and white showcasing engagement ring" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>The Promise for Forever</h4>
+            <span>Details & Romance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 6: Rooftop Bench Laughter -->
+      <div class="gallery-item" data-category="portraits twilight">
+        <img src="assets/images/IMG_0927.webp" alt="Kevin and Shannel laughing together on rooftop terrace bench" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>Laughter & Ease</h4>
+            <span>Portraits</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 7: Candlelight Table Intimacy -->
+      <div class="gallery-item" data-category="twilight details">
+        <img src="assets/images/IMG_0737.webp" alt="Candlelight portrait on terrace" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>Golden Hour Glow</h4>
+            <span>Twilight</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 8: Twilight Skyline & Diamond Embrace -->
+      <div class="gallery-item" data-category="portraits twilight">
+        <img src="assets/images/IMG_0895.webp" alt="Kevin and Shannel embrace against London skyline with diamond ring" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>The Skyline Vow</h4>
+            <span>Editorial Romance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo 9: Twilight Rooftop Candlelight -->
+      <div class="gallery-item" data-category="twilight portraits">
+        <img src="assets/images/IMG_0723.webp" alt="Kevin and Shannel twilight celebration on rooftop terrace" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-overlay-text">
+            <h4>Twilight Celebration</h4>
+            <span>Twilight Romance</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gallery Lightbox Modal -->
+  <div id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Photo Preview Lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close Lightbox">&times;</button>
+      <button class="lightbox-nav-btn lightbox-prev" id="lightboxPrev" aria-label="Previous Image">&#10094;</button>
+      <img id="lightboxImg" src="" alt="Enlarged gallery preview" />
+      <button class="lightbox-nav-btn lightbox-next" id="lightboxNext" aria-label="Next Image">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- ================= 5. VENUES & GETTING THERE ================= -->
+  <section id="venues">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Location & Directions</span>
+      <h2>Our Wedding Venue</h2>
+      <p class="section-subtext">The historic Labadi Beach Hotel — where manicured lawns meet the Atlantic coastline.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <div class="venues-grid reveal-on-scroll">
+      <!-- Venue Card: Labadi Beach Hotel -->
+      <div class="venue-card">
+        <div class="venue-img-wrapper">
+          <span class="venue-badge-pill">Ceremony & Reception Venue</span>
+          <img 
+            src="assets/images/labadi-beach-hotel.webp?v=3" 
+            alt="Labadi Beach Hotel luxury resort grounds, pools, and fountains in Accra, Ghana" 
+            loading="lazy"
+          />
+        </div>
+        <div class="venue-info">
+          <div>
+            <h3>Labadi Beach Hotel</h3>
+            <p>
+              No 1 La Bypass, Trade Fair, Accra, Ghana<br />
+              Ceremony Ocean Lawn & Grand Royal Suite
+            </p>
+          </div>
+          <a href="https://maps.google.com/?q=Labadi+Beach+Hotel+Accra" target="_blank" rel="noopener noreferrer" class="btn-outline">
+            Open in Google Maps
+          </a>
+        </div>
+      </div>
+
+      <!-- Airport & Travel Concierge Card -->
+      <div class="venue-card">
+        <div class="venue-img-wrapper">
+          <span class="venue-badge-pill">International Gateway</span>
+          <img 
+            src="assets/images/kotoka-airport-terminal-3.webp?v=3" 
+            alt="Kotoka International Airport Terminal 3 illuminated modern facade in Accra, Ghana" 
+            loading="lazy"
+          />
+        </div>
+        <div class="venue-info">
+          <div>
+            <h3>Kotoka International Airport (ACC)</h3>
+            <p>
+              Located just 15–20 minutes from Labadi Beach Hotel.<br />
+              Secure official airport shuttles, Uber, and Bolt available 24/7.
+            </p>
+          </div>
+          <a href="https://maps.google.com/?q=Kotoka+International+Airport+Accra" target="_blank" rel="noopener noreferrer" class="btn-outline">
+            Airport Directions
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. DRESS CODE ("TROPICAL GARDEN GLAMOUR") ================= -->
+  <section id="dresscode">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Attire Guide</span>
+      <h2>Dress Code: Tropical Garden Glamour</h2>
+      <p class="section-subtext">High-fashion sophistication meets seaside coastal luxury.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <div class="dresscode-wrap reveal-on-scroll">
+      <div class="dresscode-card">
+        <h3>Elegance Under the Palms</h3>
+        <p>
+          We invite our guests to look and feel radiant. Think formal floor-length gowns, chic architectural silhouettes, sharp black-tie or dark tailored suits, and refined accessories. Breathable luxury fabrics like fine linen-silk blends, crepe, and chiffon are encouraged.
+        </p>
+
+        <!-- Curated Color Palette Swatches -->
+        <div class="palette-container">
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #141414;" title="Midnight Charcoal"></div>
+            <span class="swatch-name">Midnight Charcoal</span>
+          </div>
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #C5A059;" title="Warm Gold"></div>
+            <span class="swatch-name">Warm Gold</span>
+          </div>
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #FAF8F5; border: 1px solid #D8D2C7;" title="Alabaster Cream"></div>
+            <span class="swatch-name">Alabaster Cream</span>
+          </div>
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #243D30;" title="Emerald Olive"></div>
+            <span class="swatch-name">Emerald Olive</span>
+          </div>
+          <div class="swatch-item">
+            <div class="swatch-circle" style="background-color: #A25F46;" title="Terracotta Sunset"></div>
+            <span class="swatch-name">Terracotta</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-subtle); margin-top: 18px;">
+          <em>Note: We kindly ask guests to reserve white and ivory tones for the bride.</em>
+        </p>
+      </div>
+
+      <div class="dresscode-visual-preview">
+        <img 
+          src="assets/images/IMG_0781.webp" 
+          alt="Shannel dressed in sophisticated evening gown on city street" 
+          loading="lazy"
+        />
+        <div class="dresscode-tag">Attire Inspiration</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. GIFTS & BLESSINGS (WITHJOY REGISTRY INTEGRATION) ================= -->
+  <section id="registry">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Registry & Blessings</span>
+      <h2>Gifts & Well-Wishes</h2>
+      <p class="section-subtext">Your presence with us in Ghana is the greatest gift of all. If you wish to bless us further, explore our registry options below.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <!-- Featured WithJoy Registry Banner -->
+    <div class="joy-registry-banner reveal-on-scroll">
+      <h3>Our Wedding Registry on WithJoy</h3>
+      <p>
+        We have partnered with WithJoy to curate our wedding gift wish-list, experiences, and honeymoon funds in one seamless place.
+      </p>
+      <div class="joy-actions-row">
+        <a id="joyPrimaryBtn" href="https://withjoy.com/kevin-and-shannel/registry" target="_blank" rel="noopener noreferrer" class="btn-gold">
+          <span>Open Registry on WithJoy ↗</span>
+        </a>
+        <a id="joyDirectLink" href="https://withjoy.com/kevin-and-shannel" target="_blank" rel="noopener noreferrer" class="btn-outline" style="border-color: #FFFFFF; color: #FFFFFF;">
+          Visit Joy Website &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Four Curated Blessing Options -->
+    <div class="gifts-grid reveal-on-scroll" style="margin-top: 40px;">
+      <div class="gift-card">
+        <div>
+          <span class="card-meta-pill" style="margin-bottom: 12px; font-size: 0.65rem;">Sanctuary & Living</span>
+          <div class="gift-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <polygon points="24,7 42,20 6,20" />
+              <line x1="12" y1="20" x2="12" y2="40" />
+              <line x1="20" y1="20" x2="20" y2="40" />
+              <line x1="28" y1="20" x2="28" y2="40" />
+              <line x1="36" y1="20" x2="36" y2="40" />
+              <line x1="5" y1="40" x2="43" y2="40" />
+              <line x1="3" y1="43" x2="45" y2="43" />
+              <circle cx="24" cy="14" r="1.8" fill="currentColor" stroke="none" />
+            </svg>
+          </div>
+          <h3>Our New Home Fund</h3>
+          <p>Help us furnish and build the quiet, joyful sanctuary of our first married home together.</p>
+        </div>
+        <a href="https://withjoy.com/kevin-and-shannel/registry" target="_blank" rel="noopener noreferrer" class="btn-outline">Contribute on WithJoy &rarr;</a>
+      </div>
+
+      <div class="gift-card gift-card-featured">
+        <div>
+          <span class="card-meta-pill" style="margin-bottom: 12px; font-size: 0.65rem;">Ghana & Coastal Escapes</span>
+          <div class="gift-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M12 28a12 12 0 0 1 24 0" />
+              <line x1="24" y1="10" x2="24" y2="13" />
+              <line x1="33.9" y1="14.1" x2="31.8" y2="16.2" />
+              <line x1="38" y1="24" x2="35" y2="24" />
+              <line x1="14.1" y1="14.1" x2="16.2" y2="16.2" />
+              <line x1="10" y1="24" x2="13" y2="24" />
+              <path d="M4 33c5-2 9-2 14 0s9 2 14 0 8-2 12 0" />
+              <path d="M4 38c5-2 9-2 14 0s9 2 14 0 8-2 12 0" />
+              <circle cx="24" cy="28" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+          </div>
+          <h3>Honeymoon Adventures</h3>
+          <p>Gift unforgettable seaside dining, sunset catamaran sails, and excursions in Accra and beyond.</p>
+        </div>
+        <a href="https://withjoy.com/kevin-and-shannel/registry" target="_blank" rel="noopener noreferrer" class="btn-gold">Gift an Experience &rarr;</a>
+      </div>
+
+      <div class="gift-card">
+        <div>
+          <span class="card-meta-pill" style="margin-bottom: 12px; font-size: 0.65rem;">Household Essentials</span>
+          <div class="gift-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <polygon points="14,11 34,11 42,20 24,40 6,20" />
+              <line x1="6" y1="20" x2="42" y2="20" />
+              <line x1="14" y1="11" x2="24" y2="40" />
+              <line x1="34" y1="11" x2="24" y2="40" />
+              <line x1="14" y1="11" x2="24" y2="20" />
+              <line x1="34" y1="11" x2="24" y2="20" />
+            </svg>
+          </div>
+          <h3>Curated Wish-List</h3>
+          <p>Browse handpicked kitchen, dining, and home essentials curated across our favorite brands on WithJoy.</p>
+        </div>
+        <a href="https://withjoy.com/kevin-and-shannel/registry" target="_blank" rel="noopener noreferrer" class="btn-outline">Browse Wish-List &rarr;</a>
+      </div>
+
+      <div class="gift-card">
+        <div>
+          <span class="card-meta-pill" style="margin-bottom: 12px; font-size: 0.65rem;">Bank & Mobile Money</span>
+          <div class="gift-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M24 5L7 12v13c0 11 7.2 21.2 17 24 9.8-2.8 17-13 17-24V12L24 5z" />
+              <rect x="18" y="21" width="12" height="9" rx="1.5" />
+              <path d="M21 21v-3a3 3 0 0 1 6 0v3" />
+              <circle cx="24" cy="25.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </div>
+          <h3>Direct Transfer & MoMo</h3>
+          <p>Prefer direct international wire transfer or Ghanaian Mobile Money (MTN MoMo)? View our account details.</p>
+        </div>
+        <button type="button" class="btn-outline open-bank-modal-btn">View Transfer Details</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WithJoy Concierge Modal Window -->
+  <div id="joyModal" role="dialog" aria-modal="true" aria-label="WithJoy Registry Window">
+    <div class="joy-modal-box" style="max-width: 580px; height: auto;">
+      <div class="joy-modal-header">
+        <h4>Kevin &amp; Shannel's Registry • WithJoy</h4>
+        <button class="joy-modal-close" id="joyModalClose" aria-label="Close Registry Window">&times;</button>
+      </div>
+      <div class="joy-modal-body" style="padding: 44px 36px; text-align: center;">
+        <div style="margin: 0 auto 18px; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; color: var(--gold-primary);">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3" style="width: 100%; height: 100%;">
+            <circle cx="32" cy="32" r="30" stroke="var(--gold-border)" stroke-width="1" />
+            <circle cx="32" cy="32" r="26" stroke="var(--gold-primary)" stroke-width="1" stroke-dasharray="2 2" />
+            <polygon points="24,19 40,19 46,26 32,44 18,26" />
+            <line x1="18" y1="26" x2="46" y2="26" />
+            <line x1="24" y1="19" x2="32" y2="44" />
+            <line x1="40" y1="19" x2="32" y2="44" />
+          </svg>
+        </div>
+        <h3 style="font-size: 1.6rem; margin-bottom: 12px; color: var(--text-charcoal); font-family: var(--font-serif);">Curated on WithJoy</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 30px;">
+          Our wedding registry, honeymoon adventures, and new home funds are hosted directly on WithJoy for encrypted checkout and secure gifting.
+        </p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <a href="https://withjoy.com/kevin-and-shannel/registry" target="_blank" rel="noopener noreferrer" class="btn-gold" style="padding: 14px 28px;">
+            Continue to WithJoy Registry &rarr;
+          </a>
+          <button type="button" class="btn-outline" id="joyModalDismiss" style="padding: 14px 24px;">
+            Return to Website
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bank & Mobile Money (MoMo) Modal -->
+  <div id="bankModal" role="dialog" aria-modal="true" aria-label="Direct Transfer Details">
+    <div class="bank-modal-box">
+      <button class="joy-modal-close" id="bankModalClose" style="position: absolute; top: 16px; right: 20px;" aria-label="Close Bank Details">&times;</button>
+      <h3 style="font-size: 1.8rem; margin-bottom: 8px;">Direct Transfers</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">For electronic bank and local Mobile Money gifts:</p>
+
+      <div class="bank-details-list">
+        <div class="bank-detail-row">
+          <span>Account Holder</span>
+          <span>Kevin & Shannel</span>
+        </div>
+        <div class="bank-detail-row">
+          <span>Bank Name</span>
+          <span>Barclays / Ghana Commercial Bank</span>
+        </div>
+        <div class="bank-detail-row">
+          <span>Sort Code / BIC</span>
+          <span>Available on Request</span>
+        </div>
+        <div class="bank-detail-row">
+          <span>Mobile Money (MoMo)</span>
+          <span>MTN MoMo: +233 (0) XX XXX XXXX</span>
+        </div>
+        <div class="bank-detail-row">
+          <span>Reference</span>
+          <span>KS-Wedding-[YourName]</span>
+        </div>
+      </div>
+
+      <p style="font-size: 0.8rem; color: var(--text-subtle); text-align: center;">
+        Thank you from the bottom of our hearts for your love and generosity.
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= 8. TRAVEL & ACCRA GUEST GUIDE ================= -->
+  <section id="travel">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Guest Concierge</span>
+      <h2>Travel & Stay — Planning Your Trip</h2>
+      <p class="section-subtext">Everything you need to know for a smooth, relaxed journey into the heart of Accra.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <div class="travel-grid reveal-on-scroll">
+      <div class="travel-card">
+        <div class="travel-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <path d="M24 5l4 13 15 3-15 3-4 13-4-13-15-3 15-3 4-13z" />
+            <circle cx="24" cy="21" r="2" fill="currentColor" stroke="none" />
+            <circle cx="24" cy="21" r="15" stroke-dasharray="2 3" stroke-width="0.9" />
+          </svg>
+        </div>
+        <h3>Flights & Arrival</h3>
+        <p>
+          Fly directly into <strong>Kotoka International Airport (ACC)</strong>. Direct and one-stop flights operate regularly from London Heathrow (British Airways), New York, Washington, and European hubs. Please ensure your passport has at least 6 months validity.
+        </p>
+      </div>
+
+      <div class="travel-card">
+        <div class="travel-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <polygon points="24,7 43,18 5,18" />
+            <line x1="5" y1="41" x2="43" y2="41" />
+            <line x1="3" y1="44" x2="45" y2="44" />
+            <line x1="11" y1="18" x2="11" y2="38" />
+            <line x1="18" y1="18" x2="18" y2="38" />
+            <line x1="30" y1="18" x2="30" y2="38" />
+            <line x1="37" y1="18" x2="37" y2="38" />
+            <path d="M20 38v-9a4 4 0 0 1 8 0v9" />
+          </svg>
+        </div>
+        <h3>Hotel Accommodation</h3>
+        <p>
+          A preferred wedding rate block has been reserved at the <strong>Labadi Beach Hotel</strong>. Simply quote the <em>Kevin & Shannel Wedding</em> when booking your room. Alternative nearby luxury stays include Villa Monticello and Lancaster Accra.
+        </p>
+      </div>
+
+      <div class="travel-card">
+        <div class="travel-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="19" />
+            <circle cx="24" cy="24" r="6" />
+            <line x1="24" y1="5" x2="24" y2="18" />
+            <line x1="8.5" y1="33" x2="19.5" y2="27" />
+            <line x1="39.5" y1="33" x2="28.5" y2="27" />
+            <circle cx="24" cy="24" r="1.5" fill="currentColor" stroke="none" />
+          </svg>
+        </div>
+        <h3>Getting Around Accra</h3>
+        <p>
+          Ride-hailing apps like <strong>Uber</strong> and <strong>Bolt</strong> operate smoothly throughout Accra and accept card or cash payments. The hotel concierge can also arrange dedicated chauffeur drivers for day tours and errands.
+        </p>
+      </div>
+    </div>
+
+    <!-- Accra Weather & Travel Note -->
+    <div class="accra-advisory-card reveal-on-scroll">
+      <div class="advisory-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="9" />
+          <line x1="24" y1="4" x2="24" y2="10" />
+          <line x1="24" y1="38" x2="24" y2="44" />
+          <line x1="4" y1="24" x2="10" y2="24" />
+          <line x1="38" y1="24" x2="44" y2="24" />
+          <line x1="9.9" y1="9.9" x2="14.1" y2="14.1" />
+          <line x1="33.9" y1="33.9" x2="38.1" y2="38.1" />
+          <line x1="9.9" y1="38.1" x2="14.1" y2="33.9" />
+          <line x1="33.9" y1="14.1" x2="38.1" y2="9.9" />
+        </svg>
+      </div>
+      <div class="advisory-text">
+        <h4>January in Accra: Sunny & Golden</h4>
+        <p>January brings Ghana's dry, coastal harmattan season with daytime temperatures around 28°C–31°C (82°F–88°F) and gentle tropical sea breezes in the evening. Lightweight, breathable formalwear is ideal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 9. QUESTIONS & ANSWERS (FAQS) ================= -->
+  <section id="faq">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Helpful Answers</span>
+      <h2>Frequently Asked Questions</h2>
+      <p class="section-subtext">Answers to common questions regarding logistics, schedule, and attendance.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <div class="faq-container reveal-on-scroll">
+      <!-- FAQ 1 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button">
+          <span>What time should I arrive for the White Wedding?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Guest arrivals and seating commence at <strong>1:00 PM</strong> at the Labadi Beach Hotel ceremony lawn. The processional and ceremony begin promptly at <strong>2:00 PM</strong>. We recommend arriving by 1:15 PM to enjoy welcome refreshments and find your seat comfortably.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button">
+          <span>Are children invited to the wedding celebration?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            To allow all our guests—especially parents—an opportunity to unwind and revel together, our wedding day celebration will be an <strong>adults-only affair</strong>. We thank you in advance for making arrangements!
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button">
+          <span>When is the RSVP confirmation deadline?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Please confirm your attendance no later than <strong>1st December 2026</strong> using the RSVP form below. Final catering orders and seating charts must be finalized with the hotel immediately after this date.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button">
+          <span>What is the dress code for Tropical Garden Glamour?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Guests are encouraged to wear elegant floor-length evening gowns, formal maxi dresses, sharp tailored tuxedos, or dark tailored suits. Our curated palette consists of black/charcoal, warm gold, emerald olive, and warm terracotta. We kindly request guests avoid wearing white or ivory.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 5 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button">
+          <span>Is the ceremony unplugged?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Yes! We invite you to be completely present with us as we exchange our vows. We kindly request that all phones and cameras remain put away during the ceremony. Our photographers and videographers will capture every memory, and we will happily share high-resolution gallery access with you afterward.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 6 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button">
+          <span>Is there on-site parking and valet service?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>
+            Yes, Labadi Beach Hotel provides complimentary 24-hour guarded on-site parking with valet assistance at the main lobby entrance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 10. RSVP SECTION ================= -->
+  <section id="rsvp">
+    <div class="section-header reveal-on-scroll">
+      <span class="section-eyebrow">Kindly Confirm</span>
+      <h2>RSVP — Join Our Celebration</h2>
+      <p class="section-subtext">We cannot wait to celebrate our union with you in Accra.</p>
+      <div class="gold-divider"><div class="gold-divider-diamond"></div></div>
+    </div>
+
+    <div class="rsvp-box reveal-on-scroll">
+      <div class="rsvp-deadline">
+        <span>Kindly RSVP by 1st December 2026</span>
+      </div>
+
+      <form id="rsvpForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" required placeholder="e.g. Samuel & Grace Mensah" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required placeholder="name@domain.com" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">WhatsApp / Phone Number</label>
+            <input type="tel" id="phone" required placeholder="+233 / +44 / +1 ..." />
+          </div>
+          <div class="form-group">
+            <label for="ceremonies">Attendance Status</label>
+            <select id="ceremonies" required>
+              <option value="" disabled selected>Please select your attendance</option>
+              <option value="Joyfully Attending Full Day">Joyfully Attending Full Celebration (Ceremony & Reception)</option>
+              <option value="Attending Ceremony Only">Attending Ceremony Only (1:00 PM)</option>
+              <option value="Attending Reception Only">Attending Reception Only (5:00 PM)</option>
+              <option value="Regretfully Declining">Regretfully Declining from Afar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="guestCount">Total Number in Party</label>
+            <input type="number" id="guestCount" min="1" max="4" value="1" required />
+          </div>
+          <div class="form-group">
+            <label for="dietary">Dietary Preferences / Allergies</label>
+            <input type="text" id="dietary" placeholder="e.g. Vegetarian, Halal, Shellfish allergy, None" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">A Personal Note for Kevin & Shannel</label>
+          <textarea id="message" rows="3" placeholder="Share a blessing, memory, or note of encouragement..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-gold" style="width: 100%; margin-top: 8px;">
+          Send RSVP Confirmation
+        </button>
+      </form>
+
+      <!-- RSVP Confirmation Screen (Revealed on submission) -->
+      <div id="rsvpSuccess">
+        <h3>Thank You!</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.05rem;">
+          Your RSVP response has been registered. We are deeply touched and can’t wait to celebrate with you on 9th January 2027!
+        </p>
+        <button type="button" class="btn-outline" id="resetRsvpBtn">Submit Another Response</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 11. FOOTER ================= -->
+  <footer>
+    <div class="footer-monogram">K & S</div>
+    <div class="footer-names">Kevin & Shannel</div>
+    <div class="footer-date">Saturday, 9th January 2027 • Labadi Beach Hotel • Accra, Ghana</div>
+    <p class="footer-quote">
+      “I have found the one whom my soul loves.”<br>
+      <span style="font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-primary);">Song of Solomon 3:4</span>
+    </p>
+    <div class="footer-copy">
+      © 2027 Kevin & Shannel Wedding Celebration. All Rights Reserved.
+    </div>
+  </footer>
+
+</body>
+</html>

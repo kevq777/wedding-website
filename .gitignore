@@ -1,0 +1,12 @@
+# Raw camera exports (all converted to optimized WebP in assets/images/)
+Wedding K&S Shoot 1/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependencies & build caches
+node_modules/
+.wrangler/
+.vscode/
