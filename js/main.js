@@ -632,6 +632,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const slides = document.querySelectorAll(".hero-slide");
     const dots = document.querySelectorAll(".hero-slide-dot");
     const container = document.querySelector(".hero-image-container");
+    const heroFrame = document.querySelector(".hero-frame") || container;
     if (!slides.length) return;
 
     let currentIndex = 0;
@@ -672,8 +673,57 @@ document.addEventListener("DOMContentLoaded", () => {
     if (container) {
       container.addEventListener("mouseenter", stopTimer);
       container.addEventListener("mouseleave", startTimer);
-      container.addEventListener("touchstart", stopTimer, { passive: true });
-      container.addEventListener("touchend", startTimer, { passive: true });
+    }
+
+    // Touch / Swipe Support for Mobile & Tablet (matching Our Story timeline photo slider)
+    if (heroFrame) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      heroFrame.addEventListener(
+        "touchstart",
+        (e) => {
+          stopTimer();
+          if (e.changedTouches && e.changedTouches.length > 0) {
+            const touch = e.changedTouches[0];
+            touchStartX = touch.clientX !== undefined ? touch.clientX : touch.screenX;
+            touchStartY = touch.clientY !== undefined ? touch.clientY : touch.screenY;
+          }
+        },
+        { passive: true }
+      );
+
+      heroFrame.addEventListener(
+        "touchend",
+        (e) => {
+          if (e.changedTouches && e.changedTouches.length > 0) {
+            const touch = e.changedTouches[0];
+            const touchEndX = touch.clientX !== undefined ? touch.clientX : touch.screenX;
+            const touchEndY = touch.clientY !== undefined ? touch.clientY : touch.screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+
+            // Trigger if horizontal swipe is dominant and exceeds 35px threshold
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+              if (diffX > 0) {
+                goToSlide(currentIndex + 1);
+              } else {
+                goToSlide(currentIndex - 1);
+              }
+            }
+          }
+          startTimer();
+        },
+        { passive: true }
+      );
+
+      heroFrame.addEventListener(
+        "touchcancel",
+        () => {
+          startTimer();
+        },
+        { passive: true }
+      );
     }
 
     startTimer();
@@ -797,14 +847,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Touch / Swipe Support for Mobile & Tablet
       let touchStartX = 0;
-      let touchEndX = 0;
       let touchStartY = 0;
 
       frame.addEventListener(
         "touchstart",
         (e) => {
-          touchStartX = e.changedTouches[0].screenX;
-          touchStartY = e.changedTouches[0].screenY;
+          if (e.changedTouches && e.changedTouches.length > 0) {
+            const touch = e.changedTouches[0];
+            touchStartX = touch.clientX !== undefined ? touch.clientX : touch.screenX;
+            touchStartY = touch.clientY !== undefined ? touch.clientY : touch.screenY;
+          }
         },
         { passive: true }
       );
@@ -812,17 +864,20 @@ document.addEventListener("DOMContentLoaded", () => {
       frame.addEventListener(
         "touchend",
         (e) => {
-          touchEndX = e.changedTouches[0].screenX;
-          const touchEndY = e.changedTouches[0].screenY;
-          const diffX = touchStartX - touchEndX;
-          const diffY = touchStartY - touchEndY;
+          if (e.changedTouches && e.changedTouches.length > 0) {
+            const touch = e.changedTouches[0];
+            const touchEndX = touch.clientX !== undefined ? touch.clientX : touch.screenX;
+            const touchEndY = touch.clientY !== undefined ? touch.clientY : touch.screenY;
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
 
-          // Trigger if horizontal swipe is dominant and exceeds 35px threshold
-          if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
-            if (diffX > 0) {
-              updateSlide(currentIndex + 1);
-            } else {
-              updateSlide(currentIndex - 1);
+            // Trigger if horizontal swipe is dominant and exceeds 35px threshold
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+              if (diffX > 0) {
+                updateSlide(currentIndex + 1);
+              } else {
+                updateSlide(currentIndex - 1);
+              }
             }
           }
         },
