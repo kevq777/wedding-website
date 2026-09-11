@@ -30,50 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* ==========================================================================
-     1. INTEGRATED CARTIER MONOGRAM VAULT GATE & INVITATION OPENING
+     1. BESPOKE LUXURY PASSWORD GATE (SINGLE-PHASE ENTRY)
      ========================================================================== */
   const gate = document.getElementById("passwordGate");
   const gateForm = document.getElementById("gateForm");
   const gatePassword = document.getElementById("gatePassword");
   const gateError = document.getElementById("gateError");
-  const cartierVault = document.getElementById("cartierVault");
-  const vaultLid = document.getElementById("vaultLid");
-  const vaultInterior = document.getElementById("vaultInterior");
-  const vaultClaspDial = document.getElementById("vaultClaspDial");
-  const vaultClaspBars = document.getElementById("vaultClaspBars");
-  const vaultEnterBtn = document.getElementById("vaultEnterBtn");
-  const vaultClaspBtn = document.getElementById("vaultClaspBtn");
+  const gateCard = document.getElementById("gateCard");
 
   // Check if session is already authenticated
   if (sessionStorage.getItem("wedding_unlocked") === "true") {
     gate.classList.add("unlocked");
   }
 
-  function triggerVaultUnlock() {
-    // 1. Rotate Cartier Clasp 90deg with gold glow & retract latch bars
-    if (vaultClaspDial) vaultClaspDial.classList.add("unlocked");
-    if (vaultClaspBars) vaultClaspBars.classList.add("retracted");
+  function unlockGate() {
     if (gateError) gateError.style.display = "none";
-
-    // 2. Open Vault Lid in 3D & reveal the formal invitation presentation
-    setTimeout(() => {
-      if (vaultLid) {
-        vaultLid.classList.add("opened");
-        setTimeout(() => {
-          if (vaultLid.classList.contains("opened")) {
-            vaultLid.style.display = "none";
-          }
-        }, 800);
-      }
-      if (vaultInterior) vaultInterior.classList.add("revealed");
-    }, 450);
-
-    // 3. Mark session unlocked in sessionStorage
     sessionStorage.setItem("wedding_unlocked", "true");
-  }
-
-  function dismissVaultToSite() {
-    gate.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s ease";
     gate.classList.add("unlocked");
   }
 
@@ -82,11 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const entered = gatePassword.value.trim();
       if (entered.toUpperCase() === CONFIG.password.toUpperCase()) {
-        triggerVaultUnlock();
+        unlockGate();
       } else {
-        if (cartierVault) {
-          cartierVault.classList.add("lock-error-shake");
-          setTimeout(() => cartierVault.classList.remove("lock-error-shake"), 500);
+        if (gateCard) {
+          gateCard.classList.add("lock-error-shake");
+          setTimeout(() => gateCard.classList.remove("lock-error-shake"), 500);
         }
         if (gateError) gateError.style.display = "block";
         gatePassword.value = "";
@@ -95,44 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (vaultClaspBtn) {
-    vaultClaspBtn.addEventListener("click", () => {
-      const entered = gatePassword.value.trim();
-      if (entered.toUpperCase() === CONFIG.password.toUpperCase()) {
-        triggerVaultUnlock();
-      } else {
-        gatePassword.focus();
-      }
-    });
-  }
-
-  if (vaultEnterBtn) {
-    vaultEnterBtn.addEventListener("click", dismissVaultToSite);
-  }
-
-  // Global helpers to replay or view the Cartier invitation anytime
-  window.openCartierInvitation = function () {
+  // Developer / Couple helper to re-lock and preview the gate anytime
+  window.openPasswordGate = function () {
+    sessionStorage.removeItem("wedding_unlocked");
     gate.classList.remove("unlocked");
-    if (cartierVault) cartierVault.classList.remove("lock-error-shake");
-    if (vaultLid) {
-      vaultLid.style.display = "";
-      vaultLid.classList.remove("opened");
+    if (gateCard) gateCard.classList.remove("lock-error-shake");
+    if (gatePassword) {
+      gatePassword.value = "";
+      gatePassword.focus();
     }
-    if (vaultInterior) vaultInterior.classList.remove("revealed");
-    if (vaultClaspDial) vaultClaspDial.classList.remove("unlocked");
-    if (vaultClaspBars) vaultClaspBars.classList.remove("retracted");
-    if (gatePassword) gatePassword.value = "";
-  };
-
-  window.viewOpenedInvitation = function () {
-    gate.classList.remove("unlocked");
-    if (vaultLid) {
-      vaultLid.classList.add("opened");
-      vaultLid.style.display = "none";
-    }
-    if (vaultInterior) vaultInterior.classList.add("revealed");
-    if (vaultClaspDial) vaultClaspDial.classList.add("unlocked");
-    if (vaultClaspBars) vaultClaspBars.classList.add("retracted");
+    if (gateError) gateError.style.display = "none";
   };
 
   /* ==========================================================================
