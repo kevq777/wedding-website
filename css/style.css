@@ -1113,7 +1113,7 @@ nav.scrolled {
   padding: 10px 10px 14px;
   border-radius: 3px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  max-width: 320px;
+  max-width: 330px;
   width: 100%;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
   user-select: none;
@@ -1157,8 +1157,9 @@ nav.scrolled {
 
 .story-slide img {
   width: 100%;
-  height: 290px;
+  height: 360px;
   object-fit: cover;
+  object-position: center 20%;
   display: block;
   pointer-events: none;
 }
@@ -1428,8 +1429,9 @@ nav.scrolled {
     max-width: 100%;
     padding: 8px 8px 12px;
   }
-  .story-frame-inner img {
-    height: 240px;
+  .story-frame-inner img,
+  .story-slide img {
+    height: 330px;
   }
 }
 
