@@ -948,89 +948,41 @@ nav.scrolled {
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
 }
 
-/* Rotating Artisanal Tourbillon Monogram Seal */
-.hero-monogram-seal {
+/* Subtle Stationery Watermark Crest in Hero Background */
+.hero-watermark-crest {
   position: absolute;
-  top: -22px;
-  right: -22px;
-  width: 110px;
-  height: 110px;
-  z-index: 5;
-  pointer-events: none;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.65));
-}
-
-.seal-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.seal-outer-ring {
-  fill: rgba(16, 16, 16, 0.92);
-  stroke: var(--gold-primary);
-  stroke-width: 1.2px;
-}
-
-.seal-inner-ring {
-  fill: none;
-  stroke: rgba(212, 175, 55, 0.45);
-  stroke-width: 0.8px;
-  stroke-dasharray: 2 2;
-}
-
-.seal-rotating-text {
-  transform-origin: 60px 60px;
-  animation: tourbillonSpin 24s linear infinite;
-}
-
-.seal-text {
-  font-family: var(--font-heading, "Montserrat", sans-serif);
-  font-size: 7px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  fill: var(--gold-light, #F5E6BE);
-  text-transform: uppercase;
-}
-
-@keyframes tourbillonSpin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.seal-center-monogram {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 48%;
+  left: 36%;
   transform: translate(-50%, -50%);
-  font-family: var(--font-serif, "Cinzel", serif);
-  font-size: 0.88rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--gold-primary);
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  width: 560px;
+  max-width: 85vw;
+  height: auto;
+  opacity: 0.045;
   pointer-events: none;
-  display: flex;
+  z-index: 0;
+  filter: blur(0.5px);
+  user-select: none;
+}
+
+.hero-watermark-crest img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Refined Crest Crown Above Eyebrow */
+.hero-crest-crown {
+  margin-bottom: 16px;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
 }
 
-.seal-center-monogram span {
-  font-size: 0.72rem;
-  font-style: italic;
-  margin: 0 1px;
-  color: var(--gold-light);
-}
-
-.seal-crest-img {
-  width: 32px;
-  height: 44px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+.hero-crest-img {
+  width: 44px;
+  height: auto;
+  opacity: 0.88;
+  filter: drop-shadow(0 2px 8px rgba(197, 160, 89, 0.25));
+  display: block;
 }
 
 /* Floating Gold Pill on Hero */
@@ -2277,17 +2229,9 @@ footer {
   .hero-slide-dot.active {
     width: 18px;
   }
-  .hero-monogram-seal {
-    top: -14px;
-    right: 4px;
-    width: 86px;
-    height: 86px;
-  }
-  .seal-text {
-    font-size: 7px;
-  }
-  .seal-center-monogram {
-    font-size: 0.76rem;
+  .hero-crest-crown {
+    display: flex;
+    justify-content: center;
   }
   .form-row {
     grid-template-columns: 1fr;
