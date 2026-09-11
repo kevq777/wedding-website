@@ -1005,90 +1005,328 @@ nav.scrolled {
   z-index: 3;
 }
 
-/* ================= 2. OUR STORY SECTION ================= */
-.story-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 70px;
+/* ================= 2. OUR STORY (CHRONOLOGICAL BRANCHING TIMELINE) ================= */
+.story-timeline {
+  position: relative;
+  max-width: 1100px;
+  margin: 60px auto 0;
+  padding: 40px 0;
+}
+
+/* Central Continuous Golden Hairline Spine */
+.story-timeline::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(197, 160, 89, 0.4) 6%,
+    var(--gold-primary) 50%,
+    rgba(197, 160, 89, 0.4) 94%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* Timeline Node Row */
+.story-node {
+  position: relative;
+  display: flex;
   align-items: center;
-}
-
-.drop-cap::first-letter {
-  float: left;
-  font-family: var(--font-serif);
-  font-size: 4.2rem;
-  line-height: 0.8;
-  padding-top: 6px;
-  padding-right: 14px;
-  padding-bottom: 4px;
-  color: var(--gold-primary);
-}
-
-.story-text p {
-  color: var(--text-muted);
-  margin-bottom: 22px;
-  font-size: 1.02rem;
-  line-height: 1.85;
-}
-
-.story-quote-card {
-  border-left: 2px solid var(--gold-primary);
-  padding: 16px 24px;
-  margin: 28px 0;
-  background: rgba(197, 160, 89, 0.05);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--text-charcoal);
-}
-
-.story-image-mosaic {
-  position: relative;
-}
-
-.story-main-img-card {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid var(--gold-border);
-  box-shadow: var(--shadow-card);
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-.story-main-img-card img {
+  margin-bottom: 96px;
   width: 100%;
-  height: 520px;
+}
+
+.story-node:last-child {
+  margin-bottom: 30px;
+}
+
+/* Spine Diamond Marker */
+.story-node-marker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  background: var(--bg-alabaster, #FAF8F5);
+  border: 1px solid var(--gold-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-shadow: 0 0 16px rgba(197, 160, 89, 0.35);
+}
+
+.story-node-marker-diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--gold-primary);
+  transform: rotate(45deg);
+  box-shadow: 0 0 6px rgba(197, 160, 89, 0.7);
+}
+
+/* Branching Structure */
+/* Branch Left: Media on Left, Content on Right */
+.story-node.branch-left .story-node-media {
+  width: calc(50% - 48px);
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 28px;
+}
+
+.story-node.branch-left .story-node-content {
+  width: calc(50% - 48px);
+  margin-left: auto;
+  padding-left: 28px;
+  text-align: left;
+}
+
+/* Branch Right: Content on Left, Media on Right */
+.story-node.branch-right .story-node-media {
+  width: calc(50% - 48px);
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 28px;
+  order: 2;
+}
+
+.story-node.branch-right .story-node-content {
+  width: calc(50% - 48px);
+  padding-right: 28px;
+  text-align: right;
+  order: 1;
+}
+
+/* Compact Heirloom Photo Card */
+.story-frame {
+  position: relative;
+  background: #FAF8F5;
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  padding: 10px 10px 14px;
+  border-radius: 3px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  max-width: 310px;
+  width: 100%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.story-node.branch-left .story-frame {
+  transform: rotate(-1.5deg);
+}
+
+.story-node.branch-right .story-frame {
+  transform: rotate(1.5deg);
+}
+
+.story-frame:hover {
+  transform: rotate(0deg) translateY(-6px) scale(1.02) !important;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14);
+  border-color: var(--gold-primary);
+}
+
+.story-frame-inner {
+  overflow: hidden;
+  border-radius: 2px;
+  background: #EFECE6;
+  position: relative;
+}
+
+.story-frame-inner img {
+  width: 100%;
+  height: 290px;
   object-fit: cover;
+  display: block;
   transition: transform 0.6s ease;
 }
 
-.story-main-img-card:hover img {
-  transform: scale(1.02);
+.story-frame:hover .story-frame-inner img {
+  transform: scale(1.04);
 }
 
-.story-badge-overlay {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(250, 248, 245, 0.94);
-  backdrop-filter: blur(6px);
-  padding: 10px 18px;
-  border-radius: 2px;
-  border-left: 3px solid var(--gold-primary);
+/* Paired mini-frames */
+.story-frame-duo {
+  display: flex;
+  gap: 12px;
+  max-width: 370px;
+  width: 100%;
 }
 
-.story-badge-overlay h4 {
-  font-size: 0.95rem;
+.story-frame-duo .story-frame {
+  max-width: calc(50% - 6px);
+  padding: 8px 8px 12px;
+}
+
+.story-frame-duo .story-frame-inner img {
+  height: 190px;
+}
+
+/* Photo Caption below image */
+.story-frame-caption {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-charcoal);
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.story-frame-caption span {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  color: var(--gold-primary);
+  letter-spacing: 0.08em;
+  margin-top: 3px;
+  text-transform: none;
+}
+
+/* Story Narrative Content Card */
+.story-node-card {
+  background: var(--bg-card);
+  border: 1px solid var(--gold-border);
+  padding: 34px 30px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.story-node-card:hover {
+  border-color: var(--gold-primary);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.story-milestone-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--gold-primary);
+  font-weight: 600;
+  margin-bottom: 10px;
+  background: rgba(197, 160, 89, 0.08);
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.story-milestone-title {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  color: var(--text-charcoal);
+  margin-bottom: 14px;
+  letter-spacing: 0.03em;
+  line-height: 1.25;
+}
+
+.story-node-card p {
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.82;
+  margin-bottom: 0;
+}
+
+.story-milestone-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
   font-weight: 500;
 }
 
-.story-badge-overlay span {
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.story-milestone-location svg {
   color: var(--gold-primary);
 }
+
+/* Timeline Responsive Breakpoints */
+@media (max-width: 900px) {
+  .story-timeline::before {
+    left: 28px;
+  }
+  .story-node {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 68px;
+    margin-bottom: 64px;
+  }
+  .story-node-marker {
+    left: 28px;
+    top: 24px;
+    transform: translate(-50%, 0);
+  }
+  .story-node.branch-left .story-node-media,
+  .story-node.branch-right .story-node-media,
+  .story-node.branch-left .story-node-content,
+  .story-node.branch-right .story-node-content {
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
+    text-align: left;
+    order: unset;
+  }
+  .story-node.branch-left .story-node-media,
+  .story-node.branch-right .story-node-media {
+    margin-bottom: 22px;
+    justify-content: flex-start;
+  }
+  .story-node.branch-left .story-frame,
+  .story-node.branch-right .story-frame {
+    transform: none;
+    max-width: 310px;
+  }
+  .story-frame-duo {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .story-timeline::before {
+    left: 18px;
+  }
+  .story-node {
+    padding-left: 44px;
+    margin-bottom: 50px;
+  }
+  .story-node-marker {
+    left: 18px;
+    width: 28px;
+    height: 28px;
+    top: 20px;
+  }
+  .story-node-marker-diamond {
+    width: 8px;
+    height: 8px;
+  }
+  .story-node-card {
+    padding: 24px 18px;
+  }
+  .story-milestone-title {
+    font-size: 1.35rem;
+  }
+  .story-frame {
+    max-width: 100%;
+    padding: 8px 8px 12px;
+  }
+  .story-frame-inner img {
+    height: 240px;
+  }
+}
+
 
 /* Full Width Cinematic Transition Banner */
 .cinematic-banner {
@@ -2192,10 +2430,6 @@ footer {
   }
   .hero-actions {
     justify-content: center;
-  }
-  .story-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
   }
   .gallery-item.landscape {
     grid-column: span 1;
