@@ -1105,7 +1105,7 @@ nav.scrolled {
   order: 1;
 }
 
-/* Compact Heirloom Photo Card */
+/* Compact Heirloom Photo Card & Interactive Phase Slider */
 .story-frame {
   position: relative;
   background: #FAF8F5;
@@ -1113,9 +1113,10 @@ nav.scrolled {
   padding: 10px 10px 14px;
   border-radius: 3px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  max-width: 310px;
+  max-width: 320px;
   width: 100%;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  user-select: none;
 }
 
 .story-node.branch-left .story-frame {
@@ -1137,40 +1138,138 @@ nav.scrolled {
   border-radius: 2px;
   background: #EFECE6;
   position: relative;
+  touch-action: pan-y;
 }
 
-.story-frame-inner img {
+/* Horizontal Multi-Photo Slider Track */
+.story-slider-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.story-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  position: relative;
+}
+
+.story-slide img {
   width: 100%;
   height: 290px;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s ease;
+  pointer-events: none;
 }
 
-.story-frame:hover .story-frame-inner img {
-  transform: scale(1.04);
-}
-
-/* Paired mini-frames */
-.story-frame-duo {
+/* Luxury Prev / Next Chevrons */
+.story-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.68);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(197, 160, 89, 0.5);
+  color: #FAF8F5;
   display: flex;
-  gap: 12px;
-  max-width: 370px;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.25s ease;
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.75;
 }
 
-.story-frame-duo .story-frame {
-  max-width: calc(50% - 6px);
-  padding: 8px 8px 12px;
+.story-slider-btn.prev {
+  left: 8px;
 }
 
-.story-frame-duo .story-frame-inner img {
-  height: 190px;
+.story-slider-btn.next {
+  right: 8px;
 }
 
-/* Photo Caption below image */
-.story-frame-caption {
+.story-slider-btn:hover {
+  background: var(--gold-primary);
+  color: #161616;
+  opacity: 1;
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 0 14px rgba(197, 160, 89, 0.6);
+  border-color: #FAF8F5;
+}
+
+/* Slide Counter Pill */
+.story-slider-counter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: #FAF8F5;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Pagination Capsule Dots */
+.story-slider-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
   margin-top: 10px;
+}
+
+.story-slider-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.32);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.story-slider-dot:hover {
+  background: var(--gold-primary);
+}
+
+.story-slider-dot.active {
+  width: 18px;
+  border-radius: 4px;
+  background: var(--gold-primary);
+  box-shadow: 0 0 8px rgba(197, 160, 89, 0.6);
+}
+
+/* Dynamic Photo Caption synchronized with slide */
+.story-frame-captions {
+  position: relative;
+  min-height: 42px;
+  margin-top: 8px;
+}
+
+.story-frame-captions .story-frame-caption {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  margin-top: 0;
   font-family: var(--font-display);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
@@ -1181,7 +1280,7 @@ nav.scrolled {
   line-height: 1.35;
 }
 
-.story-frame-caption span {
+.story-frame-captions .story-frame-caption span {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.68rem;
@@ -1189,6 +1288,13 @@ nav.scrolled {
   letter-spacing: 0.08em;
   margin-top: 3px;
   text-transform: none;
+}
+
+.story-frame-captions .story-frame-caption.active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 /* Story Narrative Content Card */

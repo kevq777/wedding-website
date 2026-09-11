@@ -731,9 +731,110 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Initialize living hero features
+  /* ==========================================================================
+     8. OUR STORY RELATIONSHIP PHASE SLIDERS
+     ========================================================================== */
+  function initStorySliders() {
+    const sliderFrames = document.querySelectorAll(".story-slider-frame");
+    if (!sliderFrames.length) return;
+
+    sliderFrames.forEach((frame) => {
+      const track = frame.querySelector(".story-slider-track");
+      const slides = frame.querySelectorAll(".story-slide");
+      const prevBtn = frame.querySelector(".story-slider-btn.prev");
+      const nextBtn = frame.querySelector(".story-slider-btn.next");
+      const dots = frame.querySelectorAll(".story-slider-dot");
+      const counter = frame.querySelector(".story-slider-counter");
+      const captions = frame.querySelectorAll(".story-frame-captions .story-frame-caption");
+
+      if (!track || !slides.length) return;
+
+      let currentIndex = 0;
+      const total = slides.length;
+
+      function updateSlide(newIndex) {
+        currentIndex = (newIndex + total) % total;
+
+        // Slide the track
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        // Update counter
+        if (counter) {
+          counter.textContent = `${currentIndex + 1} / ${total}`;
+        }
+
+        // Update dots
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle("active", idx === currentIndex);
+        });
+
+        // Update captions
+        captions.forEach((caption, idx) => {
+          caption.classList.toggle("active", idx === currentIndex);
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          updateSlide(currentIndex - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          updateSlide(currentIndex + 1);
+        });
+      }
+
+      dots.forEach((dot, idx) => {
+        dot.addEventListener("click", (e) => {
+          e.stopPropagation();
+          updateSlide(idx);
+        });
+      });
+
+      // Touch / Swipe Support for Mobile & Tablet
+      let touchStartX = 0;
+      let touchEndX = 0;
+      let touchStartY = 0;
+
+      frame.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+        },
+        { passive: true }
+      );
+
+      frame.addEventListener(
+        "touchend",
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const touchEndY = e.changedTouches[0].screenY;
+          const diffX = touchStartX - touchEndX;
+          const diffY = touchStartY - touchEndY;
+
+          // Trigger if horizontal swipe is dominant and exceeds 35px threshold
+          if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+            if (diffX > 0) {
+              updateSlide(currentIndex + 1);
+            } else {
+              updateSlide(currentIndex - 1);
+            }
+          }
+        },
+        { passive: true }
+      );
+    });
+  }
+
+  // Initialize living hero & timeline features
   initHeroStardust();
   initHeroSlider();
   initHeroParallax();
+  initStorySliders();
 });
 
