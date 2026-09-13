@@ -450,8 +450,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "QUAYE-FAM": { tier: "family", maxGuests: 4, label: "Quaye Family Delegation", guest: "Quaye Family" },
     "VIP-DELEGATION": { tier: "family", maxGuests: 5, label: "Special Family / Group Delegation", guest: "" },
 
-    // Backup code matching gate password
-    "FOREVER2027": { tier: "plus-one", maxGuests: 2, label: "Kevin & Shannel Guest Invitation", guest: "" }
+    // --- Bride & Groom Mastercodes (Exempt from single-use lock, flexible party up to 10) ---
+    "FOREVER2027": { tier: "family", maxGuests: 10, label: "Bride & Groom Master Pass", guest: "Kevin & Shannel", isMaster: true },
+    "KS-VIP": { tier: "family", maxGuests: 10, label: "Bride & Groom VIP Pass", guest: "Kevin & Shannel", isMaster: true },
+    "KS-MASTER": { tier: "family", maxGuests: 10, label: "Bride & Groom Master Pass", guest: "Kevin & Shannel", isMaster: true }
   };
 
   const rsvpPasscodeBlock = document.getElementById("rsvpPasscodeBlock");
@@ -582,27 +584,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Check single-use redemption history
-    let redeemed = {};
-    try {
-      redeemed = JSON.parse(localStorage.getItem("wedding_redeemed_codes") || "{}");
-    } catch (e) {
-      redeemed = {};
-    }
-
-    if (redeemed[code]) {
-      const rec = redeemed[code];
-      showRsvpStatus("warning", `
-        This invitation code (<strong>${code}</strong>) was already registered on ${rec.date || "a previous date"} for <strong>${rec.fullName || "a guest"}</strong>.<br>
-        <span style="font-size: 0.82rem; margin-top: 6px; display: inline-block;">
-          If you need to make changes to your registered party, please contact Kevin &amp; Shannel directly.
-        </span>
-      `);
-      if (rsvpPasscodeBlock) rsvpPasscodeBlock.classList.remove("verified");
-      if (rsvpForm) rsvpForm.classList.remove("active");
-      return;
-    }
-
     // Check validity in invitation registry
     const inv = RSVP_INVITATIONS[code];
     if (!inv) {
@@ -615,6 +596,29 @@ document.addEventListener("DOMContentLoaded", () => {
       if (rsvpPasscodeBlock) rsvpPasscodeBlock.classList.remove("verified");
       if (rsvpForm) rsvpForm.classList.remove("active");
       return;
+    }
+
+    // Check single-use redemption history (Mastercodes are exempt)
+    if (!inv.isMaster) {
+      let redeemed = {};
+      try {
+        redeemed = JSON.parse(localStorage.getItem("wedding_redeemed_codes") || "{}");
+      } catch (e) {
+        redeemed = {};
+      }
+
+      if (redeemed[code]) {
+        const rec = redeemed[code];
+        showRsvpStatus("warning", `
+          This invitation code (<strong>${code}</strong>) was already registered on ${rec.date || "a previous date"} for <strong>${rec.fullName || "a guest"}</strong>.<br>
+          <span style="font-size: 0.82rem; margin-top: 6px; display: inline-block;">
+            If you need to make changes to your registered party, please contact Kevin &amp; Shannel directly.
+          </span>
+        `);
+        if (rsvpPasscodeBlock) rsvpPasscodeBlock.classList.remove("verified");
+        if (rsvpForm) rsvpForm.classList.remove("active");
+        return;
+      }
     }
 
     // Success: Unlock form and set up tier
@@ -694,18 +698,20 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Local storage error:", err);
       }
 
-      // Record passcode redemption to enforce single-use
-      try {
-        const redeemed = JSON.parse(localStorage.getItem("wedding_redeemed_codes") || "{}");
-        redeemed[code] = {
-          date: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }),
-          fullName: rsvpData.fullName,
-          guestCount: rsvpData.guestCount,
-          attendance: rsvpData.attendance
-        };
-        localStorage.setItem("wedding_redeemed_codes", JSON.stringify(redeemed));
-      } catch (err) {
-        console.error("Redemption storage error:", err);
+      // Record passcode redemption to enforce single-use (Exempt for mastercodes)
+      if (!RSVP_INVITATIONS[code]?.isMaster) {
+        try {
+          const redeemed = JSON.parse(localStorage.getItem("wedding_redeemed_codes") || "{}");
+          redeemed[code] = {
+            date: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }),
+            fullName: rsvpData.fullName,
+            guestCount: rsvpData.guestCount,
+            attendance: rsvpData.attendance
+          };
+          localStorage.setItem("wedding_redeemed_codes", JSON.stringify(redeemed));
+        } catch (err) {
+          console.error("Redemption storage error:", err);
+        }
       }
 
       // Async POST to Google Sheet Webhook if configured
