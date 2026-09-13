@@ -386,6 +386,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Copy to clipboard helper for bank details
+  const bankCopyBtns = document.querySelectorAll(".copy-field-btn");
+  bankCopyBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const textToCopy = btn.getAttribute("data-copy") || btn.closest(".copyable-text")?.dataset.copy;
+      if (!textToCopy) return;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btn.innerHTML;
+        btn.classList.add("copied");
+        btn.innerHTML = "Copied!";
+        setTimeout(() => {
+          btn.classList.remove("copied");
+          btn.innerHTML = originalText;
+        }, 1800);
+      }).catch((err) => {
+        console.warn("Clipboard copy note:", err);
+      });
+    });
+  });
+
   /* ==========================================================================
      9. TIERED INVITE-ONLY RSVP & PASSCODE GATE
      ========================================================================== */

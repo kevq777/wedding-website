@@ -1544,8 +1544,8 @@
               <circle cx="24" cy="25.5" r="1" fill="currentColor" stroke="none" />
             </svg>
           </div>
-          <h3>Direct Transfer & MoMo</h3>
-          <p>Prefer direct international wire transfer or Ghanaian Mobile Money (MTN MoMo)? View our account details.</p>
+          <h3>Direct Transfer &amp; MoMo</h3>
+          <p>Direct electronic bank transfer for UK (GBP) &amp; Ghana (GHS), plus Ghanaian Mobile Money (MTN MoMo) updates.</p>
         </div>
         <button type="button" class="btn-outline open-bank-modal-btn">View Transfer Details</button>
       </div>
@@ -1590,34 +1590,107 @@
   <div id="bankModal" role="dialog" aria-modal="true" aria-label="Direct Transfer Details">
     <div class="bank-modal-box">
       <button class="joy-modal-close" id="bankModalClose" style="position: absolute; top: 16px; right: 20px;" aria-label="Close Bank Details">&times;</button>
-      <h3 style="font-size: 1.8rem; margin-bottom: 8px;">Direct Transfers</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem;">For electronic bank and local Mobile Money gifts:</p>
+      
+      <div style="text-align: center; margin-bottom: 22px;">
+        <span class="card-meta-pill" style="margin-bottom: 8px; font-size: 0.68rem; letter-spacing: 0.15em;">Gifts &amp; Contributions</span>
+        <h3 style="font-family: var(--font-serif); font-size: 1.75rem; margin: 6px 0 8px; color: var(--text-charcoal);">Direct Bank Transfers</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin: 0 auto; max-width: 440px;">
+          For family and friends who prefer direct electronic bank transfer in the UK or Ghana:
+        </p>
+      </div>
 
-      <div class="bank-details-list">
-        <div class="bank-detail-row">
-          <span>Account Holder</span>
-          <span>Kevin & Shannel</span>
+      <!-- Account 1: UK Account (Kevin Quist) -->
+      <div class="bank-account-card">
+        <div class="bank-account-header">
+          <div class="bank-flag-title">
+            <span class="bank-flag">🇬🇧</span>
+            <div>
+              <div class="bank-account-country">United Kingdom (GBP)</div>
+              <div class="bank-account-type">UK Bank Transfer</div>
+            </div>
+          </div>
+          <span class="bank-badge">Kevin's Account</span>
         </div>
-        <div class="bank-detail-row">
-          <span>Bank Name</span>
-          <span>Barclays / Ghana Commercial Bank</span>
-        </div>
-        <div class="bank-detail-row">
-          <span>Sort Code / BIC</span>
-          <span>Available on Request</span>
-        </div>
-        <div class="bank-detail-row">
-          <span>Mobile Money (MoMo)</span>
-          <span>MTN MoMo: +233 (0) XX XXX XXXX</span>
-        </div>
-        <div class="bank-detail-row">
-          <span>Reference</span>
-          <span>KS-Wedding-[YourName]</span>
+        <div class="bank-details-list">
+          <div class="bank-detail-row">
+            <span>Beneficiary</span>
+            <span class="copyable-text" data-copy="Kevin Quist">
+              <span>Kevin Quist</span>
+              <button type="button" class="copy-field-btn" data-copy="Kevin Quist" title="Copy name" aria-label="Copy beneficiary name">Copy</button>
+            </span>
+          </div>
+          <div class="bank-detail-row">
+            <span>Sort Code</span>
+            <span class="copyable-text" data-copy="04-00-75">
+              <span>04-00-75</span>
+              <button type="button" class="copy-field-btn" data-copy="04-00-75" title="Copy sort code" aria-label="Copy sort code">Copy</button>
+            </span>
+          </div>
+          <div class="bank-detail-row">
+            <span>Account Number</span>
+            <span class="copyable-text" data-copy="60646578">
+              <span>60646578</span>
+              <button type="button" class="copy-field-btn" data-copy="60646578" title="Copy account number" aria-label="Copy account number">Copy</button>
+            </span>
+          </div>
+          <div class="bank-detail-row">
+            <span>Reference</span>
+            <span style="font-family: inherit; font-size: 0.84rem; color: var(--text-muted);">KS-[Your Name]</span>
+          </div>
         </div>
       </div>
 
-      <p style="font-size: 0.8rem; color: var(--text-subtle); text-align: center;">
-        Thank you from the bottom of our hearts for your love and generosity.
+      <!-- Account 2: Ghana Account (Shannel Naa Larbia Darku) -->
+      <div class="bank-account-card">
+        <div class="bank-account-header">
+          <div class="bank-flag-title">
+            <span class="bank-flag">🇬🇭</span>
+            <div>
+              <div class="bank-account-country">Ghana (GHS)</div>
+              <div class="bank-account-type">Local Bank Transfer</div>
+            </div>
+          </div>
+          <span class="bank-badge">Shannel's Account</span>
+        </div>
+        <div class="bank-details-list">
+          <div class="bank-detail-row">
+            <span>Beneficiary</span>
+            <span class="copyable-text" data-copy="Shannel Naa Larbia Darku">
+              <span>Shannel Naa Larbia Darku</span>
+              <button type="button" class="copy-field-btn" data-copy="Shannel Naa Larbia Darku" title="Copy name" aria-label="Copy beneficiary name">Copy</button>
+            </span>
+          </div>
+          <div class="bank-detail-row">
+            <span>Bank Name</span>
+            <span style="font-family: inherit; font-size: 0.9rem;">Zenith Bank</span>
+          </div>
+          <div class="bank-detail-row">
+            <span>Account Number</span>
+            <span class="copyable-text" data-copy="4010192593">
+              <span>4010192593</span>
+              <button type="button" class="copy-field-btn" data-copy="4010192593" title="Copy account number" aria-label="Copy account number">Copy</button>
+            </span>
+          </div>
+          <div class="bank-detail-row">
+            <span>Reference</span>
+            <span style="font-family: inherit; font-size: 0.84rem; color: var(--text-muted);">KS-[Your Name]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Money Notice -->
+      <div class="bank-momo-notice">
+        <div class="momo-notice-icon">📱</div>
+        <div class="momo-notice-content">
+          <div class="momo-notice-title">Ghanaian Mobile Money (MTN MoMo)</div>
+          <p class="momo-notice-text">
+            Our local Mobile Money numbers will be made available once we arrive in Ghana and have our Ghanaian numbers active. In the interim, please feel free to <strong>reach out to Kevin or Shannel privately via WhatsApp</strong> for MoMo details.
+          </p>
+        </div>
+      </div>
+
+      <p style="font-size: 0.8rem; color: var(--text-subtle); text-align: center; margin-top: 20px; line-height: 1.5;">
+        Thank you from the bottom of our hearts for your continuous love, prayers, and generosity.
       </p>
     </div>
   </div>
