@@ -1843,6 +1843,12 @@
         <input type="hidden" id="verifiedCode" name="verifiedCode" />
         <input type="hidden" id="verifiedTier" name="verifiedTier" />
 
+        <!-- Anti-Spam Security Honeypot (Traps automated bots, invisible to legitimate guests) -->
+        <div class="rsvp-security-guard" aria-hidden="true">
+          <label for="weddingWebsiteSecurityCheck">Security verification — please leave empty</label>
+          <input type="text" id="weddingWebsiteSecurityCheck" name="wedding_website_security_check" value="" tabindex="-1" autocomplete="new-password" />
+        </div>
+
         <div class="form-row">
           <div class="form-group" id="fullNameGroup">
             <label for="fullName">Full Name <span class="required-mark" title="Mandatory Field">*</span></label>

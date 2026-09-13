@@ -1883,6 +1883,19 @@ input:focus, select:focus, textarea:focus {
   animation: fadeIn 0.3s ease;
 }
 
+/* Anti-Spam Honeypot Security Field (Hidden from humans & accessibility tree) */
+.rsvp-security-guard {
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  z-index: -1 !important;
+}
+
 /* Tiered RSVP & Passcode Gate Styles */
 .rsvp-passcode-block {
   background: var(--bg-alabaster);
@@ -2953,4 +2966,9 @@ footer {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

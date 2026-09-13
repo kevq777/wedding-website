@@ -435,6 +435,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const rsvpSuccess = document.getElementById("rsvpSuccess");
   const rsvpConfirmationSummary = document.getElementById("rsvpConfirmationSummary");
   const resetRsvpBtn = document.getElementById("resetRsvpBtn");
+  const rsvpSubmitBtn = document.getElementById("rsvpSubmitBtn");
+  const honeypotInput = document.getElementById("weddingWebsiteSecurityCheck");
 
   const emailInput = document.getElementById("email");
   const phoneInput = document.getElementById("phone");
@@ -675,6 +677,35 @@ document.addEventListener("DOMContentLoaded", () => {
     rsvpForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
+      // 0. Anti-Spam Honeypot Security Check (Silently drop automated scrapers / bot spam)
+      if (honeypotInput && honeypotInput.value.trim() !== "") {
+        console.warn("Spam bot submission dropped via security honeypot trap.");
+        if (rsvpPasscodeBlock) rsvpPasscodeBlock.style.display = "none";
+        rsvpForm.style.display = "none";
+        if (rsvpSuccess) {
+          rsvpSuccess.style.display = "block";
+          rsvpSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        return;
+      }
+
+      // 0b. Submission Rate Limiting & Cooldown Protection (30s window)
+      const COOLDOWN_SECONDS = 30;
+      const lastSubmitTimestamp = sessionStorage.getItem("rsvp_last_submit_timestamp");
+      const currentTime = Date.now();
+      if (lastSubmitTimestamp) {
+        const elapsedSeconds = Math.floor((currentTime - parseInt(lastSubmitTimestamp, 10)) / 1000);
+        if (elapsedSeconds < COOLDOWN_SECONDS) {
+          const remainingSecs = COOLDOWN_SECONDS - elapsedSeconds;
+          if (rsvpFormErrorMsg) {
+            rsvpFormErrorMsg.innerHTML = `Please wait <strong>${remainingSecs} second${remainingSecs === 1 ? "" : "s"}</strong> before submitting another RSVP response.`;
+            rsvpFormErrorMsg.style.display = "block";
+            rsvpFormErrorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          return;
+        }
+      }
+
       const code = (verifiedCodeInput ? verifiedCodeInput.value : "").trim().toUpperCase();
       const tier = (verifiedTierInput ? verifiedTierInput.value : "") || "solo";
 
@@ -682,6 +713,23 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Please enter and verify your invitation passcode first.");
         if (rsvpPasscodeBlock) rsvpPasscodeBlock.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
+      }
+
+      // Disable button immediately to prevent duplicate clicks
+      if (rsvpSubmitBtn) {
+        rsvpSubmitBtn.disabled = true;
+        if (!rsvpSubmitBtn.dataset.originalHtml) {
+          rsvpSubmitBtn.dataset.originalHtml = rsvpSubmitBtn.innerHTML;
+        }
+        rsvpSubmitBtn.innerHTML = `
+          <span style="display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 0.8s linear infinite;">
+              <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+              <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+            </svg>
+            Securing Your RSVP...
+          </span>
+        `;
       }
 
       const guestCountEl = document.getElementById("guestCount");
@@ -734,7 +782,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      // Check for duplicate submission with same email in current session
+      const lastSubmittedEmail = (sessionStorage.getItem("rsvp_last_submitted_email") || "").toLowerCase();
+      if (!hasError && lastSubmittedEmail && emailVal && lastSubmittedEmail === emailVal.toLowerCase()) {
+        if (rsvpSubmitBtn) {
+          rsvpSubmitBtn.disabled = false;
+          rsvpSubmitBtn.innerHTML = rsvpSubmitBtn.dataset.originalHtml || "Send RSVP Confirmation";
+        }
+        if (rsvpFormErrorMsg) {
+          rsvpFormErrorMsg.innerHTML = `An RSVP confirmation has already been recorded for <strong>${emailVal}</strong> during this session. If you need to make changes or update your party, please contact Kevin & Shannel directly.`;
+          rsvpFormErrorMsg.style.display = "block";
+          rsvpFormErrorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        return;
+      }
+
       if (hasError) {
+        if (rsvpSubmitBtn) {
+          rsvpSubmitBtn.disabled = false;
+          rsvpSubmitBtn.innerHTML = rsvpSubmitBtn.dataset.originalHtml || "Send RSVP Confirmation";
+        }
         if (rsvpFormErrorMsg) {
           rsvpFormErrorMsg.innerHTML = `Please complete all required fields: <strong>${missingFields.join(", ")}</strong>.`;
           rsvpFormErrorMsg.style.display = "block";
@@ -786,6 +853,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      // Record rate-limiting & session de-duplication
+      sessionStorage.setItem("rsvp_last_submit_timestamp", Date.now().toString());
+      sessionStorage.setItem("rsvp_last_submitted_email", emailVal.toLowerCase());
+
       // Async POST to Google Sheet Webhook if configured
       if (CONFIG.rsvpWebhookUrl) {
         try {
@@ -800,6 +871,12 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (postErr) {
           console.warn("Webhook fetch initialization:", postErr);
         }
+      }
+
+      // Reset button state
+      if (rsvpSubmitBtn) {
+        rsvpSubmitBtn.disabled = false;
+        rsvpSubmitBtn.innerHTML = rsvpSubmitBtn.dataset.originalHtml || "Send RSVP Confirmation";
       }
 
       // Render confirmation summary
@@ -846,6 +923,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (resetRsvpBtn) {
     resetRsvpBtn.addEventListener("click", () => {
+      if (rsvpSubmitBtn) {
+        rsvpSubmitBtn.disabled = false;
+        if (rsvpSubmitBtn.dataset.originalHtml) {
+          rsvpSubmitBtn.innerHTML = rsvpSubmitBtn.dataset.originalHtml;
+        }
+      }
+      if (honeypotInput) {
+        honeypotInput.value = "";
+      }
       if (rsvpForm) {
         rsvpForm.reset();
         rsvpForm.classList.remove("active");
