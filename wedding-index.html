@@ -1873,23 +1873,26 @@
         <input type="hidden" id="verifiedTier" name="verifiedTier" />
 
         <div class="form-row">
-          <div class="form-group">
-            <label for="fullName">Full Name</label>
+          <div class="form-group" id="fullNameGroup">
+            <label for="fullName">Full Name <span class="required-mark" title="Mandatory Field">*</span></label>
             <input type="text" id="fullName" required placeholder="e.g. Samuel Mensah" />
+            <div class="form-error-hint">Please enter your full name.</div>
           </div>
-          <div class="form-group">
-            <label for="email">Email Address</label>
+          <div class="form-group" id="emailGroup">
+            <label for="email">Email Address <span class="required-mark" title="Mandatory Field">*</span></label>
             <input type="email" id="email" required placeholder="name@domain.com" />
+            <div class="form-error-hint">Please enter a valid email address.</div>
           </div>
         </div>
 
         <div class="form-row">
-          <div class="form-group">
-            <label for="phone">WhatsApp / Phone Number</label>
+          <div class="form-group" id="phoneGroup">
+            <label for="phone">WhatsApp / Phone Number <span class="required-mark" title="Mandatory Field">*</span></label>
             <input type="tel" id="phone" required placeholder="+233 / +44 / +1 ..." />
+            <div class="form-error-hint">Please enter your contact phone / WhatsApp number.</div>
           </div>
-          <div class="form-group">
-            <label for="ceremonies">Attendance Status</label>
+          <div class="form-group" id="ceremoniesGroup">
+            <label for="ceremonies">Attendance Status <span class="required-mark" title="Mandatory Field">*</span></label>
             <select id="ceremonies" required>
               <option value="" disabled selected>Please select your attendance</option>
               <option value="Joyfully Attending Full Day">Joyfully Attending Full Celebration (Ceremony & Reception)</option>
@@ -1897,6 +1900,7 @@
               <option value="Attending Reception Only">Attending Reception Only (5:00 PM)</option>
               <option value="Regretfully Declining">Regretfully Declining from Afar</option>
             </select>
+            <div class="form-error-hint">Please select your attendance status.</div>
           </div>
         </div>
 
@@ -1913,17 +1917,20 @@
 
         <!-- Dynamic Accompanying Guests Field (Shown only when party > 1) -->
         <div class="form-group rsvp-dynamic-field" id="accompanyingNamesGroup">
-          <label id="accompanyingNamesLabel" for="accompanyingNames">Accompanying Guest Name(s)</label>
+          <label id="accompanyingNamesLabel" for="accompanyingNames">Accompanying Guest Name(s) <span class="required-mark" title="Mandatory Field">*</span></label>
           <input type="text" id="accompanyingNames" placeholder="Please enter full name(s)" />
           <small id="accompanyingNamesHelp" style="color: var(--text-muted); font-size: 0.78rem; margin-top: 4px; display: block;">
             Please provide the full legal name(s) of your accompanying guest(s) for the guest list.
           </small>
+          <div class="form-error-hint">Please provide the name(s) of your accompanying guest(s).</div>
         </div>
 
         <div class="form-group">
           <label for="message">A Personal Note for Kevin & Shannel</label>
           <textarea id="message" rows="3" placeholder="Share a blessing, memory, or note of encouragement..."></textarea>
         </div>
+
+        <div id="rsvpFormErrorMsg" class="rsvp-form-error-msg" role="alert"></div>
 
         <button type="submit" class="btn-gold" id="rsvpSubmitBtn" style="width: 100%; margin-top: 8px;">
           Send RSVP Confirmation

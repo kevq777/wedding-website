@@ -475,6 +475,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const rsvpConfirmationSummary = document.getElementById("rsvpConfirmationSummary");
   const resetRsvpBtn = document.getElementById("resetRsvpBtn");
 
+  const emailInput = document.getElementById("email");
+  const phoneInput = document.getElementById("phone");
+  const ceremoniesInput = document.getElementById("ceremonies");
+  const rsvpFormErrorMsg = document.getElementById("rsvpFormErrorMsg");
+
+  function clearFieldError(inputEl) {
+    if (!inputEl) return;
+    const group = inputEl.closest(".form-group");
+    if (group) group.classList.remove("field-error");
+    if (rsvpFormErrorMsg) {
+      rsvpFormErrorMsg.style.display = "none";
+      rsvpFormErrorMsg.innerHTML = "";
+    }
+  }
+
+  [fullNameInput, emailInput, phoneInput, ceremoniesInput, accompanyingNamesInput].forEach((el) => {
+    if (!el) return;
+    el.addEventListener("input", () => clearFieldError(el));
+    el.addEventListener("change", () => clearFieldError(el));
+  });
+
   function showRsvpStatus(type, html) {
     if (!rsvpStatusMsg) return;
     rsvpStatusMsg.className = `rsvp-status-msg ${type}`;
@@ -674,14 +695,72 @@ document.addEventListener("DOMContentLoaded", () => {
       const guestCountVal = guestCountEl ? guestCountEl.value : "1";
       const accompanyingVal = accompanyingNamesInput ? accompanyingNamesInput.value.trim() : "";
 
+      // Mandatory Fields Validation
+      let hasError = false;
+      const missingFields = [];
+      let firstErrorEl = null;
+
+      function markError(el, fieldLabel) {
+        if (!el) return;
+        const group = el.closest(".form-group");
+        if (group) group.classList.add("field-error");
+        missingFields.push(fieldLabel);
+        if (!firstErrorEl) firstErrorEl = el;
+        hasError = true;
+      }
+
+      // 1. Full Name
+      const fullNameVal = fullNameInput ? fullNameInput.value.trim() : "";
+      if (!fullNameVal || fullNameVal.length < 2) {
+        markError(fullNameInput, "Full Name");
+      }
+
+      // 2. Email Address
+      const emailVal = emailInput ? emailInput.value.trim() : "";
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        markError(emailInput, "Valid Email Address");
+      }
+
+      // 3. WhatsApp / Phone Number
+      const phoneVal = phoneInput ? phoneInput.value.trim() : "";
+      if (!phoneVal || phoneVal.length < 6) {
+        markError(phoneInput, "WhatsApp / Phone Number");
+      }
+
+      // 4. Attendance Status
+      const attendanceVal = ceremoniesInput ? ceremoniesInput.value : "";
+      if (!attendanceVal) {
+        markError(ceremoniesInput, "Attendance Status");
+      }
+
+      // 5. Accompanying Guests (if party > 1 and group is active)
+      if (parseInt(guestCountVal, 10) > 1 && accompanyingNamesGroup && accompanyingNamesGroup.classList.contains("active")) {
+        if (!accompanyingVal || accompanyingVal.length < 2) {
+          markError(accompanyingNamesInput, "Accompanying Guest Name(s)");
+        }
+      }
+
+      if (hasError) {
+        if (rsvpFormErrorMsg) {
+          rsvpFormErrorMsg.innerHTML = `Please complete all required fields: <strong>${missingFields.join(", ")}</strong>.`;
+          rsvpFormErrorMsg.style.display = "block";
+        }
+        if (firstErrorEl) {
+          firstErrorEl.focus();
+          firstErrorEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        return;
+      }
+
       const rsvpData = {
         timestamp: new Date().toISOString(),
         passcode: code,
         tier: tier,
-        fullName: fullNameInput ? fullNameInput.value.trim() : "",
-        email: document.getElementById("email")?.value.trim() || "",
-        phone: document.getElementById("phone")?.value.trim() || "",
-        attendance: document.getElementById("ceremonies")?.value || "",
+        fullName: fullNameVal,
+        email: emailVal,
+        phone: phoneVal,
+        attendance: attendanceVal,
         guestCount: guestCountVal,
         accompanyingNames: accompanyingVal,
         dietary: document.getElementById("dietary")?.value.trim() || "None",
@@ -791,6 +870,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (accompanyingNamesGroup) {
         accompanyingNamesGroup.classList.remove("active");
+      }
+      [fullNameInput, emailInput, phoneInput, ceremoniesInput, accompanyingNamesInput].forEach((el) => {
+        if (!el) return;
+        const group = el.closest(".form-group");
+        if (group) group.classList.remove("field-error");
+      });
+      if (rsvpFormErrorMsg) {
+        rsvpFormErrorMsg.style.display = "none";
+        rsvpFormErrorMsg.innerHTML = "";
       }
       if (rsvpSuccess) rsvpSuccess.style.display = "none";
       if (rsvpPasscodeBlock) {
