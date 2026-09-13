@@ -93,44 +93,41 @@ draw1.rectangle([56, 56, W1 - 56, H1 - 56], outline=GOLD_PRIMARY, width=1)
 draw_ornate_corners(draw1, 68, 68, W1 - 68, H1 - 68, size=36, color=GOLD_PRIMARY)
 
 # Prominent Burnished Gold Monogram Crest at Top
-crest_w1 = 180
+crest_w1 = 185
 crest_h1 = int(crest_antique_gold.height * (crest_w1 / crest_antique_gold.width))
 crest1_scaled = crest_antique_gold.resize((crest_w1, crest_h1), Image.Resampling.LANCZOS)
-card1.paste(crest1_scaled, ((W1 - crest_w1) // 2, 120), crest1_scaled)
+card1.paste(crest1_scaled, ((W1 - crest_w1) // 2, 130), crest1_scaled)
 
-draw_spaced_text(draw1, 410, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 24), GOLD_DEEP, W1, 8)
-draw_gold_divider(draw1, 460, W1, 220, GOLD_PRIMARY)
+draw_spaced_text(draw1, 425, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 24), GOLD_DEEP, W1, 8)
+draw_gold_divider(draw1, 480, W1, 220, GOLD_PRIMARY)
 
-draw_spaced_text(draw1, 510, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 20), CHARCOAL_LIGHT, W1, 6)
+draw_spaced_text(draw1, 535, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 20), CHARCOAL_LIGHT, W1, 6)
 
-# Full Formal Names (Identical font size 74 for perfect egalitarian balance)
-draw_centered_text(draw1, 580, "Kevin Quist", ImageFont.truetype(playfair_italic, 74), CHARCOAL, W1)
-draw_centered_text(draw1, 675, "&", ImageFont.truetype(playfair_italic, 52), GOLD_PRIMARY, W1)
-draw_centered_text(draw1, 740, "Shannel Naa-Larbia Darku", ImageFont.truetype(playfair_italic, 74), CHARCOAL, W1)
+# Full Formal Names (Equal size 70pt)
+draw_centered_text(draw1, 610, "Kevin Elikem Quist", ImageFont.truetype(playfair_italic, 70), CHARCOAL, W1)
+draw_centered_text(draw1, 710, "&", ImageFont.truetype(playfair_italic, 50), GOLD_PRIMARY, W1)
+draw_centered_text(draw1, 780, "Shannel Naa-Larbia Darku", ImageFont.truetype(playfair_italic, 70), CHARCOAL, W1)
 
-draw_spaced_text(draw1, 875, "REQUEST THE HONOUR OF YOUR PRESENCE", ImageFont.truetype(cinzel_regular, 19), CHARCOAL_MUTED, W1, 4)
-draw_spaced_text(draw1, 915, "TO CELEBRATE THEIR UNION BEFORE GOD", ImageFont.truetype(cinzel_regular, 19), CHARCOAL_MUTED, W1, 4)
+draw_spaced_text(draw1, 925, "REQUEST THE HONOUR OF YOUR PRESENCE", ImageFont.truetype(cinzel_regular, 19), CHARCOAL_MUTED, W1, 4)
+draw_spaced_text(draw1, 970, "TO CELEBRATE THEIR UNION BEFORE GOD", ImageFont.truetype(cinzel_regular, 19), CHARCOAL_MUTED, W1, 4)
 
 # Scripture Quote in Center
-draw_gold_divider(draw1, 985, W1, 280, GOLD_PRIMARY)
-draw_centered_text(draw1, 1025, "“I have found the one whom my soul loves.”", ImageFont.truetype(playfair_italic, 30), CHARCOAL, W1)
-draw_spaced_text(draw1, 1070, "SONG OF SOLOMON 3:4", ImageFont.truetype(cinzel_regular, 16), GOLD_DEEP, W1, 4)
-draw_gold_divider(draw1, 1115, W1, 280, GOLD_PRIMARY)
+draw_gold_divider(draw1, 1045, W1, 280, GOLD_PRIMARY)
+draw_centered_text(draw1, 1090, "“I have found the one whom my soul loves.”", ImageFont.truetype(playfair_italic, 30), CHARCOAL, W1)
+draw_spaced_text(draw1, 1140, "SONG OF SOLOMON 3:4", ImageFont.truetype(cinzel_regular, 16), GOLD_DEEP, W1, 4)
+draw_gold_divider(draw1, 1190, W1, 280, GOLD_PRIMARY)
 
 # Date & Timings
-draw_spaced_text(draw1, 1175, "SATURDAY", ImageFont.truetype(cinzel_regular, 26), GOLD_PRIMARY, W1, 8)
-draw_centered_text(draw1, 1220, "9th January 2027", ImageFont.truetype(playfair_regular, 66), CHARCOAL, W1)
-draw_spaced_text(draw1, 1315, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 19), CHARCOAL_MUTED, W1, 4)
+draw_spaced_text(draw1, 1255, "SATURDAY", ImageFont.truetype(cinzel_regular, 26), GOLD_PRIMARY, W1, 8)
+draw_centered_text(draw1, 1305, "9th January 2027", ImageFont.truetype(playfair_regular, 66), CHARCOAL, W1)
+draw_spaced_text(draw1, 1405, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 19), CHARCOAL_MUTED, W1, 4)
 
-# Venue & Reception
-draw_spaced_text(draw1, 1395, "LABADI BEACH HOTEL", ImageFont.truetype(cinzel_regular, 34), GOLD_DEEP, W1, 6)
-draw_spaced_text(draw1, 1445, "ACCRA, GHANA", ImageFont.truetype(jakarta_medium, 22), CHARCOAL, W1, 5)
-
-draw_spaced_text(draw1, 1520, "DINNER & DANCING RECEPTION TO FOLLOW", ImageFont.truetype(cinzel_regular, 19), CHARCOAL_MUTED, W1, 4)
-draw_spaced_text(draw1, 1560, "ATTIRE: A BLOSSOMING ENCHANTED FOREST", ImageFont.truetype(cinzel_regular, 17), GOLD_DEEP, W1, 3)
+# Venue (Reception & Attire removed)
+draw_spaced_text(draw1, 1490, "LABADI BEACH HOTEL", ImageFont.truetype(cinzel_regular, 34), GOLD_DEEP, W1, 6)
+draw_spaced_text(draw1, 1545, "ACCRA, GHANA", ImageFont.truetype(jakarta_medium, 22), CHARCOAL, W1, 5)
 
 # RSVP and Web Address
-draw1.line([(W1 - 200) // 2, 1645, (W1 + 200) // 2, 1645], fill=IVORY_BORDER, width=1)
+draw1.line([(W1 - 220) // 2, 1640, (W1 + 220) // 2, 1640], fill=IVORY_BORDER, width=1)
 draw_spaced_text(draw1, 1680, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 19), GOLD_DEEP, W1, 3)
 draw_spaced_text(draw1, 1730, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 22), CHARCOAL, W1, 5)
 
@@ -154,41 +151,38 @@ draw_ornate_corners(draw2, 58, 58, W2 - 58, H2 - 58, size=34, color=GOLD_LIGHT)
 
 # Luminous Gold Crest at Top
 crest2_scaled = crest_raw_gold.resize((crest_w1, crest_h1), Image.Resampling.LANCZOS)
-card2.paste(crest2_scaled, ((W2 - crest_w1) // 2, 120), crest2_scaled)
+card2.paste(crest2_scaled, ((W2 - crest_w1) // 2, 130), crest2_scaled)
 
-draw_spaced_text(draw2, 410, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 24), GOLD_LIGHT, W2, 8)
-draw_gold_divider(draw2, 460, W2, 220, GOLD_LIGHT)
+draw_spaced_text(draw2, 425, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 24), GOLD_LIGHT, W2, 8)
+draw_gold_divider(draw2, 480, W2, 220, GOLD_LIGHT)
 
-draw_spaced_text(draw2, 510, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 20), "#B5AFA6", W2, 6)
+draw_spaced_text(draw2, 535, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 20), "#B5AFA6", W2, 6)
 
-# Full Formal Names (Identical font size 74)
-draw_centered_text(draw2, 580, "Kevin Quist", ImageFont.truetype(playfair_italic, 74), WHITE, W2)
-draw_centered_text(draw2, 675, "&", ImageFont.truetype(playfair_italic, 52), GOLD_LIGHT, W2)
-draw_centered_text(draw2, 740, "Shannel Naa-Larbia Darku", ImageFont.truetype(playfair_italic, 74), WHITE, W2)
+# Full Formal Names (Equal size 70pt)
+draw_centered_text(draw2, 610, "Kevin Elikem Quist", ImageFont.truetype(playfair_italic, 70), WHITE, W2)
+draw_centered_text(draw2, 710, "&", ImageFont.truetype(playfair_italic, 50), GOLD_LIGHT, W2)
+draw_centered_text(draw2, 780, "Shannel Naa-Larbia Darku", ImageFont.truetype(playfair_italic, 70), WHITE, W2)
 
-draw_spaced_text(draw2, 875, "REQUEST THE HONOUR OF YOUR PRESENCE", ImageFont.truetype(cinzel_regular, 19), "#D1CCC2", W2, 4)
-draw_spaced_text(draw2, 915, "TO WITNESS THEIR SACRED VOWS", ImageFont.truetype(cinzel_regular, 19), "#D1CCC2", W2, 4)
+draw_spaced_text(draw2, 925, "REQUEST THE HONOUR OF YOUR PRESENCE", ImageFont.truetype(cinzel_regular, 19), "#D1CCC2", W2, 4)
+draw_spaced_text(draw2, 970, "TO WITNESS THEIR SACRED VOWS", ImageFont.truetype(cinzel_regular, 19), "#D1CCC2", W2, 4)
 
 # Scripture Quote in Center
-draw_gold_divider(draw2, 985, W2, 280, GOLD_LIGHT)
-draw_centered_text(draw2, 1025, "“I have found the one whom my soul loves.”", ImageFont.truetype(playfair_italic, 30), GOLD_LIGHT, W2)
-draw_spaced_text(draw2, 1070, "SONG OF SOLOMON 3:4", ImageFont.truetype(cinzel_regular, 16), "#B5AFA6", W2, 4)
-draw_gold_divider(draw2, 1115, W2, 280, GOLD_LIGHT)
+draw_gold_divider(draw2, 1045, W2, 280, GOLD_LIGHT)
+draw_centered_text(draw2, 1090, "“I have found the one whom my soul loves.”", ImageFont.truetype(playfair_italic, 30), GOLD_LIGHT, W2)
+draw_spaced_text(draw2, 1140, "SONG OF SOLOMON 3:4", ImageFont.truetype(cinzel_regular, 16), "#B5AFA6", W2, 4)
+draw_gold_divider(draw2, 1190, W2, 280, GOLD_LIGHT)
 
 # Date & Timings
-draw_spaced_text(draw2, 1175, "SATURDAY", ImageFont.truetype(cinzel_regular, 26), GOLD_LIGHT, W2, 8)
-draw_centered_text(draw2, 1220, "9th January 2027", ImageFont.truetype(playfair_regular, 66), WHITE, W2)
-draw_spaced_text(draw2, 1315, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 19), "#D1CCC2", W2, 4)
+draw_spaced_text(draw2, 1255, "SATURDAY", ImageFont.truetype(cinzel_regular, 26), GOLD_LIGHT, W2, 8)
+draw_centered_text(draw2, 1305, "9th January 2027", ImageFont.truetype(playfair_regular, 66), WHITE, W2)
+draw_spaced_text(draw2, 1405, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 19), "#D1CCC2", W2, 4)
 
-# Venue & Reception
-draw_spaced_text(draw2, 1395, "LABADI BEACH HOTEL", ImageFont.truetype(cinzel_regular, 34), GOLD_LIGHT, W2, 6)
-draw_spaced_text(draw2, 1445, "ACCRA, GHANA", ImageFont.truetype(jakarta_medium, 22), WHITE, W2, 5)
-
-draw_spaced_text(draw2, 1520, "RECEPTION, DINNER & DANCING TO FOLLOW", ImageFont.truetype(cinzel_regular, 19), "#D1CCC2", W2, 4)
-draw_spaced_text(draw2, 1560, "ATTIRE: A BLOSSOMING ENCHANTED FOREST", ImageFont.truetype(cinzel_regular, 17), GOLD_LIGHT, W2, 3)
+# Venue (Reception & Attire removed)
+draw_spaced_text(draw2, 1490, "LABADI BEACH HOTEL", ImageFont.truetype(cinzel_regular, 34), GOLD_LIGHT, W2, 6)
+draw_spaced_text(draw2, 1545, "ACCRA, GHANA", ImageFont.truetype(jakarta_medium, 22), WHITE, W2, 5)
 
 # RSVP and Web Address
-draw2.line([(W2 - 200) // 2, 1645, (W2 + 200) // 2, 1645], fill=GOLD_DEEP, width=1)
+draw2.line([(W2 - 220) // 2, 1640, (W2 + 220) // 2, 1640], fill=GOLD_DEEP, width=1)
 draw_spaced_text(draw2, 1680, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 19), GOLD_LIGHT, W2, 3)
 draw_spaced_text(draw2, 1730, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 22), WHITE, W2, 5)
 
@@ -212,43 +206,41 @@ draw3.rectangle([52, 52, W3 - 52, H3 - 52], outline=GOLD_PRIMARY, width=1)
 draw_ornate_corners(draw3, 62, 62, W3 - 62, H3 - 62, size=32, color=GOLD_PRIMARY)
 
 # Centered Burnished Gold Crest at Top
-crest_w3 = 135
+crest_w3 = 140
 crest_h3 = int(crest_antique_gold.height * (crest_w3 / crest_antique_gold.width))
 crest3_scaled = crest_antique_gold.resize((crest_w3, crest_h3), Image.Resampling.LANCZOS)
 card3.paste(crest3_scaled, ((W3 - crest_w3) // 2, 75), crest3_scaled)
 
-draw_spaced_text(draw3, 285, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 22), GOLD_DEEP, W3, 8)
-draw_gold_divider(draw3, 325, W3, 220, GOLD_PRIMARY)
+draw_spaced_text(draw3, 290, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 22), GOLD_DEEP, W3, 8)
+draw_gold_divider(draw3, 335, W3, 220, GOLD_PRIMARY)
 
-draw_spaced_text(draw3, 355, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 18), CHARCOAL_LIGHT, W3, 6)
+draw_spaced_text(draw3, 370, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 18), CHARCOAL_LIGHT, W3, 6)
 
-# Couple Full Names with Gold Ampersand
-name_f3 = ImageFont.truetype(playfair_italic, 54)
-amp_f3 = ImageFont.truetype(playfair_italic, 46)
-w_kq = draw3.textlength("Kevin Quist", font=name_f3)
+# Couple Full Names with Gold Ampersand (Size 48pt for complete names)
+name_f3 = ImageFont.truetype(playfair_italic, 48)
+amp_f3 = ImageFont.truetype(playfair_italic, 40)
+w_kq = draw3.textlength("Kevin Elikem Quist", font=name_f3)
 w_amp = draw3.textlength(" & ", font=amp_f3)
 w_snd = draw3.textlength("Shannel Naa-Larbia Darku", font=name_f3)
 total_names_w = w_kq + w_amp + w_snd
 start_x3 = (W3 - total_names_w) / 2.0
-y_name3 = 405
-draw3.text((start_x3, y_name3), "Kevin Quist", font=name_f3, fill=CHARCOAL)
+y_name3 = 425
+draw3.text((start_x3, y_name3), "Kevin Elikem Quist", font=name_f3, fill=CHARCOAL)
 draw3.text((start_x3 + w_kq, y_name3 + 4), " & ", font=amp_f3, fill=GOLD_PRIMARY)
 draw3.text((start_x3 + w_kq + w_amp, y_name3), "Shannel Naa-Larbia Darku", font=name_f3, fill=CHARCOAL)
 
-draw_spaced_text(draw3, 500, "REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR WEDDING CELEBRATION", ImageFont.truetype(cinzel_regular, 18), CHARCOAL_MUTED, W3, 4)
+draw_spaced_text(draw3, 525, "REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR WEDDING CELEBRATION", ImageFont.truetype(cinzel_regular, 18), CHARCOAL_MUTED, W3, 4)
 
-draw_gold_divider(draw3, 560, W3, 300, GOLD_PRIMARY)
+draw_gold_divider(draw3, 585, W3, 300, GOLD_PRIMARY)
 
-draw_spaced_text(draw3, 600, "SATURDAY, 9TH JANUARY 2027", ImageFont.truetype(cinzel_regular, 24), GOLD_PRIMARY, W3, 7)
-draw_spaced_text(draw3, 640, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 18), CHARCOAL_MUTED, W3, 4)
+draw_spaced_text(draw3, 630, "SATURDAY, 9TH JANUARY 2027", ImageFont.truetype(cinzel_regular, 24), GOLD_PRIMARY, W3, 7)
+draw_spaced_text(draw3, 675, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 18), CHARCOAL_MUTED, W3, 4)
 
-draw_spaced_text(draw3, 700, "LABADI BEACH HOTEL • ACCRA, GHANA", ImageFont.truetype(cinzel_regular, 28), CHARCOAL, W3, 6)
+draw_spaced_text(draw3, 745, "LABADI BEACH HOTEL • ACCRA, GHANA", ImageFont.truetype(cinzel_regular, 28), CHARCOAL, W3, 6)
 
-draw_spaced_text(draw3, 760, "RECEPTION & DINNER TO FOLLOW  •  ATTIRE: A BLOSSOMING ENCHANTED FOREST", ImageFont.truetype(cinzel_regular, 16), CHARCOAL_LIGHT, W3, 3)
-
-draw3.line([(W3 - 240) // 2, 830, (W3 + 240) // 2, 830], fill=IVORY_BORDER, width=1)
-draw_spaced_text(draw3, 860, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 18), GOLD_DEEP, W3, 3)
-draw_spaced_text(draw3, 905, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 20), CHARCOAL, W3, 5)
+draw3.line([(W3 - 240) // 2, 835, (W3 + 240) // 2, 835], fill=IVORY_BORDER, width=1)
+draw_spaced_text(draw3, 870, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 18), GOLD_DEEP, W3, 3)
+draw_spaced_text(draw3, 915, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 20), CHARCOAL, W3, 5)
 
 card3.save(os.path.join(output_dir, "Invitation-3-HauteCouture-Postcard.png"), quality=95)
 print("Saved Card 3.")
@@ -269,34 +261,33 @@ draw4.rectangle([42, 42, W4 - 42, H4 - 42], outline=GOLD_DEEP, width=1)
 draw_ornate_corners(draw4, 52, 52, W4 - 52, H4 - 52, size=30, color=GOLD_LIGHT)
 
 # Luminous Gold Crest
-crest_w4 = 145
+crest_w4 = 150
 crest_h4 = int(crest_raw_gold.height * (crest_w4 / crest_raw_gold.width))
 crest4_scaled = crest_raw_gold.resize((crest_w4, crest_h4), Image.Resampling.LANCZOS)
-card4.paste(crest4_scaled, ((W4 - crest_w4) // 2, 75), crest4_scaled)
+card4.paste(crest4_scaled, ((W4 - crest_w4) // 2, 85), crest4_scaled)
 
-draw_spaced_text(draw4, 300, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 22), GOLD_LIGHT, W4, 8)
-draw_gold_divider(draw4, 340, W4, 200, GOLD_LIGHT)
+draw_spaced_text(draw4, 315, "THE WHITE WEDDING", ImageFont.truetype(cinzel_regular, 22), GOLD_LIGHT, W4, 8)
+draw_gold_divider(draw4, 360, W4, 200, GOLD_LIGHT)
 
-draw_spaced_text(draw4, 375, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 18), "#A69F94", W4, 5)
+draw_spaced_text(draw4, 400, "TOGETHER WITH THEIR FAMILIES", ImageFont.truetype(cinzel_regular, 18), "#A69F94", W4, 5)
 
-# Both names size 62 for perfect harmony
-draw_centered_text(draw4, 430, "Kevin Quist", ImageFont.truetype(playfair_italic, 62), WHITE, W4)
-draw_centered_text(draw4, 510, "&", ImageFont.truetype(playfair_italic, 46), GOLD_LIGHT, W4)
-draw_centered_text(draw4, 565, "Shannel Naa-Larbia Darku", ImageFont.truetype(playfair_italic, 62), WHITE, W4)
+# Both names size 58 for square balance
+draw_centered_text(draw4, 460, "Kevin Elikem Quist", ImageFont.truetype(playfair_italic, 58), WHITE, W4)
+draw_centered_text(draw4, 540, "&", ImageFont.truetype(playfair_italic, 44), GOLD_LIGHT, W4)
+draw_centered_text(draw4, 600, "Shannel Naa-Larbia Darku", ImageFont.truetype(playfair_italic, 58), WHITE, W4)
 
-draw_spaced_text(draw4, 670, "CORDIALLY INVITE YOU TO CELEBRATE THEIR UNION", ImageFont.truetype(cinzel_regular, 17), "#D1CCC2", W4, 4)
+draw_spaced_text(draw4, 710, "CORDIALLY INVITE YOU TO CELEBRATE THEIR UNION", ImageFont.truetype(cinzel_regular, 17), "#D1CCC2", W4, 4)
 
-draw_gold_divider(draw4, 725, W4, 240, GOLD_LIGHT)
+draw_gold_divider(draw4, 770, W4, 240, GOLD_LIGHT)
 
-draw_spaced_text(draw4, 765, "SATURDAY, 9TH JANUARY 2027", ImageFont.truetype(cinzel_regular, 22), GOLD_LIGHT, W4, 6)
-draw_spaced_text(draw4, 805, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 17), "#B5AFA6", W4, 3)
+draw_spaced_text(draw4, 810, "SATURDAY, 9TH JANUARY 2027", ImageFont.truetype(cinzel_regular, 22), GOLD_LIGHT, W4, 6)
+draw_spaced_text(draw4, 855, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFont.truetype(cinzel_regular, 17), "#B5AFA6", W4, 3)
 
-draw_spaced_text(draw4, 860, "LABADI BEACH HOTEL • ACCRA, GHANA", ImageFont.truetype(cinzel_regular, 26), WHITE, W4, 5)
-draw_spaced_text(draw4, 910, "RECEPTION & DINNER TO FOLLOW", ImageFont.truetype(cinzel_regular, 16), "#B5AFA6", W4, 3)
+draw_spaced_text(draw4, 915, "LABADI BEACH HOTEL • ACCRA, GHANA", ImageFont.truetype(cinzel_regular, 26), WHITE, W4, 5)
 
-draw4.line([(W4 - 180) // 2, 970, (W4 + 180) // 2, 970], fill=GOLD_DEEP, width=1)
-draw_spaced_text(draw4, 1000, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 18), GOLD_LIGHT, W4, 3)
-draw_spaced_text(draw4, 1045, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 20), WHITE, W4, 5)
+draw4.line([(W4 - 180) // 2, 985, (W4 + 180) // 2, 985], fill=GOLD_DEEP, width=1)
+draw_spaced_text(draw4, 1020, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 18), GOLD_LIGHT, W4, 3)
+draw_spaced_text(draw4, 1065, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 20), WHITE, W4, 5)
 
 card4.save(os.path.join(output_dir, "Invitation-4-ProposalRomance-Square.png"), quality=95)
 print("Saved Card 4.")
