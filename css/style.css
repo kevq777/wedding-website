@@ -2563,6 +2563,92 @@ input:focus, select:focus, textarea:focus {
   color: var(--text-charcoal);
 }
 
+/* Hotel Recommendations Mini List & Action Buttons */
+.hotel-recs-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 20px;
+  border-top: 1px solid #EBE6DC;
+  border-bottom: 1px solid #EBE6DC;
+}
+
+.hotel-recs-list li {
+  padding: 9px 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px dashed #EDE8E0;
+  line-height: 1.4;
+}
+
+.hotel-recs-list li:last-child {
+  border-bottom: none;
+}
+
+.hotel-recs-list li strong {
+  font-size: 0.88rem;
+  color: var(--text-charcoal);
+  font-weight: 600;
+}
+
+.hotel-recs-list li span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.travel-card-links {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 6px;
+  flex-wrap: wrap;
+}
+
+.travel-btn {
+  flex: 1 1 140px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.travel-btn-booking {
+  background: #003580;
+  color: #FFFFFF !important;
+  border: 1px solid #003580;
+  box-shadow: 0 2px 8px rgba(0, 53, 128, 0.2);
+}
+
+.travel-btn-booking:hover {
+  background: #00224F;
+  border-color: #00224F;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 53, 128, 0.3);
+}
+
+.travel-btn-maps {
+  background: #FFFFFF;
+  color: var(--gold-primary) !important;
+  border: 1px solid var(--gold-primary);
+  box-shadow: 0 2px 8px rgba(197, 160, 89, 0.15);
+}
+
+.travel-btn-maps:hover {
+  background: var(--gold-primary);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
+}
+
 /* Accra Weather & Advisory Note */
 .accra-advisory-card {
   margin-top: 40px;
