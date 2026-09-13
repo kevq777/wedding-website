@@ -126,10 +126,9 @@ draw_spaced_text(draw1, 1405, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageF
 draw_spaced_text(draw1, 1490, "LABADI BEACH HOTEL", ImageFont.truetype(cinzel_regular, 34), GOLD_DEEP, W1, 6)
 draw_spaced_text(draw1, 1545, "ACCRA, GHANA", ImageFont.truetype(jakarta_medium, 22), CHARCOAL, W1, 5)
 
-# RSVP and Web Address
-draw1.line([(W1 - 220) // 2, 1640, (W1 + 220) // 2, 1640], fill=IVORY_BORDER, width=1)
-draw_spaced_text(draw1, 1680, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 19), GOLD_DEEP, W1, 3)
-draw_spaced_text(draw1, 1730, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 22), CHARCOAL, W1, 5)
+# RSVP (Website domain omitted for clean, timeless stationery; links sent directly in message)
+draw_gold_divider(draw1, 1660, W1, 240, GOLD_PRIMARY)
+draw_spaced_text(draw1, 1715, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 20), GOLD_DEEP, W1, 4)
 
 card1.save(os.path.join(output_dir, "Invitation-1-RoyalAlabaster-Story.png"), quality=95)
 print("Saved Card 1.")
@@ -181,10 +180,9 @@ draw_spaced_text(draw2, 1405, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageF
 draw_spaced_text(draw2, 1490, "LABADI BEACH HOTEL", ImageFont.truetype(cinzel_regular, 34), GOLD_LIGHT, W2, 6)
 draw_spaced_text(draw2, 1545, "ACCRA, GHANA", ImageFont.truetype(jakarta_medium, 22), WHITE, W2, 5)
 
-# RSVP and Web Address
-draw2.line([(W2 - 220) // 2, 1640, (W2 + 220) // 2, 1640], fill=GOLD_DEEP, width=1)
-draw_spaced_text(draw2, 1680, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 19), GOLD_LIGHT, W2, 3)
-draw_spaced_text(draw2, 1730, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 22), WHITE, W2, 5)
+# RSVP (Domain removed)
+draw_gold_divider(draw2, 1660, W2, 240, GOLD_LIGHT)
+draw_spaced_text(draw2, 1715, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 20), GOLD_LIGHT, W2, 4)
 
 card2.save(os.path.join(output_dir, "Invitation-2-EnchantedEmerald-Story.png"), quality=95)
 print("Saved Card 2.")
@@ -238,9 +236,9 @@ draw_spaced_text(draw3, 675, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFo
 
 draw_spaced_text(draw3, 745, "LABADI BEACH HOTEL • ACCRA, GHANA", ImageFont.truetype(cinzel_regular, 28), CHARCOAL, W3, 6)
 
-draw3.line([(W3 - 240) // 2, 835, (W3 + 240) // 2, 835], fill=IVORY_BORDER, width=1)
-draw_spaced_text(draw3, 870, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 18), GOLD_DEEP, W3, 3)
-draw_spaced_text(draw3, 915, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 20), CHARCOAL, W3, 5)
+# RSVP (Domain removed)
+draw_gold_divider(draw3, 855, W3, 260, GOLD_PRIMARY)
+draw_spaced_text(draw3, 905, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 19), GOLD_DEEP, W3, 4)
 
 card3.save(os.path.join(output_dir, "Invitation-3-HauteCouture-Postcard.png"), quality=95)
 print("Saved Card 3.")
@@ -285,9 +283,9 @@ draw_spaced_text(draw4, 855, "CEREMONY AT ONE O'CLOCK IN THE AFTERNOON", ImageFo
 
 draw_spaced_text(draw4, 915, "LABADI BEACH HOTEL • ACCRA, GHANA", ImageFont.truetype(cinzel_regular, 26), WHITE, W4, 5)
 
-draw4.line([(W4 - 180) // 2, 985, (W4 + 180) // 2, 985], fill=GOLD_DEEP, width=1)
-draw_spaced_text(draw4, 1020, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 18), GOLD_LIGHT, W4, 3)
-draw_spaced_text(draw4, 1065, "WWW.KEVINANDSHANNEL.COM", ImageFont.truetype(cinzel_regular, 20), WHITE, W4, 5)
+# RSVP (Domain removed)
+draw_gold_divider(draw4, 1005, W4, 240, GOLD_LIGHT)
+draw_spaced_text(draw4, 1055, "KINDLY RSVP BY 1ST DECEMBER 2026", ImageFont.truetype(jakarta_medium, 19), GOLD_LIGHT, W4, 4)
 
 card4.save(os.path.join(output_dir, "Invitation-4-ProposalRomance-Square.png"), quality=95)
 print("Saved Card 4.")
