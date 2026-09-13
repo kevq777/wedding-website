@@ -222,26 +222,9 @@ section {
   font-weight: 500;
 }
 
-/* ================= PASSWORD GATE (EDITORIAL LUXURY MODAL) ================= */
+/* ================= PASSWORD GATE (EDITORIAL LUXURY MODAL - DISABLED) ================= */
 #passwordGate {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 50% 35%, rgba(14, 15, 18, 0.94) 0%, rgba(6, 7, 9, 0.98) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  isolation: isolate;
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-#passwordGate.unlocked {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  display: none !important;
 }
 
 .gate-card {
@@ -1914,6 +1897,12 @@ input:focus, select:focus, textarea:focus {
 .rsvp-passcode-block.verified {
   border-color: var(--gold-primary);
   background: #FCFAF6;
+  padding: 20px 24px;
+}
+
+.rsvp-passcode-block.verified p,
+.rsvp-passcode-block.verified .rsvp-code-input-row {
+  display: none !important;
 }
 
 .rsvp-passcode-block p {

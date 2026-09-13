@@ -33,54 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* ==========================================================================
-     1. BESPOKE LUXURY PASSWORD GATE (SINGLE-PHASE ENTRY)
+     1. OPEN CELEBRATION ENTRY (FRICTIONLESS ACCESS)
      ========================================================================== */
-  const gate = document.getElementById("passwordGate");
-  const gateForm = document.getElementById("gateForm");
-  const gatePassword = document.getElementById("gatePassword");
-  const gateError = document.getElementById("gateError");
-  const gateCard = document.getElementById("gateCard");
-
-  // Check if session is already authenticated
-  if (sessionStorage.getItem("wedding_unlocked") === "true") {
-    gate.classList.add("unlocked");
-  }
-
-  function unlockGate() {
-    if (gateError) gateError.style.display = "none";
-    sessionStorage.setItem("wedding_unlocked", "true");
-    gate.classList.add("unlocked");
-  }
-
-  if (gateForm) {
-    gateForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const entered = gatePassword.value.trim();
-      if (entered.toUpperCase() === CONFIG.password.toUpperCase()) {
-        unlockGate();
-      } else {
-        if (gateCard) {
-          gateCard.classList.add("lock-error-shake");
-          setTimeout(() => gateCard.classList.remove("lock-error-shake"), 500);
-        }
-        if (gateError) gateError.style.display = "block";
-        gatePassword.value = "";
-        gatePassword.focus();
-      }
-    });
-  }
-
-  // Developer / Couple helper to re-lock and preview the gate anytime
-  window.openPasswordGate = function () {
-    sessionStorage.removeItem("wedding_unlocked");
-    gate.classList.remove("unlocked");
-    if (gateCard) gateCard.classList.remove("lock-error-shake");
-    if (gatePassword) {
-      gatePassword.value = "";
-      gatePassword.focus();
-    }
-    if (gateError) gateError.style.display = "none";
-  };
+  // Direct immersive access for all guests with zero password hurdles
+  window.openPasswordGate = function () {};
 
   /* ==========================================================================
      2. NAVIGATION & MOBILE DRAWER
@@ -438,14 +394,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Solo Guest Passes (Strictly 1 Seat) ---
     "SOLO27": { tier: "solo", maxGuests: 1, label: "Single Guest Invitation", guest: "" },
     "KS-SOLO": { tier: "solo", maxGuests: 1, label: "Single Guest Invitation", guest: "" },
+    "SOLO": { tier: "solo", maxGuests: 1, label: "Single Guest Invitation", guest: "" },
 
     // --- Plus-One Guest Passes (Up to 2 Seats) ---
     "PLUS1": { tier: "plus-one", maxGuests: 2, label: "Guest & Plus-One Invitation", guest: "" },
     "COUPLE27": { tier: "plus-one", maxGuests: 2, label: "Couple Invitation", guest: "" },
     "KS-PLUSONE": { tier: "plus-one", maxGuests: 2, label: "Guest & Plus-One Invitation", guest: "" },
+    "KS-PLUS1": { tier: "plus-one", maxGuests: 2, label: "Guest & Plus-One Invitation", guest: "" },
+    "PLUSONE": { tier: "plus-one", maxGuests: 2, label: "Guest & Plus-One Invitation", guest: "" },
 
     // --- Family & Group Delegations (Up to 4-5 Seats) ---
     "FAMILY27": { tier: "family", maxGuests: 4, label: "Family Delegation (Up to 4)", guest: "" },
+    "KS-FAMILY": { tier: "family", maxGuests: 4, label: "Family Delegation (Up to 4)", guest: "" },
+    "FAMILY": { tier: "family", maxGuests: 4, label: "Family Delegation (Up to 4)", guest: "" },
     "MENSAH-FAM": { tier: "family", maxGuests: 4, label: "Mensah Family Delegation", guest: "Mensah Family" },
     "QUAYE-FAM": { tier: "family", maxGuests: 4, label: "Quaye Family Delegation", guest: "Quaye Family" },
     "VIP-DELEGATION": { tier: "family", maxGuests: 5, label: "Special Family / Group Delegation", guest: "" },
@@ -596,7 +557,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function handlePasscodeVerification() {
+  function handlePasscodeVerification(shouldScroll = true) {
     if (!rsvpCodeInput) return;
     const code = rsvpCodeInput.value.trim().toUpperCase();
 
@@ -661,19 +622,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (rsvpForm) {
       rsvpForm.classList.add("active");
-      rsvpForm.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (shouldScroll) {
+        rsvpForm.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   }
 
+  // Magic Link Support: Auto-detect ?code=... or ?rsvp=... in the URL
+  function checkUrlForMagicLink() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const codeParam = urlParams.get("code") || urlParams.get("rsvp") || urlParams.get("passcode") || urlParams.get("inv");
+
+      if (codeParam) {
+        const cleanCode = codeParam.trim().toUpperCase();
+        if (RSVP_INVITATIONS[cleanCode]) {
+          if (rsvpCodeInput) rsvpCodeInput.value = cleanCode;
+          // Auto-verify silently without scrolling to bottom immediately
+          handlePasscodeVerification(false);
+
+          // If URL specifically targeted #rsvp, smoothly scroll to it
+          if (window.location.hash === "#rsvp") {
+            setTimeout(() => {
+              const rsvpSection = document.getElementById("rsvp");
+              if (rsvpSection) rsvpSection.scrollIntoView({ behavior: "smooth" });
+            }, 600);
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("Magic link auto-check error:", err);
+    }
+  }
+
+  // Run Magic Link check on initial load
+  checkUrlForMagicLink();
+
   if (verifyRsvpCodeBtn) {
-    verifyRsvpCodeBtn.addEventListener("click", handlePasscodeVerification);
+    verifyRsvpCodeBtn.addEventListener("click", () => handlePasscodeVerification(true));
   }
 
   if (rsvpCodeInput) {
     rsvpCodeInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        handlePasscodeVerification();
+        handlePasscodeVerification(true);
       }
     });
   }
