@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // WithJoy.com URLs
     joyRegistryUrl: "https://withjoy.com/kevin-and-shannel/registry",
     joySiteUrl: "https://withjoy.com/kevin-and-shannel",
+
+    // Google Sheets Webhook URL for real-time private RSVP collection (Optional)
+    rsvpWebhookUrl: "",
     
     // Event Details for Calendar Invites
     event: {
@@ -428,28 +431,260 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==========================================================================
-     9. RSVP FORM SUBMISSION & LOCAL ARCHIVAL
+     9. TIERED INVITE-ONLY RSVP & PASSCODE GATE
      ========================================================================== */
+  // Master Invitations Registry with Tier Limits & Privileges
+  const RSVP_INVITATIONS = {
+    // --- Solo Guest Passes (Strictly 1 Seat) ---
+    "SOLO27": { tier: "solo", maxGuests: 1, label: "Single Guest Invitation", guest: "" },
+    "KS-SOLO": { tier: "solo", maxGuests: 1, label: "Single Guest Invitation", guest: "" },
+
+    // --- Plus-One Guest Passes (Up to 2 Seats) ---
+    "PLUS1": { tier: "plus-one", maxGuests: 2, label: "Guest & Plus-One Invitation", guest: "" },
+    "COUPLE27": { tier: "plus-one", maxGuests: 2, label: "Couple Invitation", guest: "" },
+    "KS-PLUSONE": { tier: "plus-one", maxGuests: 2, label: "Guest & Plus-One Invitation", guest: "" },
+
+    // --- Family & Group Delegations (Up to 4-5 Seats) ---
+    "FAMILY27": { tier: "family", maxGuests: 4, label: "Family Delegation (Up to 4)", guest: "" },
+    "MENSAH-FAM": { tier: "family", maxGuests: 4, label: "Mensah Family Delegation", guest: "Mensah Family" },
+    "QUAYE-FAM": { tier: "family", maxGuests: 4, label: "Quaye Family Delegation", guest: "Quaye Family" },
+    "VIP-DELEGATION": { tier: "family", maxGuests: 5, label: "Special Family / Group Delegation", guest: "" },
+
+    // Backup code matching gate password
+    "FOREVER2027": { tier: "plus-one", maxGuests: 2, label: "Kevin & Shannel Guest Invitation", guest: "" }
+  };
+
+  const rsvpPasscodeBlock = document.getElementById("rsvpPasscodeBlock");
+  const rsvpCodeInput = document.getElementById("rsvpCodeInput");
+  const verifyRsvpCodeBtn = document.getElementById("verifyRsvpCodeBtn");
+  const rsvpStatusMsg = document.getElementById("rsvpStatusMsg");
+
   const rsvpForm = document.getElementById("rsvpForm");
+  const verifiedCodeInput = document.getElementById("verifiedCode");
+  const verifiedTierInput = document.getElementById("verifiedTier");
+  const fullNameInput = document.getElementById("fullName");
+  const partySizeContainer = document.getElementById("partySizeContainer");
+  const accompanyingNamesGroup = document.getElementById("accompanyingNamesGroup");
+  const accompanyingNamesLabel = document.getElementById("accompanyingNamesLabel");
+  const accompanyingNamesInput = document.getElementById("accompanyingNames");
+  const accompanyingNamesHelp = document.getElementById("accompanyingNamesHelp");
+
   const rsvpSuccess = document.getElementById("rsvpSuccess");
+  const rsvpConfirmationSummary = document.getElementById("rsvpConfirmationSummary");
   const resetRsvpBtn = document.getElementById("resetRsvpBtn");
+
+  function showRsvpStatus(type, html) {
+    if (!rsvpStatusMsg) return;
+    rsvpStatusMsg.className = `rsvp-status-msg ${type}`;
+    rsvpStatusMsg.innerHTML = html;
+    rsvpStatusMsg.style.display = "block";
+  }
+
+  function configureTierUI(inv) {
+    if (!partySizeContainer) return;
+
+    if (inv.tier === "solo") {
+      partySizeContainer.innerHTML = `
+        <label for="guestCount">Total Number in Party</label>
+        <div class="rsvp-party-locked-note">
+          <span><strong>1 Reserved Seat</strong> (Individual Guest)</span>
+          <span class="rsvp-party-locked-tag">Solo Pass</span>
+        </div>
+        <input type="hidden" id="guestCount" name="guestCount" value="1" />
+      `;
+      if (accompanyingNamesGroup) {
+        accompanyingNamesGroup.classList.remove("active");
+        if (accompanyingNamesInput) {
+          accompanyingNamesInput.removeAttribute("required");
+          accompanyingNamesInput.value = "";
+        }
+      }
+    } else if (inv.tier === "plus-one") {
+      partySizeContainer.innerHTML = `
+        <label for="guestCount">Total Number in Party</label>
+        <select id="guestCount" required>
+          <option value="1">1 Guest (Attending Solo)</option>
+          <option value="2" selected>2 Guests (Attending with +1)</option>
+        </select>
+      `;
+      if (accompanyingNamesLabel) accompanyingNamesLabel.textContent = "Accompanying Guest Full Name";
+      if (accompanyingNamesInput) {
+        accompanyingNamesInput.placeholder = "e.g. Ama Boateng";
+      }
+      if (accompanyingNamesHelp) {
+        accompanyingNamesHelp.textContent = "Please provide the full legal name of your accompanying guest for the guest list.";
+      }
+
+      const countSelect = document.getElementById("guestCount");
+      function updatePlusOneField() {
+        if (!countSelect || !accompanyingNamesGroup) return;
+        if (countSelect.value === "2") {
+          accompanyingNamesGroup.classList.add("active");
+          if (accompanyingNamesInput) accompanyingNamesInput.setAttribute("required", "required");
+        } else {
+          accompanyingNamesGroup.classList.remove("active");
+          if (accompanyingNamesInput) {
+            accompanyingNamesInput.removeAttribute("required");
+            accompanyingNamesInput.value = "";
+          }
+        }
+      }
+      if (countSelect) {
+        countSelect.addEventListener("change", updatePlusOneField);
+        updatePlusOneField();
+      }
+    } else if (inv.tier === "family") {
+      let optionsHtml = "";
+      for (let i = 1; i <= inv.maxGuests; i++) {
+        const sel = (i === inv.maxGuests) ? "selected" : "";
+        optionsHtml += `<option value="${i}" ${sel}>${i} ${i === 1 ? "Guest" : "Guests in Family Party"}</option>`;
+      }
+      partySizeContainer.innerHTML = `
+        <label for="guestCount">Total Number in Party</label>
+        <select id="guestCount" required>${optionsHtml}</select>
+      `;
+      if (accompanyingNamesLabel) accompanyingNamesLabel.textContent = "Accompanying Family / Children Names";
+      if (accompanyingNamesInput) {
+        accompanyingNamesInput.placeholder = "e.g. Ama Mensah, Kofi Mensah (Age 8)";
+      }
+      if (accompanyingNamesHelp) {
+        accompanyingNamesHelp.textContent = "Please list full names of all accompanying family members and children.";
+      }
+
+      const countSelect = document.getElementById("guestCount");
+      function updateFamilyField() {
+        if (!countSelect || !accompanyingNamesGroup) return;
+        const val = parseInt(countSelect.value, 10);
+        if (val > 1) {
+          accompanyingNamesGroup.classList.add("active");
+          if (accompanyingNamesInput) accompanyingNamesInput.setAttribute("required", "required");
+        } else {
+          accompanyingNamesGroup.classList.remove("active");
+          if (accompanyingNamesInput) {
+            accompanyingNamesInput.removeAttribute("required");
+            accompanyingNamesInput.value = "";
+          }
+        }
+      }
+      if (countSelect) {
+        countSelect.addEventListener("change", updateFamilyField);
+        updateFamilyField();
+      }
+    }
+  }
+
+  function handlePasscodeVerification() {
+    if (!rsvpCodeInput) return;
+    const code = rsvpCodeInput.value.trim().toUpperCase();
+
+    if (!code) {
+      showRsvpStatus("warning", "Please enter your invitation passcode before verifying.");
+      return;
+    }
+
+    // Check single-use redemption history
+    let redeemed = {};
+    try {
+      redeemed = JSON.parse(localStorage.getItem("wedding_redeemed_codes") || "{}");
+    } catch (e) {
+      redeemed = {};
+    }
+
+    if (redeemed[code]) {
+      const rec = redeemed[code];
+      showRsvpStatus("warning", `
+        This invitation code (<strong>${code}</strong>) was already registered on ${rec.date || "a previous date"} for <strong>${rec.fullName || "a guest"}</strong>.<br>
+        <span style="font-size: 0.82rem; margin-top: 6px; display: inline-block;">
+          If you need to make changes to your registered party, please contact Kevin &amp; Shannel directly.
+        </span>
+      `);
+      if (rsvpPasscodeBlock) rsvpPasscodeBlock.classList.remove("verified");
+      if (rsvpForm) rsvpForm.classList.remove("active");
+      return;
+    }
+
+    // Check validity in invitation registry
+    const inv = RSVP_INVITATIONS[code];
+    if (!inv) {
+      showRsvpStatus("error", `
+        We could not find an invitation associated with code "<strong>${code}</strong>".<br>
+        <span style="font-size: 0.82rem; margin-top: 4px; display: inline-block;">
+          Please check the passcode on your invitation card or message, or reach out to the couple.
+        </span>
+      `);
+      if (rsvpPasscodeBlock) rsvpPasscodeBlock.classList.remove("verified");
+      if (rsvpForm) rsvpForm.classList.remove("active");
+      return;
+    }
+
+    // Success: Unlock form and set up tier
+    if (rsvpPasscodeBlock) rsvpPasscodeBlock.classList.add("verified");
+    if (verifiedCodeInput) verifiedCodeInput.value = code;
+    if (verifiedTierInput) verifiedTierInput.value = inv.tier;
+
+    showRsvpStatus("success", `
+      <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 4px;">Invitation Verified ✓</div>
+      <div>Welcome to the celebration! Your RSVP has been unlocked.</div>
+      <div class="rsvp-tier-pill">${inv.label}</div>
+    `);
+
+    configureTierUI(inv);
+
+    if (inv.guest && fullNameInput && !fullNameInput.value.trim()) {
+      fullNameInput.value = inv.guest;
+    }
+
+    if (rsvpForm) {
+      rsvpForm.classList.add("active");
+      rsvpForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  if (verifyRsvpCodeBtn) {
+    verifyRsvpCodeBtn.addEventListener("click", handlePasscodeVerification);
+  }
+
+  if (rsvpCodeInput) {
+    rsvpCodeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handlePasscodeVerification();
+      }
+    });
+  }
 
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
+      const code = (verifiedCodeInput ? verifiedCodeInput.value : "").trim().toUpperCase();
+      const tier = (verifiedTierInput ? verifiedTierInput.value : "") || "solo";
+
+      if (!code) {
+        alert("Please enter and verify your invitation passcode first.");
+        if (rsvpPasscodeBlock) rsvpPasscodeBlock.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      const guestCountEl = document.getElementById("guestCount");
+      const guestCountVal = guestCountEl ? guestCountEl.value : "1";
+      const accompanyingVal = accompanyingNamesInput ? accompanyingNamesInput.value.trim() : "";
+
       const rsvpData = {
         timestamp: new Date().toISOString(),
-        fullName: document.getElementById("fullName")?.value.trim() || "",
+        passcode: code,
+        tier: tier,
+        fullName: fullNameInput ? fullNameInput.value.trim() : "",
         email: document.getElementById("email")?.value.trim() || "",
         phone: document.getElementById("phone")?.value.trim() || "",
         attendance: document.getElementById("ceremonies")?.value || "",
-        guestCount: document.getElementById("guestCount")?.value || "1",
+        guestCount: guestCountVal,
+        accompanyingNames: accompanyingVal,
         dietary: document.getElementById("dietary")?.value.trim() || "None",
         message: document.getElementById("message")?.value.trim() || ""
       };
 
-      // Save to localStorage for resilient persistence
+      // Save to localStorage wedding_rsvps
       try {
         const stored = JSON.parse(localStorage.getItem("wedding_rsvps") || "[]");
         stored.push(rsvpData);
@@ -459,18 +694,102 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Local storage error:", err);
       }
 
-      // Smooth transition to Success state
+      // Record passcode redemption to enforce single-use
+      try {
+        const redeemed = JSON.parse(localStorage.getItem("wedding_redeemed_codes") || "{}");
+        redeemed[code] = {
+          date: new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }),
+          fullName: rsvpData.fullName,
+          guestCount: rsvpData.guestCount,
+          attendance: rsvpData.attendance
+        };
+        localStorage.setItem("wedding_redeemed_codes", JSON.stringify(redeemed));
+      } catch (err) {
+        console.error("Redemption storage error:", err);
+      }
+
+      // Async POST to Google Sheet Webhook if configured
+      if (CONFIG.rsvpWebhookUrl) {
+        try {
+          fetch(CONFIG.rsvpWebhookUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(rsvpData)
+          }).catch((webhookErr) => {
+            console.warn("Google Sheet Webhook background sync note:", webhookErr);
+          });
+        } catch (postErr) {
+          console.warn("Webhook fetch initialization:", postErr);
+        }
+      }
+
+      // Render confirmation summary
+      if (rsvpConfirmationSummary) {
+        const invInfo = RSVP_INVITATIONS[code] || { label: "Wedding Invitation" };
+        rsvpConfirmationSummary.innerHTML = `
+          <div class="rsvp-summary-row">
+            <span>Invitation Passcode</span>
+            <span>${code} (${invInfo.label})</span>
+          </div>
+          <div class="rsvp-summary-row">
+            <span>Primary Guest</span>
+            <span>${rsvpData.fullName}</span>
+          </div>
+          <div class="rsvp-summary-row">
+            <span>Attendance Status</span>
+            <span>${rsvpData.attendance}</span>
+          </div>
+          <div class="rsvp-summary-row">
+            <span>Total Party Size</span>
+            <span>${rsvpData.guestCount} ${parseInt(rsvpData.guestCount, 10) === 1 ? "Guest" : "Guests"}</span>
+          </div>
+          ${rsvpData.accompanyingNames ? `
+          <div class="rsvp-summary-row">
+            <span>Accompanying Guest(s)</span>
+            <span>${rsvpData.accompanyingNames}</span>
+          </div>` : ""}
+          <div class="rsvp-summary-row">
+            <span>Contact Details</span>
+            <span>${rsvpData.phone} | ${rsvpData.email}</span>
+          </div>
+        `;
+      }
+
+      // Transition to Success state
+      if (rsvpPasscodeBlock) rsvpPasscodeBlock.style.display = "none";
       rsvpForm.style.display = "none";
-      rsvpSuccess.style.display = "block";
-      rsvpSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (rsvpSuccess) {
+        rsvpSuccess.style.display = "block";
+        rsvpSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     });
   }
 
   if (resetRsvpBtn) {
     resetRsvpBtn.addEventListener("click", () => {
-      rsvpForm.reset();
-      rsvpSuccess.style.display = "none";
-      rsvpForm.style.display = "block";
+      if (rsvpForm) {
+        rsvpForm.reset();
+        rsvpForm.classList.remove("active");
+        rsvpForm.style.display = "";
+      }
+      if (rsvpPasscodeBlock) {
+        rsvpPasscodeBlock.classList.remove("verified");
+        rsvpPasscodeBlock.style.display = "";
+      }
+      if (rsvpCodeInput) rsvpCodeInput.value = "";
+      if (rsvpStatusMsg) {
+        rsvpStatusMsg.className = "rsvp-status-msg";
+        rsvpStatusMsg.style.display = "none";
+        rsvpStatusMsg.innerHTML = "";
+      }
+      if (accompanyingNamesGroup) {
+        accompanyingNamesGroup.classList.remove("active");
+      }
+      if (rsvpSuccess) rsvpSuccess.style.display = "none";
+      if (rsvpPasscodeBlock) {
+        rsvpPasscodeBlock.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     });
   }
 
@@ -481,25 +800,34 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("No RSVP responses stored yet.");
       return;
     }
-    const headers = ["Timestamp", "Full Name", "Email", "Phone", "Attendance", "Guests", "Dietary", "Message"];
+    const headers = ["Timestamp", "Passcode", "Tier", "Full Name", "Email", "Phone", "Attendance", "Guests", "Accompanying Guests", "Dietary", "Message"];
     const rows = data.map((d) => [
-      `"${d.timestamp}"`,
-      `"${d.fullName}"`,
-      `"${d.email}"`,
-      `"${d.phone}"`,
-      `"${d.attendance}"`,
-      `"${d.guestCount}"`,
-      `"${d.dietary}"`,
+      `"${d.timestamp || ""}"`,
+      `"${d.passcode || ""}"`,
+      `"${d.tier || ""}"`,
+      `"${(d.fullName || "").replace(/"/g, '""')}"`,
+      `"${(d.email || "").replace(/"/g, '""')}"`,
+      `"${(d.phone || "").replace(/"/g, '""')}"`,
+      `"${(d.attendance || "").replace(/"/g, '""')}"`,
+      `"${d.guestCount || "1"}"`,
+      `"${(d.accompanyingNames || "").replace(/"/g, '""')}"`,
+      `"${(d.dietary || "").replace(/"/g, '""')}"`,
       `"${(d.message || "").replace(/"/g, '""')}"`
     ]);
     const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Kevin_Shannel_RSVPs_${new Date().toISOString().slice(0,10)}.csv`);
+    link.setAttribute("download", `Kevin_Shannel_RSVPs_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  // Helper to reset redeemed codes during testing
+  window.resetRSVPCodes = function () {
+    localStorage.removeItem("wedding_redeemed_codes");
+    alert("All invitation passcodes have been reset for testing.");
   };
 
   /* ==========================================================================

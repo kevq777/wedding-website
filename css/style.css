@@ -1862,6 +1862,168 @@ input:focus, select:focus, textarea:focus {
   margin-bottom: 14px;
 }
 
+/* Tiered RSVP & Passcode Gate Styles */
+.rsvp-passcode-block {
+  background: var(--bg-alabaster);
+  border: 1px solid var(--gold-border-subtle);
+  border-radius: 4px;
+  padding: 28px 24px;
+  margin-bottom: 30px;
+  text-align: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rsvp-passcode-block.verified {
+  border-color: var(--gold-primary);
+  background: #FCFAF6;
+}
+
+.rsvp-passcode-block p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.rsvp-code-input-row {
+  display: flex;
+  gap: 12px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.rsvp-code-input-row input {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.rsvp-code-input-row button {
+  flex: 0 0 auto;
+  padding: 12px 24px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.rsvp-status-msg {
+  display: none;
+  margin-top: 16px;
+  padding: 12px 18px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-align: center;
+  animation: fadeIn 0.35s ease;
+}
+
+.rsvp-status-msg.error {
+  display: block;
+  background: #FFF2F0;
+  border: 1px solid #FFCCC7;
+  color: #CF1322;
+}
+
+.rsvp-status-msg.warning {
+  display: block;
+  background: #FFFBE6;
+  border: 1px solid #FFE58F;
+  color: #D48806;
+}
+
+.rsvp-status-msg.success {
+  display: block;
+  background: #F6FFED;
+  border: 1px solid #B7EB8F;
+  color: #389E0D;
+}
+
+.rsvp-tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold-gradient);
+  color: #FFFFFF;
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 12px;
+  box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
+}
+
+.rsvp-unlocked-fields {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.rsvp-unlocked-fields.active {
+  display: block;
+}
+
+.rsvp-party-locked-note {
+  font-size: 0.88rem;
+  color: var(--text-charcoal);
+  background: #FFFFFF;
+  padding: 14px 16px;
+  border: 1px solid #D6D0C5;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rsvp-party-locked-tag {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gold-primary);
+  font-weight: 600;
+}
+
+.rsvp-dynamic-field {
+  display: none;
+  animation: fadeIn 0.35s ease;
+}
+
+.rsvp-dynamic-field.active {
+  display: flex;
+}
+
+.rsvp-summary-card {
+  background: var(--bg-alabaster);
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  padding: 24px;
+  margin: 24px auto 30px;
+  max-width: 480px;
+  text-align: left;
+}
+
+.rsvp-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #EBE6DC;
+  font-size: 0.92rem;
+}
+
+.rsvp-summary-row:last-child {
+  border-bottom: none;
+}
+
+.rsvp-summary-row span:first-child {
+  color: var(--text-muted);
+}
+
+.rsvp-summary-row span:last-child {
+  color: var(--text-charcoal);
+  font-weight: 600;
+}
+
 /* ================= 6. VENUES SECTION ================= */
 .venues-grid {
   display: grid;

@@ -1855,11 +1855,27 @@
         <span>Kindly RSVP by 1st December 2026</span>
       </div>
 
-      <form id="rsvpForm">
+      <!-- Passcode Verification Gate -->
+      <div class="rsvp-passcode-block" id="rsvpPasscodeBlock">
+        <span class="section-eyebrow" style="font-size: 0.76rem; letter-spacing: 0.2em;">Exclusive Invitation Verification</span>
+        <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--text-charcoal); margin: 8px 0 12px;">Enter Your Invitation Passcode</h3>
+        <p>Please enter the unique invitation code provided on your personal card or message to unlock your RSVP.</p>
+        <div class="rsvp-code-input-row">
+          <input type="text" id="rsvpCodeInput" placeholder="e.g. KS-SOLO" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" />
+          <button type="button" class="btn-gold" id="verifyRsvpCodeBtn">Verify Invitation</button>
+        </div>
+        <div id="rsvpStatusMsg" class="rsvp-status-msg" role="alert"></div>
+      </div>
+
+      <!-- Unlocked Dynamic RSVP Form (Hidden until valid passcode verified) -->
+      <form id="rsvpForm" class="rsvp-unlocked-fields">
+        <input type="hidden" id="verifiedCode" name="verifiedCode" />
+        <input type="hidden" id="verifiedTier" name="verifiedTier" />
+
         <div class="form-row">
           <div class="form-group">
             <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" required placeholder="e.g. Samuel & Grace Mensah" />
+            <input type="text" id="fullName" required placeholder="e.g. Samuel Mensah" />
           </div>
           <div class="form-group">
             <label for="email">Email Address</label>
@@ -1885,9 +1901,9 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-group" id="partySizeContainer">
             <label for="guestCount">Total Number in Party</label>
-            <input type="number" id="guestCount" min="1" max="4" value="1" required />
+            <input type="number" id="guestCount" min="1" max="1" value="1" required />
           </div>
           <div class="form-group">
             <label for="dietary">Dietary Preferences / Allergies</label>
@@ -1895,23 +1911,36 @@
           </div>
         </div>
 
+        <!-- Dynamic Accompanying Guests Field (Shown only when party > 1) -->
+        <div class="form-group rsvp-dynamic-field" id="accompanyingNamesGroup">
+          <label id="accompanyingNamesLabel" for="accompanyingNames">Accompanying Guest Name(s)</label>
+          <input type="text" id="accompanyingNames" placeholder="Please enter full name(s)" />
+          <small id="accompanyingNamesHelp" style="color: var(--text-muted); font-size: 0.78rem; margin-top: 4px; display: block;">
+            Please provide the full legal name(s) of your accompanying guest(s) for the guest list.
+          </small>
+        </div>
+
         <div class="form-group">
           <label for="message">A Personal Note for Kevin & Shannel</label>
           <textarea id="message" rows="3" placeholder="Share a blessing, memory, or note of encouragement..."></textarea>
         </div>
 
-        <button type="submit" class="btn-gold" style="width: 100%; margin-top: 8px;">
+        <button type="submit" class="btn-gold" id="rsvpSubmitBtn" style="width: 100%; margin-top: 8px;">
           Send RSVP Confirmation
         </button>
       </form>
 
       <!-- RSVP Confirmation Screen (Revealed on submission) -->
       <div id="rsvpSuccess">
-        <h3>Thank You!</h3>
-        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.05rem;">
+        <span class="section-eyebrow" style="font-size: 0.76rem; letter-spacing: 0.2em; color: var(--gold-primary);">Confirmation Registered</span>
+        <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--text-charcoal); margin: 8px 0 12px;">Thank You!</h3>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.05rem;">
           Your RSVP response has been registered. We are deeply touched and can’t wait to celebrate with you on 9th January 2027!
         </p>
-        <button type="button" class="btn-outline" id="resetRsvpBtn">Submit Another Response</button>
+        <div id="rsvpConfirmationSummary" class="rsvp-summary-card"></div>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="btn-outline" id="resetRsvpBtn">Submit Another Response</button>
+        </div>
       </div>
     </div>
   </section>
