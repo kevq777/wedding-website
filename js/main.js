@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
     joyRegistryUrl: "https://withjoy.com/kevin-and-shannel/registry",
     joySiteUrl: "https://withjoy.com/kevin-and-shannel",
 
-    // Google Sheets Webhook URL for real-time private RSVP collection (Optional)
-    rsvpWebhookUrl: "",
+    // Google Sheets Webhook URL for real-time private RSVP collection
+    rsvpWebhookUrl: "https://script.google.com/macros/s/AKfycbzsOS17Bj0PWPGA6zqLgN1Q1QbCXDI3c6SLaFZp_8VmRpzkmFpWstkK3Hx6uDLoxlC3/exec",
     
     // Event Details for Calendar Invites
     event: {
@@ -885,7 +885,7 @@ document.addEventListener("DOMContentLoaded", () => {
           fetch(CONFIG.rsvpWebhookUrl, {
             method: "POST",
             mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(rsvpData)
           }).catch((webhookErr) => {
             console.warn("Google Sheet Webhook background sync note:", webhookErr);
