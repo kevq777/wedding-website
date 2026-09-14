@@ -24,6 +24,8 @@ IMAGES_TO_PROCESS = [
     ("Wedding K&S Shoot 1", "the gym in the UK 2020.jpeg", "story-phase4-02-gym.webp", 0),
     ("Wedding K&S Shoot 1", "workout progression.jpeg", "story-phase4-03-workout.webp", 0),
     ("Wedding K&S Shoot 1", "2024 reunited in the UK.jpeg", "story-phase4-04-uk2024.webp", 0),
+    ("Our story imagery", "Quad Bikes in the Wilderness.jpeg", "story-phase4-05-quad-biking.webp", 0),
+    ("Our story imagery", "Dates in Accra 2024.jpeg", "story-phase4-06-accra-date-2024.webp", 0),
     
     # Phase 5
     ("Our story imagery", "Shannels 29th this year engaged.jpeg", "story-phase5-01-shannel29.webp", 0),
