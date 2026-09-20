@@ -1591,6 +1591,32 @@ nav.scrolled {
   font-weight: 500;
 }
 
+.attendance-cta-box {
+  margin-top: 36px;
+  padding: 32px 24px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--gold-border-subtle);
+  border-radius: 4px;
+}
+
+.attendance-cta-text {
+  max-width: 580px;
+  margin: 0 auto 20px;
+  font-size: 0.96rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.attendance-deadline-note {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  font-weight: 500;
+}
+
 /* ================= 4. CURATED PHOTO GALLERY & LIGHTBOX ================= */
 .gallery-controls {
   display: flex;
